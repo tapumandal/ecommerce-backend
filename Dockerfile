@@ -1,7 +1,7 @@
 FROM openjdk:8
-ADD target/ims-server-app.jar ims-server-app.jar
+ADD target/ecommerce-backend.jar ecommerce-backend.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "ims-server-app.jar"]
+ENTRYPOINT ["java", "-jar", "ecommerce-backend.jar"]
 
 ## MySql pull then run with credentials
 # docker run --name mysql-server -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=ims-db -e MYSQL_USER=ims-user -e MYSQL_PASSWORD=password -d mysql:5.6

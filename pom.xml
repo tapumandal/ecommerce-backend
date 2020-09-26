@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tapumandal</groupId>
-	<artifactId>ims</artifactId>
+	<artifactId>ecommerce-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>SikderEnterprise </name>
+	<name>eCommerce</name>
 	<description>It's a Inventory Management System for dealer of multiple product</description>
 
 	<properties>
@@ -90,7 +90,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<finalName>ims-server-app</finalName>
+					<finalName>ecommerce-backend</finalName>
 				</configuration>
 			</plugin>
 		</plugins>
