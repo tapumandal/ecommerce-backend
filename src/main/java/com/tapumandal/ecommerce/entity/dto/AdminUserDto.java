@@ -10,14 +10,10 @@ public class AdminUserDto{
     @Valid
     private UserDto userDto;
 
-    @Valid
-    private CompanyDto companyDto;
-
     public AdminUserDto(){};
 
-    public AdminUserDto(UserDto userDto, CompanyDto companyDto) {
+    public AdminUserDto(UserDto userDto) {
         this.userDto = userDto;
-        this.companyDto = companyDto;
     }
 
     public UserDto getUserDto() {
@@ -28,11 +24,4 @@ public class AdminUserDto{
         this.userDto = userDto;
     }
 
-    public CompanyDto getCompanyDto() {
-        return companyDto;
-    }
-
-    public void setCompanyDto(CompanyDto companyDto) {
-        this.companyDto = companyDto;
-    }
 }

@@ -27,9 +27,6 @@ public class Warehouse {
     @Column(name = "address")
     protected String address;
 
-    @Column(name = "company_id", updatable = false)
-    protected int companyId = ApplicationPreferences.getUser().getCompany().getId();
-
     @Column(name = "is_active", columnDefinition = "boolean default 1")
     private boolean isActive = true;
 
@@ -43,9 +40,6 @@ public class Warehouse {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Date updatedAt;
-
-    @OneToMany(mappedBy = "warehouse")
-    private List<ChallanProduct> challanProducts;
 
     public Warehouse() {}
 
@@ -88,14 +82,6 @@ public class Warehouse {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
     }
 
     public boolean isActive() {

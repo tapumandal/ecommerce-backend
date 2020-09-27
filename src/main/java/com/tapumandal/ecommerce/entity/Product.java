@@ -32,9 +32,6 @@ public class Product {
     @Column(name = "selling_price_per_unit")
     private String sellingPricePerUnit;
 
-    @Column(name = "company_id", updatable = false)
-    protected int companyId = ApplicationPreferences.getUser().getCompany().getId();
-
     @Column(name = "is_active", columnDefinition = "boolean default 1")
     private boolean isActive = true;
 
@@ -149,12 +146,5 @@ public class Product {
         this.measurement = measurement;
     }
 
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
-    }
 }
 

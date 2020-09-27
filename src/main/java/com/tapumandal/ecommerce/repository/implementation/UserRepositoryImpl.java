@@ -124,7 +124,7 @@ public class UserRepositoryImpl  implements UserRepository {
 
 
     private Query getQuery(){
-        String query = "FROM User U WHERE U.isDeleted = 0 AND U.company.id = "+ApplicationPreferences.getUser().getCompany().getId();
+        String query = "FROM User U WHERE U.isDeleted = 0";
         Query resQuery =  getSession().createQuery(query);
 
         return resQuery;
@@ -133,7 +133,7 @@ public class UserRepositoryImpl  implements UserRepository {
     @Override
     public User getById(int id) {
 
-        String query = "FROM User U WHERE U.id = "+id+" AND U.isDeleted = 0 AND U.company.id = "+ApplicationPreferences.getUser().getCompany().getId();
+        String query = "FROM User U WHERE U.id = "+id+" AND U.isDeleted = 0";
         return (User) getSession().createQuery(query).uniqueResult();
     }
 

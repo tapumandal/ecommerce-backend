@@ -80,7 +80,7 @@ public class MeasurementRepositoryImpl implements MeasurementRepository {
     }
 
     private Query getQuery(){
-        String query = "FROM Measurement M WHERE M.isDeleted = 0 AND M.companyId = "+ ApplicationPreferences.getUser().getCompany().getId();
+        String query = "FROM Measurement M WHERE M.isDeleted = 0";
         Query resQuery =  getSession().createQuery(query);
 
         return resQuery;
@@ -89,7 +89,7 @@ public class MeasurementRepositoryImpl implements MeasurementRepository {
     @Override
     public Measurement getById(int id) {
 
-        String query = "FROM Measurement M WHERE M.id = "+id+" AND M.isDeleted = 0 AND M.companyId = "+ ApplicationPreferences.getUser().getCompany().getId();
+        String query = "FROM Measurement M WHERE M.id = "+id+" AND M.isDeleted = 0";
         return (Measurement) getSession().createQuery(query).uniqueResult();
     }
 

@@ -18,20 +18,20 @@ public class UserDto{
     @NotNull(message = "UserName can't be empty")
     protected String username;
 
-    @NotNull(message = "phone can't be empty")
-    @Size(min=7, max = 20, message = "Phone number is not usable")
+//    @NotNull(message = "phone can't be empty")
+//    @Size(min=7, max = 20, message = "Phone number is not usable")
     protected String phone;
 
     @NotNull(message = "password can't be empty")
     @Size(min=6, max = 32, message = "Password is not valid")
     protected String password;
 
-    @NotNull(message = "address can't be empty")
-    @Size(min=12, max = 32, message = "Address information is very less")
+//    @NotNull(message = "address can't be empty")
+//    @Size(min=12, max = 32, message = "Address information is very less")
     protected String address;
 
-    @NotNull(message = "Work title can't be empty")
-    @Size(min=3, max = 32, message = "Work Title is not valid")
+//    @NotNull(message = "Work title can't be empty")
+//    @Size(min=3, max = 32, message = "Work Title is not valid")
     protected String work_title;
 
 
@@ -41,8 +41,8 @@ public class UserDto{
 
     protected boolean is_deleted = false;
 
-    @Nullable
-    private CompanyDto company;
+//    @Nullable
+//    private CompanyDto company;
 
     public int getId() {
         return id;
@@ -99,13 +99,13 @@ public class UserDto{
         this.work_title = work_title;
     }
 
-    public CompanyDto getCompany() {
-        return company;
-    }
-
-    public void setCompany(CompanyDto company) {
-        this.company = company;
-    }
+//    public CompanyDto getCompany() {
+//        return company;
+//    }
+//
+//    public void setCompany(CompanyDto company) {
+//        this.company = company;
+//    }
 
     public String getRole() {
         return role;

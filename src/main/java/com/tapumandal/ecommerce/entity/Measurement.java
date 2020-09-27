@@ -40,9 +40,6 @@ public class Measurement {
     @Column(name = "package_per_package_l2")
     private int packagePerPackageL2 = 1;
 
-    @Column(name = "company_id", updatable = false)
-    protected int companyId = ApplicationPreferences.getUser().getCompany().getId();
-
     @Column(name = "is_active", columnDefinition = "boolean default 1")
     private boolean isActive = true;
 
@@ -144,14 +141,6 @@ public class Measurement {
 
     public void setPackagePerPackageL2(int packagePerPackageL2) {
         this.packagePerPackageL2 = packagePerPackageL2;
-    }
-
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
     }
 
     public boolean isActive() {

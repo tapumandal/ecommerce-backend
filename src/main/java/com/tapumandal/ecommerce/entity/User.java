@@ -5,7 +5,6 @@ import java.sql.Date;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.tapumandal.ecommerce.annotation.CustomCompanySerializer;
 import com.tapumandal.ecommerce.entity.dto.UserDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -62,19 +61,11 @@ public class User {
     private Date updatedAt;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id")
-    @Where(clause = "company_is_deleted = false AND company_is_active = true")
-    @JsonSerialize(using = CustomCompanySerializer.class)
-    private Company company;
-
-
-//    @OneToOne( mappedBy = "dsr" )
-//    private DeliveryUnit dsr;
-//    @OneToOne( mappedBy = "driver" )
-//    private DeliveryUnit driver;
-//    @OneToOne( mappedBy = "helpingHand" )
-//    private DeliveryUnit helpingHand;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "company_id")
+//    @Where(clause = "company_is_deleted = false AND company_is_active = true")
+//    @JsonSerialize(using = CustomCompanySerializer.class)
+//    private Company company;
 
     public User() {
     }
@@ -93,9 +84,9 @@ public class User {
         this.isActive = userDto.isActive();
         this.isDeleted = userDto.isDeleted();
 
-        if (userDto.getCompany() != null) {
-            this.company = new Company(userDto.getCompany());
-        }
+//        if (userDto.getCompany() != null) {
+//            this.company = new Company(userDto.getCompany());
+//        }
     }
 
 
@@ -108,7 +99,7 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -120,7 +111,7 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return username == null ? "" : username;
     }
 
     public boolean isUsernameVerified() {
@@ -132,7 +123,7 @@ public class User {
     }
 
     public String getUsernameType() {
-        return usernameType;
+        return usernameType == null ? "" : usernameType;
     }
 
     public void setUsernameType(String usernameType) {
@@ -140,7 +131,7 @@ public class User {
     }
 
     public String getPhone() {
-        return phone;
+        return phone == null ? "" : phone;
     }
 
     public void setPhone(String phone) {
@@ -148,7 +139,7 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return password == null ? "" : password;
     }
 
     public void setPassword(String password) {
@@ -156,7 +147,7 @@ public class User {
     }
 
     public String getAddress() {
-        return address;
+        return address == null ? "" : address;
     }
 
     public void setAddress(String address) {
@@ -188,7 +179,7 @@ public class User {
     }
 
     public String getRole() {
-        return role;
+        return role == null ? "" : role;
     }
 
     public void setRole(String role) {
@@ -196,7 +187,7 @@ public class User {
     }
 
     public String getWorkTitle() {
-        return workTitle;
+        return workTitle == null ? "" : workTitle;
     }
 
     public void setWorkTitle(String workTitle) {
@@ -211,36 +202,13 @@ public class User {
         isActive = active;
     }
 
-    public Company getCompany() {
-        return company;
-    }
+//    public Company getCompany() {
+//        return company;
+//    }
+//
+//    public void setCompany(Company company) {
+//        this.company = company;
+//    }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
 
-
-//    public DeliveryUnit getDsr() {
-//        return dsr;
-//    }
-//
-//    public void setDsr(DeliveryUnit dsr) {
-//        this.dsr = dsr;
-//    }
-//
-//    public DeliveryUnit getDriver() {
-//        return driver;
-//    }
-//
-//    public void setDriver(DeliveryUnit driver) {
-//        this.driver = driver;
-//    }
-//
-//    public DeliveryUnit getHelpingHand() {
-//        return helpingHand;
-//    }
-//
-//    public void setHelpingHand(DeliveryUnit helpingHand) {
-//        this.helpingHand = helpingHand;
-//    }
 }

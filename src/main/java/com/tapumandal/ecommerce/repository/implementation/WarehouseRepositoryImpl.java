@@ -77,7 +77,7 @@ public class WarehouseRepositoryImpl implements WarehouseRepository {
     }
 
     private Query getQuery(){
-        String query = "FROM Warehouse M WHERE M.isDeleted = 0 AND M.companyId = "+ companyId();
+        String query = "FROM Warehouse M WHERE M.isDeleted = 0";
         Query resQuery =  getSession().createQuery(query);
 
         return resQuery;
@@ -86,7 +86,7 @@ public class WarehouseRepositoryImpl implements WarehouseRepository {
     @Override
     public Warehouse getById(int id) {
 
-        String query = "FROM Warehouse M WHERE M.id = "+id+" AND M.isDeleted = 0 AND M.companyId = "+ companyId();
+        String query = "FROM Warehouse M WHERE M.id = "+id+" AND M.isDeleted = 0";
         return (Warehouse) getSession().createQuery(query).uniqueResult();
     }
 
@@ -112,10 +112,5 @@ public class WarehouseRepositoryImpl implements WarehouseRepository {
             return false;
         }
     }
-
-    private int companyId(){
-        return ApplicationPreferences.getUser().getCompany().getId();
-    }
-
 
 }

@@ -29,7 +29,6 @@ public class CustomUserSerializer extends StdSerializer<List<User>> {
 
         List<User> usr = new ArrayList<>();
         for (User u : user) {
-            u.setCompany(null);
             usr.add(u);
         }
         generator.writeObject(usr);

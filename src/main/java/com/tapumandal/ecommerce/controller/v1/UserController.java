@@ -66,9 +66,9 @@ public class UserController extends ControllerHelper {
     public CommonResponseSingle userRegistration(@RequestBody @Valid UserDto userDto, HttpServletRequest request) {
 
         if (!userService.isUserExist(userDto.getUsername())) {
-            if (userDto.getCompany().getId() != 0) {
-                return response(false, HttpStatus.BAD_REQUEST, "Please check your company information.", (User) null);
-            }
+//            if (userDto.getCompany().getId() != 0) {
+//                return response(false, HttpStatus.BAD_REQUEST, "Please check your company information.", (User) null);
+//            }
             User user = userService.createUser(userDto);
 
             if (user != null) {
@@ -89,7 +89,7 @@ public class UserController extends ControllerHelper {
 
         if (!userService.isUserExist(userDto.getUsername())) {
 
-            userDto.setCompany(null);
+//            userDto.setCompany(null);
             User user = userService.createUser(userDto);
 
             if (user != null) {

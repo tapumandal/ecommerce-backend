@@ -80,7 +80,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     private Query getQuery(){
-        String query = "FROM Product P WHERE P.isDeleted = 0 AND P.companyId = "+ ApplicationPreferences.getUser().getCompany().getId();
+        String query = "FROM Product P WHERE P.isDeleted = 0";
         Query resQuery =  getSession().createQuery(query);
 
         return resQuery;
@@ -89,7 +89,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Product getById(int id) {
 
-        String query = "FROM Product P WHERE P.id = "+id+" AND P.isDeleted = 0 AND P.companyId = "+ApplicationPreferences.getUser().getCompany().getId();
+        String query = "FROM Product P WHERE P.id = "+id+" AND P.isDeleted = 0";
         return (Product) getSession().createQuery(query).uniqueResult();
     }
 

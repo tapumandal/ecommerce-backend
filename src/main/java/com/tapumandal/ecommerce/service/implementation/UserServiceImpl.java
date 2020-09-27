@@ -1,10 +1,8 @@
 package com.tapumandal.ecommerce.service.implementation;
 
-import com.tapumandal.ecommerce.entity.Company;
 import com.tapumandal.ecommerce.entity.User;
 import com.tapumandal.ecommerce.entity.dto.UserDto;
 import com.tapumandal.ecommerce.repository.UserRepository;
-import com.tapumandal.ecommerce.service.CompanyService;
 import com.tapumandal.ecommerce.service.UserService;
 import com.tapumandal.ecommerce.util.ApplicationPreferences;
 import com.tapumandal.ecommerce.util.MyPagenation;
@@ -23,8 +21,6 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    CompanyService companyService;
 
     @Autowired
     ApplicationPreferences applicationPreferences;
@@ -41,7 +37,9 @@ public class UserServiceImpl implements UserService{
     @Override
     public User createUser(UserDto userDto) {
 
-        if(userDto.getCompany() != null){
+//        True for ecommerce fron app.
+//        Make it conditional when mobile app is ready
+        if(true){
             return createAdminAccount(userDto);
         }else{
             return createUserAccount(userDto);
@@ -49,10 +47,8 @@ public class UserServiceImpl implements UserService{
     }
 
     private User createAdminAccount(UserDto userDto) {
-        Company company = new Company();
-        company.setId( companyService.create( userDto.getCompany() ).getId() );
+
         User u = new User(userDto);
-        u.setCompany(company);
         u.setRole("ADMIN");
 
         u = this.checkUsernameType(u);
@@ -78,10 +74,6 @@ public class UserServiceImpl implements UserService{
 
     private User createUserAccount(UserDto userDto) {
         User u = new User(userDto);
-        Company company = new Company();
-        company.setId(ApplicationPreferences.getUser().getCompany().getId());
-        u.setCompany(company);
-
         Optional<User> user;
 //        try{
         int userId = userRepository.create(u);
