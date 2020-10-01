@@ -1,6 +1,6 @@
 package com.tapumandal.ecommerce.repository.implementation;
 
-import com.tapumandal.ecommerce.entity.Measurement;
+import com.google.gson.Gson;
 import com.tapumandal.ecommerce.entity.Product;
 import com.tapumandal.ecommerce.repository.ProductRepository;
 import com.tapumandal.ecommerce.util.ApplicationPreferences;
@@ -36,6 +36,9 @@ public class ProductRepositoryImpl implements ProductRepository {
         getSession().saveOrUpdate(product);
         getSession().flush();
         getSession().clear();
+
+        System.out.println("Repository: ");
+        System.out.println(new Gson().toJson(product));
         return product.getId();
     }
 
@@ -109,8 +112,6 @@ public class ProductRepositoryImpl implements ProductRepository {
             Product product = tmpEntity.get();
             product.setActive(false);
             product.setDeleted(true);
-            product.setMeasurement(new ArrayList<Measurement>());
-
             update(product);
             return true;
         }else{

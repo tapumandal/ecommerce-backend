@@ -1,9 +1,9 @@
 package com.tapumandal.ecommerce.service.implementation;
 
+import com.google.gson.Gson;
 import com.tapumandal.ecommerce.entity.Product;
 import com.tapumandal.ecommerce.entity.dto.ProductDto;
 import com.tapumandal.ecommerce.repository.ProductRepository;
-import com.tapumandal.ecommerce.service.MeasurementService;
 import com.tapumandal.ecommerce.service.ProductService;
 import com.tapumandal.ecommerce.util.MyPagenation;
 import com.tapumandal.ecommerce.util.ResourceVerifier;
@@ -21,9 +21,6 @@ public class ProductServiceImpl implements ProductService {
     ProductRepository productRepository;
 
     @Autowired
-    MeasurementService measurementService;
-
-    @Autowired
     ResourceVerifier resourceVerifier;
 
     private Product product;
@@ -38,11 +35,10 @@ public class ProductServiceImpl implements ProductService {
     public Product create(ProductDto productDto) {
 
         Product pro = new Product(productDto);
-        Optional<Product> product;
+        System.out.println("SERVICE: ");
+        System.out.println(new Gson().toJson(pro));
 
-        if(!resourceVerifier.checkMeasurements(pro.getMeasurement())){
-            return null;
-        }
+        Optional<Product> product;
 
 //        try{
             int productId = productRepository.create(pro);

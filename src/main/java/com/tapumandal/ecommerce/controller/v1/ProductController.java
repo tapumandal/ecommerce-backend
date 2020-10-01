@@ -1,5 +1,6 @@
 package com.tapumandal.ecommerce.controller.v1;
 
+import com.google.gson.Gson;
 import com.tapumandal.ecommerce.entity.Product;
 import com.tapumandal.ecommerce.entity.dto.ProductDto;
 import com.tapumandal.ecommerce.service.ProductService;
@@ -28,7 +29,8 @@ public class ProductController extends ControllerHelper<Product> {
     public CommonResponseSingle createProduct(@RequestBody @Valid ProductDto productDto, HttpServletRequest request) {
 
         storeUserDetails(request);
-
+        System.out.println("Controller: ");
+        System.out.println(new Gson().toJson(productDto));
         Product product = productService.create(productDto);
 
         if (product != null) {

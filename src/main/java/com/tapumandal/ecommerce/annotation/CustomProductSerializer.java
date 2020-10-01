@@ -22,14 +22,13 @@ public class CustomProductSerializer extends StdSerializer<List<Product>> {
 
     @Override
     public void serialize(
-            List<Product> measurement,
+            List<Product> products,
             JsonGenerator generator,
             SerializerProvider provider)
             throws IOException, JsonProcessingException {
 
         List<Product> pro = new ArrayList<>();
-        for (Product s : measurement) {
-            s.setMeasurement(null);
+        for (Product s : products) {
             pro.add(s);
         }
         generator.writeObject(pro);

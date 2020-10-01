@@ -34,8 +34,8 @@ public class WarehouseServiceImpl implements WarehouseService {
         Optional<Warehouse> warehouse;
 
 //        try{
-            int measurementId = warehouseRepository.create(meas);
-            warehouse = Optional.ofNullable(warehouseRepository.getById(measurementId));
+            int warehouseId = warehouseRepository.create(meas);
+            warehouse = Optional.ofNullable(warehouseRepository.getById(warehouseId));
 //        }catch (Exception e){
 //            return null;
 //        }
@@ -54,8 +54,8 @@ public class WarehouseServiceImpl implements WarehouseService {
 
         Optional<Warehouse> warehouse;
 //        try{
-            int measurementId = warehouseRepository.update(meas);
-            warehouse = Optional.ofNullable(warehouseRepository.getById(measurementId));
+            int warehouseId = warehouseRepository.update(meas);
+            warehouse = Optional.ofNullable(warehouseRepository.getById(warehouseId));
 //        }catch (Exception e){
 //            return null;
 //        }

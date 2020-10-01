@@ -47,7 +47,7 @@ public class User {
 
 
     @Column(name = "is_active", columnDefinition = "boolean default 1")
-    private boolean isActive = true;
+    private boolean isActive = false;
 
     @Column(name = "is_deleted", columnDefinition = "boolean default 0")
     private boolean isDeleted = false;

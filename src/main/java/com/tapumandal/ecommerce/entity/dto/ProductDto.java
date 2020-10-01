@@ -6,8 +6,6 @@ import org.springframework.stereotype.Component;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
 
 @Component
 public class ProductDto {
@@ -28,8 +26,6 @@ public class ProductDto {
     private String selling_price_per_unit;
 
     private boolean active = true;
-
-    Set<MeasurementDto> measurement = new HashSet<MeasurementDto>();
 
     public int getId() {
         return id;
@@ -71,12 +67,5 @@ public class ProductDto {
         this.active = active;
     }
 
-    public Set<MeasurementDto> getMeasurement() {
-        return measurement;
-    }
-
-    public void setMeasurement(Set<MeasurementDto> measurement) {
-        this.measurement = measurement;
-    }
 }
 

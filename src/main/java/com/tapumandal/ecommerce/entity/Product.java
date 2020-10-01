@@ -1,8 +1,6 @@
 package com.tapumandal.ecommerce.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.tapumandal.ecommerce.annotation.CustomMeasurementSerializer;
-import com.tapumandal.ecommerce.entity.dto.MeasurementDto;
 import com.tapumandal.ecommerce.entity.dto.ProductDto;
 import com.tapumandal.ecommerce.util.ApplicationPreferences;
 import org.hibernate.annotations.CreationTimestamp;
@@ -46,17 +44,6 @@ public class Product {
     @UpdateTimestamp
     private Date updatedAt;
 
-
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "product_measurement",
-            joinColumns = {@JoinColumn(name = "product_id")},
-            inverseJoinColumns = {@JoinColumn(name = "measurement_id")}
-    )
-    @Where(clause = "is_deleted = false AND is_active = true" )
-    @JsonSerialize(using = CustomMeasurementSerializer.class)
-    List<Measurement> measurement = new ArrayList<Measurement>();
-
     public Product(ProductDto productDto) {
 
         this.setId(productDto.getId());
@@ -64,10 +51,6 @@ public class Product {
         this.buyingPricePerUnit = productDto.getBuying_price_per_unit();
         this.sellingPricePerUnit = productDto.getSelling_price_per_unit();
         this.setActive(productDto.isActive());
-
-        for(MeasurementDto measurementDto: productDto.getMeasurement()){
-            measurement.add(new Measurement(measurementDto));
-        }
     }
 
     public Product() {
@@ -136,14 +119,6 @@ public class Product {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public List<Measurement> getMeasurement() {
-        return measurement;
-    }
-
-    public void setMeasurement(List<Measurement> measurement) {
-        this.measurement = measurement;
     }
 
 }
