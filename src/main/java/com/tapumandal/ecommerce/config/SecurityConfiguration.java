@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-            http.csrf().disable()
+                http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(apiVersionUrl+"/registration").permitAll()
                 .antMatchers(apiVersionUrl+"/authenticate").permitAll()
@@ -51,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(apiVersionUrl+"/challan/**").hasAnyAuthority("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors();
 
 //                .anyRequest().authenticated()
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
