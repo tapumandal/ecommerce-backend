@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/warehouse")
 public class WarehouseController extends ControllerHelper<Warehouse> {

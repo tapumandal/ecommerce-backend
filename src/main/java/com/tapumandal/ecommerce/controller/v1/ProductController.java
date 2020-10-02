@@ -11,6 +11,7 @@ import com.tapumandal.ecommerce.util.MyPagenation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/product")
 public class ProductController extends ControllerHelper<Product> {
@@ -26,7 +28,7 @@ public class ProductController extends ControllerHelper<Product> {
     ProductService productService;
 
     @PostMapping(path = "/create")
-    public CommonResponseSingle createProduct(@RequestBody @Valid ProductDto productDto, HttpServletRequest request) {
+    public ResponseEntity<CommonResponseSingle> createProduct(@RequestBody @Valid ProductDto productDto, HttpServletRequest request) {
 
         storeUserDetails(request);
         System.out.println("Controller: ");
@@ -34,11 +36,11 @@ public class ProductController extends ControllerHelper<Product> {
         Product product = productService.create(productDto);
 
         if (product != null) {
-            return response(true, HttpStatus.CREATED, "New product inserted successfully", product);
+            return ResponseEntity.ok(response(true, HttpStatus.CREATED, "New product inserted successfully", product));
         } else if (product == null) {
-            return response(false, HttpStatus.BAD_REQUEST, "Something is wrong please contact", (Product) null);
+            return ResponseEntity.ok(response(false, HttpStatus.BAD_REQUEST, "Something is wrong please contact", (Product) null));
         }
-        return response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong with the application", (Product) null);
+        return ResponseEntity.ok(response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong with the application", (Product) null));
     }
 
     @GetMapping(path = "/{id}")
@@ -58,7 +60,7 @@ public class ProductController extends ControllerHelper<Product> {
     }
 
     @GetMapping(path = "/list")
-    public CommonResponseArray<Product> getAll(HttpServletRequest request, Pageable pageable) {
+    public ResponseEntity<CommonResponseArray<Product>> getAll(HttpServletRequest request, Pageable pageable) {
 
         storeUserDetails(request);
 
@@ -67,11 +69,11 @@ public class ProductController extends ControllerHelper<Product> {
         MyPagenation myPagenation = managePagenation(request, productService.getPageable(pageable), pageable);
 
         if (!products.isEmpty()) {
-            return response(true, HttpStatus.FOUND, "All product list", products, myPagenation);
+            return ResponseEntity.ok(response(true, HttpStatus.FOUND, "All product list", products, myPagenation));
         } else if (products.isEmpty()) {
-            return response(false, HttpStatus.NO_CONTENT, "No product found", new ArrayList<Product>(), myPagenation);
+            return ResponseEntity.ok(response(false, HttpStatus.NO_CONTENT, "No product found", new ArrayList<Product>(), myPagenation));
         } else {
-            return response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong", new ArrayList<Product>(), myPagenation);
+            return ResponseEntity.ok(response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong", new ArrayList<Product>(), myPagenation));
         }
 
     }
