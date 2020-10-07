@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -28,18 +29,20 @@ public class ProductController extends ControllerHelper<Product> {
     ProductService productService;
 
     @PostMapping(path = "/create")
-    public ResponseEntity<CommonResponseSingle> createProduct(@RequestBody @Valid ProductDto productDto, HttpServletRequest request) {
+//    public ResponseEntity<CommonResponseSingle> createProduct(@RequestBody @Valid ProductDto productDto, HttpServletRequest request) {
+    public ResponseEntity<CommonResponseSingle> createProduct(@RequestParam("image") MultipartFile file, HttpServletRequest request) {
 
         storeUserDetails(request);
         System.out.println("Controller: ");
-        System.out.println(new Gson().toJson(productDto));
-        Product product = productService.create(productDto);
+        System.out.println(new Gson().toJson(file));
+//        System.out.println(new Gson().toJson(productDto));
+//        Product product = productService.create(productDto);
 
-        if (product != null) {
-            return ResponseEntity.ok(response(true, HttpStatus.CREATED, "New product inserted successfully", product));
-        } else if (product == null) {
-            return ResponseEntity.ok(response(false, HttpStatus.BAD_REQUEST, "Something is wrong please contact", (Product) null));
-        }
+//        if (product != null) {
+//            return ResponseEntity.ok(response(true, HttpStatus.CREATED, "New product inserted successfully", product));
+//        } else if (product == null) {
+//            return ResponseEntity.ok(response(false, HttpStatus.BAD_REQUEST, "Something is wrong please contact", (Product) null));
+//        }
         return ResponseEntity.ok(response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong with the application", (Product) null));
     }
 

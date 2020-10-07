@@ -6,8 +6,10 @@ import com.tapumandal.ecommerce.util.ApplicationPreferences;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.*;
 
@@ -24,11 +26,36 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "buying_price_per_unit")
+//    @Column(name = "image")
+//    private MultipartFile image;
+
+    @Column(name = "categories")
+    private String categories;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "buyingPricePerUnit")
     private String buyingPricePerUnit;
 
-    @Column(name = "selling_price_per_unit")
+    @Column(name = "sellingPricePerUnit")
     private String sellingPricePerUnit;
+
+    @Column(name = "discountPrice")
+    private String discountPrice;
+
+    @Column(name = "discountTitle")
+    private String discountTitle;
+
+    @Column(name = "unit")
+    private String unit;
+
+    @Column(name = "unitTitle")
+    private String unitTitle;
+
+    @Column(name = "quantity")
+    private String quantity;
+
 
     @Column(name = "is_active", columnDefinition = "boolean default 1")
     private boolean isActive = true;
@@ -44,13 +71,39 @@ public class Product {
     @UpdateTimestamp
     private Date updatedAt;
 
+    @OneToMany(mappedBy="product")
+    private Set<ImageModel> imageModels;
+
+
     public Product(ProductDto productDto) {
 
         this.setId(productDto.getId());
         this.setName(productDto.getName());
-        this.buyingPricePerUnit = productDto.getBuying_price_per_unit();
-        this.sellingPricePerUnit = productDto.getSelling_price_per_unit();
+//        this.setImage(productDto.getImage());
+        this.setCategories(productDto.getCategories());
+        this.setDescription(productDto.getDescription());
+        this.setBuyingPricePerUnit(productDto.getBuyingPricePerUnit());
+        this.setSellingPricePerUnit(productDto.getSellingPricePerUnit());
+        this.setDiscountPrice(productDto.getDiscountPrice());
+        this.setDiscountTitle(productDto.getDiscountTitle());
+        this.setUnit(productDto.getUnit());
+        this.setUnitTitle(productDto.getUnitTitle());
+        this.setQuantity(productDto.getQuantity());
         this.setActive(productDto.isActive());
+        this.setDeleted(productDto.isDelete());
+
+        ImageModel tmpImg = new ImageModel();
+
+//        tmpImg.setName(productDto.getImage().getOriginalFilename());
+//        tmpImg.setType(productDto.getImage().getContentType());
+//        try {
+//            tmpImg.setPicByte(productDto.getImage().getBytes());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        this.setImageModels((Set<ImageModel>) tmpImg);
+
     }
 
     public Product() {
@@ -73,6 +126,30 @@ public class Product {
         this.name = name;
     }
 
+//    public MultipartFile getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(MultipartFile image) {
+//        this.image = image;
+//    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getBuyingPricePerUnit() {
         return buyingPricePerUnit;
     }
@@ -87,6 +164,46 @@ public class Product {
 
     public void setSellingPricePerUnit(String sellingPricePerUnit) {
         this.sellingPricePerUnit = sellingPricePerUnit;
+    }
+
+    public String getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(String discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
+    public String getDiscountTitle() {
+        return discountTitle;
+    }
+
+    public void setDiscountTitle(String discountTitle) {
+        this.discountTitle = discountTitle;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getUnitTitle() {
+        return unitTitle;
+    }
+
+    public void setUnitTitle(String unitTitle) {
+        this.unitTitle = unitTitle;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 
     public boolean isActive() {
@@ -121,5 +238,12 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
+    public Set<ImageModel> getImageModels() {
+        return imageModels;
+    }
+
+    public void setImageModels(Set<ImageModel> imageModels) {
+        this.imageModels = imageModels;
+    }
 }
 
