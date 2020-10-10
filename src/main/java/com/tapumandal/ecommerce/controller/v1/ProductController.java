@@ -32,6 +32,7 @@ public class ProductController extends ControllerHelper<Product> {
 //    public ResponseEntity<CommonResponseSingle> createProduct(@RequestParam("image") MultipartFile file, HttpServletRequest request) {
     public ResponseEntity<CommonResponseSingle> createProduct(@ModelAttribute  ProductDto productDto, HttpServletRequest request) {
 
+        System.out.println(new Gson().toJson(productDto));
         storeUserDetails(request);
 
         Product product = productService.create(productDto);

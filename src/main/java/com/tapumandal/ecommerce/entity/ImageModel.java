@@ -1,62 +1,46 @@
 package com.tapumandal.ecommerce.entity;
 
-import com.tapumandal.ecommerce.entity.dto.ProductDto;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.persistence.*;
-import java.sql.Date;
-
-@Entity
-@Table(name = "image_table")
 public class ImageModel {
-    public ImageModel() {
-        super();
-    }
-    public ImageModel(String name, String type, byte[] picByte) {
-        this.name = name;
-        this.type = type;
-        this.picByte = picByte;
-    }
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "type")
+
     private String type;
-    //image bytes can have large lengths so we specify a value
-    //which is more than the default length for picByte column
-    @Column(name = "picByte", length = 1000)
-    private byte[] picByte;
+
+    private String url;
+
+    private String name;
+
+    private long size;
 
 
-    @ManyToOne
-    @JoinColumn(name="product_id", nullable=false)
-    private Product product;
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
 
+    public String getUrl() {
+        return url;
+    }
 
-
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
-    public String getType() {
-        return type;
+
+    public long getSize() {
+        return size;
     }
-    public void setType(String type) {
-        this.type = type;
-    }
-    public byte[] getPicByte() {
-        return picByte;
-    }
-    public void setPicByte(byte[] picByte) {
-        this.picByte = picByte;
+
+    public void setSize(long size) {
+        this.size = size;
     }
 }
+

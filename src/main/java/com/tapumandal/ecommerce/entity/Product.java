@@ -67,7 +67,7 @@ public class Product {
     private Date updatedAt;
 
     @OneToMany(mappedBy="product")
-    private Set<ProductImage> productImages;
+    private List<ProductImage> productImages;
 
 
     public Product(ProductDto productDto) {
@@ -220,11 +220,11 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public Set<ProductImage> getProductImages() {
+    public List<ProductImage> getProductImages() {
         return productImages;
     }
 
-    public void setProductImages(Set<ProductImage> productImages) {
+    public void setProductImages(List<ProductImage> productImages) {
         this.productImages = productImages;
     }
 }

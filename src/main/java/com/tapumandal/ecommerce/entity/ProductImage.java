@@ -1,12 +1,10 @@
 package com.tapumandal.ecommerce.entity;
 
-import com.tapumandal.ecommerce.entity.dto.ProductDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "product_image")
@@ -18,6 +16,9 @@ public class ProductImage {
     @Column(name = "id", unique = true, nullable = false)
     private int id;
 
+    @Column(name = "type")
+    private String type;
+
     @Column(name = "url")
     private String url;
 
@@ -25,7 +26,7 @@ public class ProductImage {
     private String name;
 
     @Column(name = "size")
-    private String size;
+    private long size;
 
     @Column(name = "is_active", columnDefinition = "boolean default 1")
     private boolean isActive = true;
@@ -54,6 +55,14 @@ public class ProductImage {
         this.id = id;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -70,11 +79,11 @@ public class ProductImage {
         this.name = name;
     }
 
-    public String getSize() {
+    public long getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(long size) {
         this.size = size;
     }
 

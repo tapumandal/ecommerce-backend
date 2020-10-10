@@ -35,7 +35,7 @@ public class ProductDto {
     //    @NotNull
 //    @NotEmpty
 //    @Size(min=4, max = 50, message = "image field is not OK.")
-    private MultipartFile image;
+    private MultipartFile[] images;
 
     @NotNull
     @NotEmpty
@@ -102,12 +102,12 @@ public class ProductDto {
         this.name = name;
     }
 
-    public MultipartFile getImage() {
-        return image;
+    public MultipartFile[] getImages() {
+        return images;
     }
 
-    public void setImage(MultipartFile image) {
-        this.image = image;
+    public void setImages(MultipartFile[] images) {
+        this.images = images;
     }
 
     public String getCategories() {
