@@ -1,15 +1,10 @@
 package com.tapumandal.ecommerce.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.tapumandal.ecommerce.entity.dto.ProductDto;
-import com.tapumandal.ecommerce.util.ApplicationPreferences;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.io.IOException;
 import java.sql.Date;
 import java.util.*;
 
@@ -72,7 +67,7 @@ public class Product {
     private Date updatedAt;
 
     @OneToMany(mappedBy="product")
-    private Set<ImageModel> imageModels;
+    private Set<ProductImage> productImages;
 
 
     public Product(ProductDto productDto) {
@@ -91,19 +86,6 @@ public class Product {
         this.setQuantity(productDto.getQuantity());
         this.setActive(productDto.isActive());
         this.setDeleted(productDto.isDelete());
-
-        ImageModel tmpImg = new ImageModel();
-
-//        tmpImg.setName(productDto.getImage().getOriginalFilename());
-//        tmpImg.setType(productDto.getImage().getContentType());
-//        try {
-//            tmpImg.setPicByte(productDto.getImage().getBytes());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        this.setImageModels((Set<ImageModel>) tmpImg);
-
     }
 
     public Product() {
@@ -238,12 +220,12 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public Set<ImageModel> getImageModels() {
-        return imageModels;
+    public Set<ProductImage> getProductImages() {
+        return productImages;
     }
 
-    public void setImageModels(Set<ImageModel> imageModels) {
-        this.imageModels = imageModels;
+    public void setProductImages(Set<ProductImage> productImages) {
+        this.productImages = productImages;
     }
 }
 
