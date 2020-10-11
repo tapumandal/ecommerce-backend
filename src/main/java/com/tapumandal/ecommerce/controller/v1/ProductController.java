@@ -34,7 +34,7 @@ public class ProductController extends ControllerHelper<Product> {
 
         System.out.println(new Gson().toJson(productDto));
         storeUserDetails(request);
-
+        productDto.setImageRealPath(request.getServletContext().getRealPath(""));
         Product product = productService.create(productDto);
 
         if (product != null) {

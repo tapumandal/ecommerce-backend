@@ -31,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     ServiceHelper helper;
 
-    String PRODUCT_FILE_PATH = "/src/public/images/product";
+    String PRODUCT_FILE_PATH = "public/images/product/";
 
     private Product product;
 
@@ -43,6 +43,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product create(ProductDto productDto) {
+
+        PRODUCT_FILE_PATH = System.getProperty("user.dir")+PRODUCT_FILE_PATH;
 
         Product pro = new Product(productDto);
 

@@ -37,6 +37,8 @@ public class ProductDto {
 //    @Size(min=4, max = 50, message = "image field is not OK.")
     private MultipartFile[] images;
 
+    private String imageRealPath;
+
     @NotNull
     @NotEmpty
     @Size(min=3, max = 200, message = "categories field is not OK.")
@@ -196,6 +198,14 @@ public class ProductDto {
 
     public void setDelete(boolean delete) {
         isDelete = delete;
+    }
+
+    public String getImageRealPath() {
+        return imageRealPath;
+    }
+
+    public void setImageRealPath(String imageRealPath) {
+        this.imageRealPath = imageRealPath;
     }
 }
 
