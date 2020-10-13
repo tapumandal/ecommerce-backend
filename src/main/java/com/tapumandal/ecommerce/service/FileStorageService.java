@@ -1,17 +1,24 @@
 package com.tapumandal.ecommerce.service;
 
+import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
+import net.coobird.thumbnailator.name.Rename;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.Instant;
 
 @Service
 public class FileStorageService {
@@ -34,23 +41,22 @@ public class FileStorageService {
     }
 
     public String storeFile(MultipartFile file) {
+
+        String extension = getExtension(file);
+        String newFileName = String.valueOf(Instant.now().getEpochSecond())+"."+extension;
+
         // Normalize file name
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(newFileName);
 
         try {
-            // Check if the file's name contains invalid characters
             if(fileName.contains("..")) {
-//                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
                 System.out.println("Sorry! Filename contains invalid path sequence ");
             }
-
-            // Copy file to the target location (Replacing existing file with the same name)
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
             return fileName;
         } catch (IOException ex) {
-//            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
             System.out.println("Could not store file " + fileName + ". Please try again!");
         }
         return "";
@@ -63,13 +69,19 @@ public class FileStorageService {
             if(resource.exists()) {
                 return resource;
             } else {
-//                throw new MyFileNotFoundException("File not found " + fileName);
                 System.out.println("File not found " + fileName);
             }
         } catch (MalformedURLException ex) {
-//            throw new MyFileNotFoundException("File not found " + fileName, ex);
             System.out.println("File not found " + fileName);
         }
         return null;
+    }
+
+    private String getExtension(MultipartFile file) {
+        int i = file.getOriginalFilename().lastIndexOf('.');
+        if (i > 0) {
+            return file.getOriginalFilename().substring(i+1);
+        }
+        return "";
     }
 }

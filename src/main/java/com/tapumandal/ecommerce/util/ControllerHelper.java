@@ -43,6 +43,16 @@ public class ControllerHelper<Entity> {
         return commonResponseArray;
     }
 
+    protected  CommonResponseArray<Entity> response(boolean action, HttpStatus status, String message, List<Entity> data){
+
+        commonResponseArray.setAction(action);
+        commonResponseArray.setStatus(status);
+        commonResponseArray.setMessage(message);
+        commonResponseArray.setData(data);
+
+        return commonResponseArray;
+    }
+
     protected MyPagenation managePagenation(HttpServletRequest request, MyPagenation pagenation, Pageable pageable) {
 
         int totalPage = (int) Math.ceil((float)pagenation.getTotalElement()/(float)pageable.getPageSize());

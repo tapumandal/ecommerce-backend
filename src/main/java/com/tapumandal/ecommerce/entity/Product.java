@@ -20,8 +20,8 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-//    @Column(name = "image")
-//    private MultipartFile image;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "categories")
     private String categories;
@@ -229,6 +229,12 @@ public class Product {
         this.productImages = productImages;
     }
 
+    public String getImage() {
+        return image;
+    }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
 }
 
