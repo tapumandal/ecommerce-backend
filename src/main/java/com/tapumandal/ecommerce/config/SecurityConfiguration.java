@@ -40,8 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/public/**").permitAll()
-                .antMatchers("/root/public/**").permitAll()
+                .antMatchers(apiVersionUrl+"/public/**").permitAll()
                 .antMatchers(apiVersionUrl+"/public/**").permitAll()
                 .antMatchers(apiVersionUrl+"/root/public/**").permitAll()
                 .antMatchers(apiVersionUrl+"/registration").permitAll()
@@ -53,12 +52,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(apiVersionUrl+"/product/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers(apiVersionUrl+"/measurement/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers(apiVersionUrl+"/challan/**").hasAnyAuthority("ADMIN", "USER")
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors();
 
-
-//                .anyRequest().authenticated()
 
 //                .anyRequest().authenticated()
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

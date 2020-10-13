@@ -16,9 +16,9 @@ public class ServiceHelper {
     @Autowired
     ImageService imageService;
 
-    public List<ProductImage> storeProductImages(String file_path, MultipartFile[] images) {
+    public List<ProductImage> storeProductImages(MultipartFile[] images) {
 
-        List<ImageModel> imageModels = imageService.store(file_path, images);
+        List<ImageModel> imageModels = imageService.store(images);
 
         List<ProductImage> productImages = new ArrayList<>();
 

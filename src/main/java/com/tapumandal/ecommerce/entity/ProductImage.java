@@ -1,5 +1,6 @@
 package com.tapumandal.ecommerce.entity;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,7 +14,6 @@ public class ProductImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", unique = true, nullable = false)
     private int id;
 
     @Column(name = "type")
@@ -42,9 +42,11 @@ public class ProductImage {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "product_id")
+//    private Product product;
+
+
 
 
     public int getId() {
@@ -119,12 +121,14 @@ public class ProductImage {
         this.updatedAt = updatedAt;
     }
 
-    public Product getProduct() {
-        return product;
-    }
+//    public Product getProduct() {
+//        return product;
+//    }
+//
+//    public void setProduct(Product product) {
+//        this.product = product;
+//    }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+
 }
 

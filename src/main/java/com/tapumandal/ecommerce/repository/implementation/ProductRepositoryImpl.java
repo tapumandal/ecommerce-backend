@@ -33,11 +33,14 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public int create(Product product) {
 
-        getSession().saveOrUpdate(product);
+        System.out.println("Repository Before Save: ");
+        System.out.println(new Gson().toJson(product));
+
+        getSession().save(product);
         getSession().flush();
         getSession().clear();
 
-        System.out.println("Repository: ");
+        System.out.println("Repository After Save: ");
         System.out.println(new Gson().toJson(product));
         return product.getId();
     }

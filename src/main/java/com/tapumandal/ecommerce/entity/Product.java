@@ -15,8 +15,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", unique = true, nullable = false)
-    private int id;
+    protected int id;
 
     @Column(name = "name")
     private String name;
@@ -66,8 +65,10 @@ public class Product {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @OneToMany(mappedBy="product")
-    private List<ProductImage> productImages;
+//    @OneToMany(mappedBy="product", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private List<ProductImage> productImages = new ArrayList<ProductImage>();
 
 
     public Product(ProductDto productDto) {
@@ -227,5 +228,7 @@ public class Product {
     public void setProductImages(List<ProductImage> productImages) {
         this.productImages = productImages;
     }
+
+
 }
 

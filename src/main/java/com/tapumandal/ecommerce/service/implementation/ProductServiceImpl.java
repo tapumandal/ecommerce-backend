@@ -6,6 +6,7 @@ import com.tapumandal.ecommerce.entity.Product;
 import com.tapumandal.ecommerce.entity.ProductImage;
 import com.tapumandal.ecommerce.entity.dto.ProductDto;
 import com.tapumandal.ecommerce.repository.ProductRepository;
+import com.tapumandal.ecommerce.service.FileStorageService;
 import com.tapumandal.ecommerce.service.ProductService;
 import com.tapumandal.ecommerce.util.ImageService;
 import com.tapumandal.ecommerce.util.MyPagenation;
@@ -48,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product pro = new Product(productDto);
 
-        List<ProductImage> productImages = helper.storeProductImages(PRODUCT_FILE_PATH, productDto.getImages());
+        List<ProductImage> productImages = helper.storeProductImages(productDto.getImages());
 
         pro.setProductImages(productImages);
         System.out.println("SERVICE: ");
