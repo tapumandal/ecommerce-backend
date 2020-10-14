@@ -18,6 +18,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Autowired
     EntityManager entityManager;
 
+    private final String modelClassName = "Category";
+
     @Override
     public Session getSession() {
         return entityManager.unwrap(Session.class);
@@ -74,7 +76,7 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     private Query getQuery(){
-        String query = "FROM Company C WHERE C.isDeleted = 0";
+        String query = "FROM "+modelClassName+" C WHERE C.isDeleted = 0";
         Query resQuery =  getSession().createQuery(query);
 
         return resQuery;
@@ -83,21 +85,14 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public Category getById(int id) {
 
-        String query = "FROM Company C WHERE C.id = "+id+" AND C.isDeleted = 0";
-        return (Category) getSession().createQuery(query).uniqueResult();
-    }
-
-    @Override
-    public Category getCompanyFirstTime(int id) {
-
-        String query = "FROM Company C WHERE C.id = "+id+" AND C.isDeleted = 0";
+        String query = "FROM "+modelClassName+" C WHERE C.id = "+id+" AND C.isDeleted = 0";
         return (Category) getSession().createQuery(query).uniqueResult();
     }
 
     @Override
     public List<Category> getByKeyAndValue(String key, String value) {
         return (List<Category>) getSession().createQuery(
-                "from Company where "+key+" = :value"
+                "from Category where "+key+" = :value"
         ).setParameter("value", value)
                 .getResultList();
     }

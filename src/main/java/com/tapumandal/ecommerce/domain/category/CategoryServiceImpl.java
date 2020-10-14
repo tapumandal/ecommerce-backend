@@ -30,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 //        try{
             int categoryId = categoryRepository.create(pro);
-            category = Optional.ofNullable(categoryRepository.getCompanyFirstTime(categoryId));
+            category = Optional.ofNullable(categoryRepository.getById(categoryId));
 //        }catch (Exception e){
 //            return null;
 //        }
@@ -49,12 +49,12 @@ public class CategoryServiceImpl implements CategoryService {
         Category pro = new Category(categoryDto);
 
         Optional<Category> category;
-        try{
+//        try{
             int proId = categoryRepository.update(pro);
             category = Optional.ofNullable(categoryRepository.getById(proId));
-        }catch (Exception e){
-            return null;
-        }
+//        }catch (Exception e){
+//            return null;
+//        }
 
         if(category.isPresent()){
             return category.get();
