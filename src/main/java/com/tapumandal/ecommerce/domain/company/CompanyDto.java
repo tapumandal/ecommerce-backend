@@ -3,6 +3,7 @@ package com.tapumandal.ecommerce.domain.company;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -11,8 +12,13 @@ import java.util.List;
 @Component
 public class CompanyDto {
 
-    protected int id;
-    protected String name;
+    private int id;
+
+    @NotNull
+    @NotEmpty
+    @Size(min=3, max = 50, message = "name field is not OK.")
+    private String name;
+
     private boolean isActive = true;
     private boolean isDeleted = false;
 
