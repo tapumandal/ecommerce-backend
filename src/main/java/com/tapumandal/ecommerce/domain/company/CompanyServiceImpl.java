@@ -9,24 +9,24 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CompanyServiceImpl implements com.tapumandal.ecommerce.domain.company.CompanyService {
+public class CompanyServiceImpl implements CompanyService {
 
     @Autowired
-    com.tapumandal.ecommerce.domain.company.CompanyRepository companyRepository;
+    CompanyRepository companyRepository;
 
-    private com.tapumandal.ecommerce.domain.company.Company company;
+    private Company company;
 
     public CompanyServiceImpl(){}
 
-    public CompanyServiceImpl(com.tapumandal.ecommerce.domain.company.Company company){
+    public CompanyServiceImpl(Company company){
         this.company = company;
     }
 
     @Override
-    public com.tapumandal.ecommerce.domain.company.Company create(com.tapumandal.ecommerce.domain.company.CompanyDto companyDto) {
+    public Company create(CompanyDto companyDto) {
 
-        com.tapumandal.ecommerce.domain.company.Company pro = new com.tapumandal.ecommerce.domain.company.Company(companyDto);
-        Optional<com.tapumandal.ecommerce.domain.company.Company> company;
+        Company pro = new Company(companyDto);
+        Optional<Company> company;
 
 //        try{
             int companyId = companyRepository.create(pro);
@@ -43,12 +43,12 @@ public class CompanyServiceImpl implements com.tapumandal.ecommerce.domain.compa
     }
 
     @Override
-    public com.tapumandal.ecommerce.domain.company.Company update(com.tapumandal.ecommerce.domain.company.CompanyDto companyDto) {
+    public Company update(CompanyDto companyDto) {
 
 
-        com.tapumandal.ecommerce.domain.company.Company pro = new com.tapumandal.ecommerce.domain.company.Company(companyDto);
+        Company pro = new Company(companyDto);
 
-        Optional<com.tapumandal.ecommerce.domain.company.Company> company;
+        Optional<Company> company;
         try{
             int proId = companyRepository.update(pro);
             company = Optional.ofNullable(companyRepository.getById(proId));
@@ -65,8 +65,8 @@ public class CompanyServiceImpl implements com.tapumandal.ecommerce.domain.compa
     }
 
     @Override
-    public List<com.tapumandal.ecommerce.domain.company.Company> getAll(Pageable pageable) {
-        Optional<List<com.tapumandal.ecommerce.domain.company.Company>> companys = Optional.ofNullable(companyRepository.getAll(pageable));
+    public List<Company> getAll(Pageable pageable) {
+        Optional<List<Company>> companys = Optional.ofNullable(companyRepository.getAll(pageable));
 
         if(companys.isPresent()){
             return companys.get();
@@ -76,9 +76,9 @@ public class CompanyServiceImpl implements com.tapumandal.ecommerce.domain.compa
     }
 
     @Override
-    public com.tapumandal.ecommerce.domain.company.Company getById(int id) {
+    public Company getById(int id) {
 
-        Optional<com.tapumandal.ecommerce.domain.company.Company> company = Optional.ofNullable(companyRepository.getById(id));
+        Optional<Company> company = Optional.ofNullable(companyRepository.getById(id));
 
         if(company.isPresent()){
             return company.get();
@@ -97,18 +97,18 @@ public class CompanyServiceImpl implements com.tapumandal.ecommerce.domain.compa
     }
 
     @Override
-    public com.tapumandal.ecommerce.domain.company.Company getByValue(String kye, String value) {
+    public Company getByValue(String kye, String value) {
         return null;
     }
 
     @Override
-    public List<com.tapumandal.ecommerce.domain.company.Company> getAllByValue(String kye, String value) {
+    public List<Company> getAllByValue(String kye, String value) {
         return null;
     }
 
     @Override
     public boolean isActive(int id) {
-        Optional<com.tapumandal.ecommerce.domain.company.Company> company = Optional.ofNullable(companyRepository.getById(id));
+        Optional<Company> company = Optional.ofNullable(companyRepository.getById(id));
         if(company.isPresent()){
             if(company.get().isActive()){
                 return true;
