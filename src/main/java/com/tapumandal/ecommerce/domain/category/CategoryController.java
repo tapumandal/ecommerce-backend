@@ -23,7 +23,7 @@ public class CategoryController extends ControllerHelper<Category> {
     CategoryService categoryService;
 
     @PostMapping(path = "/create")
-    public CommonResponseSingle createCompany(@RequestBody @Valid CategoryDto categoryDto, HttpServletRequest request) {
+    public CommonResponseSingle createCompany(@ModelAttribute CategoryDto categoryDto, HttpServletRequest request) {
 
         storeUserDetails(request);
 
@@ -60,14 +60,14 @@ public class CategoryController extends ControllerHelper<Category> {
 
         List<Category> categorys = categoryService.getAll(pageable);
 
-        MyPagenation myPagenation = managePagenation(request, categoryService.getPageable(pageable), pageable);
+//        MyPagenation myPagenation = managePagenation(request, categoryService.getPageable(pageable), pageable);
 
         if (!categorys.isEmpty()) {
-            return response(true, HttpStatus.FOUND, "All category list", categorys, myPagenation);
+            return response(true, HttpStatus.FOUND, "All category list", categorys);
         } else if (categorys.isEmpty()) {
-            return response(false, HttpStatus.NO_CONTENT, "No category found", new ArrayList<Category>(), myPagenation);
+            return response(false, HttpStatus.NO_CONTENT, "No category found", new ArrayList<Category>());
         } else {
-            return response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong", new ArrayList<Category>(), myPagenation);
+            return response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong", new ArrayList<Category>());
         }
 
     }

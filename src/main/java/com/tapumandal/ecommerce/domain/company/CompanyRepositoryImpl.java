@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public class CompanyRepositoryImpl implements com.tapumandal.ecommerce.domain.company.CompanyRepository {
+public class CompanyRepositoryImpl implements CompanyRepository {
 
     @Autowired
     EntityManager entityManager;
@@ -25,7 +25,7 @@ public class CompanyRepositoryImpl implements com.tapumandal.ecommerce.domain.co
 
 
     @Override
-    public int create(com.tapumandal.ecommerce.domain.company.Company company) {
+    public int create(Company company) {
 
         getSession().saveOrUpdate(company);
         getSession().flush();
@@ -34,9 +34,9 @@ public class CompanyRepositoryImpl implements com.tapumandal.ecommerce.domain.co
     }
 
     @Override
-    public int update(com.tapumandal.ecommerce.domain.company.Company company) {
+    public int update(Company company) {
 
-        Optional<com.tapumandal.ecommerce.domain.company.Company> tmpEntity = Optional.ofNullable(getById(company.getId()));
+        Optional<Company> tmpEntity = Optional.ofNullable(getById(company.getId()));
         getSession().clear();
 
         if(tmpEntity.isPresent()) {
@@ -48,7 +48,7 @@ public class CompanyRepositoryImpl implements com.tapumandal.ecommerce.domain.co
     }
 
     @Override
-    public List<com.tapumandal.ecommerce.domain.company.Company> getAll(Pageable pageable) {
+    public List<Company> getAll(Pageable pageable) {
 
 
         Query resQuery = getQuery();
@@ -74,29 +74,29 @@ public class CompanyRepositoryImpl implements com.tapumandal.ecommerce.domain.co
     }
 
     private Query getQuery(){
-        String query = "FROM Company C WHERE C.isDeleted = 0";
+        String query = "FROM Company C WHERE C.isDeleted = 0 ORDER BY id DESC";
         Query resQuery =  getSession().createQuery(query);
 
         return resQuery;
     }
 
     @Override
-    public com.tapumandal.ecommerce.domain.company.Company getById(int id) {
+    public Company getById(int id) {
 
         String query = "FROM Company C WHERE C.id = "+id+" AND C.isDeleted = 0";
-        return (com.tapumandal.ecommerce.domain.company.Company) getSession().createQuery(query).uniqueResult();
+        return (Company) getSession().createQuery(query).uniqueResult();
     }
 
     @Override
-    public com.tapumandal.ecommerce.domain.company.Company getCompanyFirstTime(int id) {
+    public Company getCompanyFirstTime(int id) {
 
         String query = "FROM Company C WHERE C.id = "+id+" AND C.isDeleted = 0";
-        return (com.tapumandal.ecommerce.domain.company.Company) getSession().createQuery(query).uniqueResult();
+        return (Company) getSession().createQuery(query).uniqueResult();
     }
 
     @Override
-    public List<com.tapumandal.ecommerce.domain.company.Company> getByKeyAndValue(String key, String value) {
-        return (List<com.tapumandal.ecommerce.domain.company.Company>) getSession().createQuery(
+    public List<Company> getByKeyAndValue(String key, String value) {
+        return (List<Company>) getSession().createQuery(
                 "from Company where "+key+" = :value"
         ).setParameter("value", value)
                 .getResultList();
@@ -105,9 +105,9 @@ public class CompanyRepositoryImpl implements com.tapumandal.ecommerce.domain.co
     @Override
     public boolean delete(int id) {
 
-        Optional<com.tapumandal.ecommerce.domain.company.Company> tmpEntity = Optional.ofNullable(getById(id));
+        Optional<Company> tmpEntity = Optional.ofNullable(getById(id));
         if(tmpEntity.isPresent()){
-            com.tapumandal.ecommerce.domain.company.Company company = tmpEntity.get();
+            Company company = tmpEntity.get();
             company.setActive(false);
             company.setDeleted(true);
             update(company);
