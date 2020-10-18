@@ -23,6 +23,9 @@ public class Product {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "company")
+    private String company;
+
     @Column(name = "categories")
     private String categories;
 
@@ -76,6 +79,7 @@ public class Product {
         this.setId(productDto.getId());
         this.setName(productDto.getName());
 //        this.setImage(productDto.getImage());
+        this.setCompany(productDto.getCompany());
         this.setCategories(productDto.getCategories());
         this.setDescription(productDto.getDescription());
         this.setBuyingPricePerUnit(productDto.getBuyingPricePerUnit());
@@ -235,6 +239,14 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 }
 

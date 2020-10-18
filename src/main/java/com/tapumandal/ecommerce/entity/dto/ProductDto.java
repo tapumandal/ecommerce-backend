@@ -42,6 +42,11 @@ public class ProductDto {
     @NotNull
     @NotEmpty
     @Size(min=3, max = 200, message = "categories field is not OK.")
+    private String company;
+
+    @NotNull
+    @NotEmpty
+    @Size(min=3, max = 200, message = "categories field is not OK.")
     private String categories;
 
     @NotNull
@@ -206,6 +211,14 @@ public class ProductDto {
 
     public void setImageRealPath(String imageRealPath) {
         this.imageRealPath = imageRealPath;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 }
 
