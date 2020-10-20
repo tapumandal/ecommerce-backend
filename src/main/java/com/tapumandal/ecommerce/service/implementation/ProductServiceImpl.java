@@ -49,11 +49,13 @@ public class ProductServiceImpl implements ProductService {
 
         Product pro = new Product(productDto);
 
-        List<ProductImage> productImages = helper.storeProductImages(productDto.getImages());
+        if(productDto.getImages().length < 1) {
+            List<ProductImage> productImages = helper.storeProductImages(productDto.getImages());
+            String thumbnailUrl = productImages.get(0).getUrl().replaceAll(productImages.get(0).getName(), "thumbnail." + productImages.get(0).getName());
+            pro.setImage(thumbnailUrl);
+            pro.setProductImages(productImages);
+        }
 
-        String thumbnailUrl = productImages.get(0).getUrl().replaceAll(productImages.get(0).getName(), "thumbnail."+productImages.get(0).getName());
-        pro.setImage(thumbnailUrl);
-        pro.setProductImages(productImages);
         System.out.println("SERVICE: ");
         System.out.println(new Gson().toJson(pro));
 
@@ -80,6 +82,13 @@ public class ProductServiceImpl implements ProductService {
 
 
         Product pro = new Product(productDto);
+
+        if(productDto.getImages().length < 1) {
+            List<ProductImage> productImages = helper.storeProductImages(productDto.getImages());
+            String thumbnailUrl = productImages.get(0).getUrl().replaceAll(productImages.get(0).getName(), "thumbnail." + productImages.get(0).getName());
+            pro.setImage(thumbnailUrl);
+            pro.setProductImages(productImages);
+        }
 
         Optional<Product> product;
         try{

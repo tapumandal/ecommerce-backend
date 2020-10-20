@@ -23,8 +23,14 @@ public class Product {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "company")
+    private String company;
+
     @Column(name = "categories")
     private String categories;
+
+    @Column(name = "preSelectedCategories")
+    private String[] preSelectedCategories;
 
     @Column(name = "description")
     private String description;
@@ -76,7 +82,9 @@ public class Product {
         this.setId(productDto.getId());
         this.setName(productDto.getName());
 //        this.setImage(productDto.getImage());
+        this.setCompany(productDto.getCompany());
         this.setCategories(productDto.getCategories());
+        this.setPreSelectedCategories(productDto.getPreSelectedCategories());
         this.setDescription(productDto.getDescription());
         this.setBuyingPricePerUnit(productDto.getBuyingPricePerUnit());
         this.setSellingPricePerUnit(productDto.getSellingPricePerUnit());
@@ -235,6 +243,22 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String[] getPreSelectedCategories() {
+        return preSelectedCategories;
+    }
+
+    public void setPreSelectedCategories(String[] preSelectedCategories) {
+        this.preSelectedCategories = preSelectedCategories;
     }
 }
 

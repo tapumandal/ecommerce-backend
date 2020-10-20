@@ -4,6 +4,7 @@ import com.sun.istack.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -42,7 +43,17 @@ public class ProductDto {
     @NotNull
     @NotEmpty
     @Size(min=3, max = 200, message = "categories field is not OK.")
+    private String company;
+
+    @NotNull
+    @NotEmpty
+    @Size(min=3, max = 200, message = "categories field is not OK.")
     private String categories;
+
+    @NotNull
+    @NotEmpty
+    @Size(min=3, max = 200, message = "Pre selected categories field is not OK.")
+    private String[] preSelectedCategories;
 
     @NotNull
     @NotEmpty
@@ -206,6 +217,22 @@ public class ProductDto {
 
     public void setImageRealPath(String imageRealPath) {
         this.imageRealPath = imageRealPath;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String[] getPreSelectedCategories() {
+        return preSelectedCategories;
+    }
+
+    public void setPreSelectedCategories(String[] preSelectedCategories) {
+        this.preSelectedCategories = preSelectedCategories;
     }
 }
 
