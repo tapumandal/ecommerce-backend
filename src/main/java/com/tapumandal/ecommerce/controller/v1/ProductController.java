@@ -36,7 +36,6 @@ public class ProductController extends ControllerHelper<Product> {
 
 
     @PostMapping(path = "/create")
-//    public ResponseEntity<CommonResponseSingle> createProduct(@RequestParam("image") MultipartFile file, HttpServletRequest request) {
     public ResponseEntity<CommonResponseSingle> createProduct(@ModelAttribute  ProductDto productDto, HttpServletRequest request) {
 
         storeUserDetails(request);
@@ -50,21 +49,6 @@ public class ProductController extends ControllerHelper<Product> {
         }
         return ResponseEntity.ok(response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong with the application", (Product) null));
     }
-
-//    @PostMapping(path = "/create")
-//    public ResponseEntity<CommonResponseSingle> createProduct(@RequestBody @Valid ProductDto productDto, HttpServletRequest request) {
-//
-//        storeUserDetails(request);
-//        System.out.println(new Gson().toJson(productDto));
-//        Product product = productService.create(productDto);
-//
-//        if (product != null) {
-//            return ResponseEntity.ok(response(true, HttpStatus.CREATED, "New product inserted successfully", product));
-//        } else if (product == null) {
-//            return ResponseEntity.ok(response(false, HttpStatus.BAD_REQUEST, "Something is wrong please contact", (Product) null));
-//        }
-//        return ResponseEntity.ok(response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong with the application", (Product) null));
-//    }
 
     @GetMapping(path = "/{id}")
     public CommonResponseSingle<Product> getProduct(@PathVariable("id") int id, HttpServletRequest request) {
@@ -103,7 +87,7 @@ public class ProductController extends ControllerHelper<Product> {
 
 
     @PostMapping(path = "/update")
-    public CommonResponseSingle updateProduct(@RequestBody ProductDto productDto, HttpServletRequest request) {
+    public CommonResponseSingle updateProduct(@ModelAttribute ProductDto productDto, HttpServletRequest request) {
 
         storeUserDetails(request);
 
