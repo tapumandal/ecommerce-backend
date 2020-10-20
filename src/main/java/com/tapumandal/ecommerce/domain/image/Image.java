@@ -1,4 +1,4 @@
-package com.tapumandal.ecommerce.entity;
+package com.tapumandal.ecommerce.domain.image;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,7 +9,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "product_image")
-public class ProductImage {
+public class Image {
 
 
     @Id

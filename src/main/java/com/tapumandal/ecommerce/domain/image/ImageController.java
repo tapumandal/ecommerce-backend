@@ -1,13 +1,11 @@
-package com.tapumandal.ecommerce.controller.v1;
+package com.tapumandal.ecommerce.domain.image;
 
+import com.google.gson.Gson;
 import com.tapumandal.ecommerce.entity.Product;
-import com.tapumandal.ecommerce.entity.dto.ProductDto;
 import com.tapumandal.ecommerce.service.FileStorageService;
-import com.tapumandal.ecommerce.service.ProductService;
 import com.tapumandal.ecommerce.util.CommonResponseArray;
 import com.tapumandal.ecommerce.util.CommonResponseSingle;
 import com.tapumandal.ecommerce.util.ControllerHelper;
-import com.tapumandal.ecommerce.util.MyPagenation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Pageable;
@@ -25,11 +23,14 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1")
-public class ImageController extends ControllerHelper<Product> {
+public class ImageController extends ControllerHelper<Image> {
 
 
     @Autowired
     FileStorageService fileStorageService;
+
+    @Autowired
+    ImageService imageService;
 
     @GetMapping("/public/images/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
@@ -56,6 +57,18 @@ public class ImageController extends ControllerHelper<Product> {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public CommonResponseSingle<Image> deleteImage(@PathVariable("id") int id, HttpServletRequest request) {
+
+        storeUserDetails(request);
+
+        if (imageService.deleteById(id)) {
+            return response(true, HttpStatus.OK, "Image by id " + id + " is deleted", (Image) null);
+        } else{
+            return response(false, HttpStatus.NOT_FOUND, "Image not found or deleted", (Image) null);
+        }
     }
 
 }

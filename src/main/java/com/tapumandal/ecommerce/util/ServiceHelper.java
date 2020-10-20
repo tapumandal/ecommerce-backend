@@ -1,7 +1,7 @@
 package com.tapumandal.ecommerce.util;
 
 import com.tapumandal.ecommerce.entity.ImageModel;
-import com.tapumandal.ecommerce.entity.ProductImage;
+import com.tapumandal.ecommerce.domain.image.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,14 +16,14 @@ public class ServiceHelper {
     @Autowired
     ImageService imageService;
 
-    public List<ProductImage> storeProductImages(MultipartFile[] images) {
+    public List<Image> storeProductImages(MultipartFile[] images) {
 
         List<ImageModel> imageModels = imageService.store(images);
 
-        List<ProductImage> productImages = new ArrayList<>();
+        List<Image> productImages = new ArrayList<>();
 
         for (ImageModel tmp: imageModels) {
-            ProductImage image = new ProductImage();
+            Image image = new Image();
             image.setName(tmp.getName());
             image.setUrl(tmp.getUrl());
             image.setSize(tmp.getSize());
