@@ -72,8 +72,7 @@ public class Product {
     @UpdateTimestamp
     private Date updatedAt;
 
-//    @OneToMany(mappedBy="product", cascade = CascadeType.ALL)
-    @OneToMany(cascade = CascadeType.DETACH)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private List<Image> productImages = new ArrayList<Image>();
 
@@ -261,5 +260,7 @@ public class Product {
     public void setPreSelectedCategories(String[] preSelectedCategories) {
         this.preSelectedCategories = preSelectedCategories;
     }
+
+
 }
 

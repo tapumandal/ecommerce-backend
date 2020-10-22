@@ -1,5 +1,6 @@
 package com.tapumandal.ecommerce.domain.image;
 
+import com.tapumandal.ecommerce.domain.company.Company;
 import com.tapumandal.ecommerce.util.MyPagenation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -23,17 +24,8 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image create(ImageDto imageDto) {
-
-        Image pro = new Image(imageDto);
-        Optional<Image> image;
-
-//        try{
-            int imageId = imageRepository.create(pro);
-            image = Optional.ofNullable(imageRepository.getImageFirstTime(imageId));
-//        }catch (Exception e){
-//            return null;
-//        }
+    public Image getImageByName(String name) {
+        Optional<Image> image = Optional.ofNullable(imageRepository.getImageByName(name));
 
         if(image.isPresent()){
             return image.get();
@@ -43,89 +35,17 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image update(ImageDto imageDto) {
-
-
-        Image pro = new Image(imageDto);
-
-        Optional<Image> image;
-        try{
-            int proId = imageRepository.update(pro);
-            image = Optional.ofNullable(imageRepository.getById(proId));
-        }catch (Exception e){
-            return null;
-        }
-
-        if(image.isPresent()){
-            return image.get();
-        }else{
-            return null;
-        }
-
+    public List<Image> getImageByProductId(int productId) {
+        List<Image> image = imageRepository.getImageByProductId(productId);
+        return image;
     }
 
     @Override
-    public List<Image> getAll(Pageable pageable) {
-        Optional<List<Image>> images = Optional.ofNullable(imageRepository.getAll(pageable));
-
-        if(images.isPresent()){
-            return images.get();
-        }else{
-            return null;
-        }
-    }
-
-    @Override
-    public Image getById(int id) {
-
-        Optional<Image> image = Optional.ofNullable(imageRepository.getById(id));
-
-        if(image.isPresent()){
-            return image.get();
-        }else{
-            return null;
-        }
-    }
-
-    @Override
-    public boolean deleteById(int id) {
+    public boolean deleteImageByName(String name) {
         try {
-            return imageRepository.delete(id);
+            return imageRepository.delete(name);
         }catch (Exception ex){
             return false;
         }
     }
-
-    @Override
-    public Image getByValue(String kye, String value) {
-        return null;
-    }
-
-    @Override
-    public List<Image> getAllByValue(String kye, String value) {
-        return null;
-    }
-
-    @Override
-    public boolean isActive(int id) {
-        Optional<Image> image = Optional.ofNullable(imageRepository.getById(id));
-        if(image.isPresent()){
-            if(image.get().isActive()){
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean isDeleted(int id) {
-        return image.isDeleted();
-    }
-
-    @Override
-    public MyPagenation getPageable(Pageable pageable) {
-        return null;
-    }
-
 }

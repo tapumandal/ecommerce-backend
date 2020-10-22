@@ -1,8 +1,17 @@
 package com.tapumandal.ecommerce.domain.image;
 
 import com.tapumandal.ecommerce.repository.Repository;
+import org.hibernate.Session;
 
-public interface ImageRepository extends Repository<Image> {
+import java.util.List;
 
-    public Image getImageFirstTime(int imageId);
+public interface ImageRepository{
+
+    public Session getSession();
+
+    public Image getImageByName(String name);
+
+    public boolean delete(String name);
+
+    public List<Image> getImageByProductId(int productId);
 }

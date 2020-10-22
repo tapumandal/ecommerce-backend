@@ -1,6 +1,7 @@
 package com.tapumandal.ecommerce.service.implementation;
 
 import com.google.gson.Gson;
+import com.tapumandal.ecommerce.domain.image.ImageService;
 import com.tapumandal.ecommerce.entity.Product;
 import com.tapumandal.ecommerce.domain.image.Image;
 import com.tapumandal.ecommerce.entity.dto.ProductDto;
@@ -27,6 +28,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ServiceHelper helper;
+
+    @Autowired
+    ImageService imageService;
 
     String PRODUCT_FILE_PATH = "public/images/product/";
 
@@ -83,6 +87,11 @@ public class ProductServiceImpl implements ProductService {
             List<Image> productImages = helper.storeProductImages(productDto.getImages());
             String thumbnailUrl = productImages.get(0).getUrl().replaceAll(productImages.get(0).getName(), "thumbnail." + productImages.get(0).getName());
             pro.setImage(thumbnailUrl);
+
+            List<Image> existingImages = imageService.getImageByProductId(pro.getId());
+            System.out.println("HHHHHHHHHHH");
+            System.out.println(new Gson().toJson(existingImages));
+            productImages.addAll(existingImages);
             pro.setProductImages(productImages);
         }
 

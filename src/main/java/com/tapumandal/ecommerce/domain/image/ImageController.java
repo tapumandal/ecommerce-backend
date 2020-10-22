@@ -59,13 +59,13 @@ public class ImageController extends ControllerHelper<Image> {
                 .body(resource);
     }
 
-    @DeleteMapping(path = "/{id}")
-    public CommonResponseSingle<Image> deleteImage(@PathVariable("id") int id, HttpServletRequest request) {
+    @DeleteMapping(path = "/public/images/{name}")
+    public CommonResponseSingle<Image> deleteImage(@PathVariable("name") String imageName, HttpServletRequest request) {
 
         storeUserDetails(request);
 
-        if (imageService.deleteById(id)) {
-            return response(true, HttpStatus.OK, "Image by id " + id + " is deleted", (Image) null);
+        if (imageService.deleteImageByName(imageName)) {
+            return response(true, HttpStatus.OK, "Image by name " + imageName + " is deleted", (Image) null);
         } else{
             return response(false, HttpStatus.NOT_FOUND, "Image not found or deleted", (Image) null);
         }
