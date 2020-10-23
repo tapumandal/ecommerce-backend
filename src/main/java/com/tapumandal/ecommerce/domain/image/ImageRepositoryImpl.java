@@ -2,6 +2,7 @@ package com.tapumandal.ecommerce.domain.image;
 import com.tapumandal.ecommerce.domain.category.Category;
 import com.tapumandal.ecommerce.entity.Product;
 import com.tapumandal.ecommerce.util.MyPagenation;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,10 +64,14 @@ public class ImageRepositoryImpl implements ImageRepository {
 
     @Override
     public List<Image> getImageByProductId(int productId) {
-        return (List<Image>) getSession().createQuery(
-                "from Product where product_id = :value"
-        ).setParameter("value", productId)
-                .getResultList();
+
+        String sql = "SELECT * FROM image WHERE product_id = :product_id";
+        return (List<Image>) getSession().createSQLQuery(sql).addEntity(Image.class).setParameter("product_id", productId).list();
+
+//        return (List<Image>) getSession().createSQLQuery(
+//                "from Product where product_id = :value"
+//        ).setParameter("value", productId)
+//                .getResultList();
     }
 
 
