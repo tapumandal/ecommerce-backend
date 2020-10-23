@@ -1,5 +1,6 @@
 package com.tapumandal.ecommerce.entity;
 
+import com.tapumandal.ecommerce.domain.image.Image;
 import com.tapumandal.ecommerce.entity.dto.ProductDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -71,10 +72,9 @@ public class Product {
     @UpdateTimestamp
     private Date updatedAt;
 
-//    @OneToMany(mappedBy="product", cascade = CascadeType.ALL)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private List<ProductImage> productImages = new ArrayList<ProductImage>();
+    private List<Image> productImages = new ArrayList<Image>();
 
 
     public Product(ProductDto productDto) {
@@ -229,11 +229,11 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public List<ProductImage> getProductImages() {
+    public List<Image> getProductImages() {
         return productImages;
     }
 
-    public void setProductImages(List<ProductImage> productImages) {
+    public void setProductImages(List<Image> productImages) {
         this.productImages = productImages;
     }
 
@@ -260,5 +260,7 @@ public class Product {
     public void setPreSelectedCategories(String[] preSelectedCategories) {
         this.preSelectedCategories = preSelectedCategories;
     }
+
+
 }
 

@@ -36,7 +36,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         System.out.println("Repository Before Save: ");
         System.out.println(new Gson().toJson(product));
 
-        getSession().save(product);
+        getSession().saveOrUpdate(product);
         getSession().flush();
         getSession().clear();
 

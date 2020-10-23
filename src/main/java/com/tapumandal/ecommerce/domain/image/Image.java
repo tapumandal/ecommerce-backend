@@ -1,5 +1,6 @@
-package com.tapumandal.ecommerce.entity;
+package com.tapumandal.ecommerce.domain.image;
 
+import com.tapumandal.ecommerce.entity.Product;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -8,8 +9,8 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "product_image")
-public class ProductImage {
+@Table(name = "image")
+public class Image {
 
 
     @Id
@@ -42,8 +43,9 @@ public class ProductImage {
     @UpdateTimestamp
     private Date updatedAt;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "product_id")
+
+//    @ManyToOne
+//    @JoinColumn(name = "product_id", referencedColumnName = "id")
 //    private Product product;
 
 
@@ -121,6 +123,15 @@ public class ProductImage {
         this.updatedAt = updatedAt;
     }
 
+//    public Product getProduct() {
+//        return product;
+//    }
+//
+//    public void setProduct(Product product) {
+//        this.product = product;
+//    }
+
+//
 //    public Product getProduct() {
 //        return product;
 //    }

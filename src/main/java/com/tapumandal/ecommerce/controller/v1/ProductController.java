@@ -38,6 +38,8 @@ public class ProductController extends ControllerHelper<Product> {
     @PostMapping(path = "/create")
     public ResponseEntity<CommonResponseSingle> createProduct(@ModelAttribute  ProductDto productDto, HttpServletRequest request) {
 
+        System.out.println("Controller Create");
+        System.out.println(new Gson().toJson(productDto));
         storeUserDetails(request);
         productDto.setImageRealPath(request.getServletContext().getRealPath(""));
         Product product = productService.create(productDto);
@@ -89,6 +91,8 @@ public class ProductController extends ControllerHelper<Product> {
     @PostMapping(path = "/update")
     public CommonResponseSingle updateProduct(@ModelAttribute ProductDto productDto, HttpServletRequest request) {
 
+        System.out.println("Controller Update");
+        System.out.println(new Gson().toJson(productDto));
         storeUserDetails(request);
 
         Product product = productService.update(productDto);
