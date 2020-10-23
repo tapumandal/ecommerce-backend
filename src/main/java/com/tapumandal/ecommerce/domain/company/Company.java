@@ -36,7 +36,7 @@ public class Company {
 
     public Company(){}
 
-    public Company(com.tapumandal.ecommerce.domain.company.CompanyDto companyDto) {
+    public Company(CompanyDto companyDto) {
         this.id = companyDto.getId();
         this.name = companyDto.getName();
         this.isActive = companyDto.isActive();

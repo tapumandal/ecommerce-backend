@@ -53,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(apiVersionUrl+"/company/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers(apiVersionUrl+"/measurement/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers(apiVersionUrl+"/challan/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers(apiVersionUrl+"/navigation/**").hasAnyAuthority("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors();
