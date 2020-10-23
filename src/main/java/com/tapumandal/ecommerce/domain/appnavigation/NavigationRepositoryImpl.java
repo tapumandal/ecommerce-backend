@@ -34,7 +34,7 @@ public class NavigationRepositoryImpl implements NavigationRepository {
 
         System.out.println("SERVICE: ");
         System.out.println(new Gson().toJson(navigation));
-
+        deleteNavigation();
         getSession().saveOrUpdate(navigation);
         getSession().flush();
         getSession().clear();
@@ -60,9 +60,13 @@ public class NavigationRepositoryImpl implements NavigationRepository {
         String query = "FROM "+modelClassName+" M WHERE M.navigation IS NOT NULL";
         return (Navigation) getSession().createQuery(query).uniqueResult();
     }
-    public Navigation deleteNavigation() {
-        String query = "delete FROM "+modelClassName;
-        return (Navigation) getSession().createQuery(query).uniqueResult();
+    public void deleteNavigation() {
+        String stringQuery = "DELETE FROM "+modelClassName;
+        Query query = getSession().createQuery(stringQuery);
+        query.executeUpdate();
+
+//        String query = "delete FROM "+modelClassName+" M WHERE M.navigation IS NOT NULL OR M.navigation IS NULL";
+//        return (Navigation) getSession().createQuery(query).uniqueResult();
     }
 
 

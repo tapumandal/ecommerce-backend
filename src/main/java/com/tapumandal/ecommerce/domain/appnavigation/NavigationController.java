@@ -40,7 +40,7 @@ public class NavigationController extends ControllerHelper<Navigation> {
         return response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong with the application", (Navigation) null);
     }
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "/get")
     public CommonResponseSingle<Navigation> getNavigation(HttpServletRequest request) {
 
         storeUserDetails(request);
