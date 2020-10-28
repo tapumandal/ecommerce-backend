@@ -86,10 +86,12 @@ public class ControllerHelper<Entity> {
 
     public void storeUserDetails(HttpServletRequest request){
 
-        String authorizationHeader = request.getHeader("Authorization");
-        String token = authorizationHeader.substring(7);
-        String username = getUserNameJWT(token);
-        applicationPreferences.saveUserByUsername(username);
+        if(request.getHeader("Authorization") != null) {
+            String authorizationHeader = request.getHeader("Authorization");
+            String token = authorizationHeader.substring(7);
+            String username = getUserNameJWT(token);
+            applicationPreferences.saveUserByUsername(username);
+        }
     }
 
     private String getUserNameJWT(String token) {
