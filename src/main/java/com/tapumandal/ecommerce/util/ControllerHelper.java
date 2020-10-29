@@ -86,11 +86,20 @@ public class ControllerHelper<Entity> {
 
     public void storeUserDetails(HttpServletRequest request){
 
-        if(request.getHeader("Authorization") != null) {
+        System.out.println(request.getHeader("Authorization"));
+
+        if(request.getHeader("Authorization") == null) {
+            System.out.println("NULL");
+        }else if(request.getHeader("Authorization").equals("")) {
+            System.out.println("EMPTY");
+        }else{
+
             String authorizationHeader = request.getHeader("Authorization");
-            String token = authorizationHeader.substring(7);
-            String username = getUserNameJWT(token);
-            applicationPreferences.saveUserByUsername(username);
+            if(!authorizationHeader.isEmpty()) {
+                String token = authorizationHeader.substring(7);
+                String username = getUserNameJWT(token);
+                applicationPreferences.saveUserByUsername(username);
+            }
         }
     }
 
