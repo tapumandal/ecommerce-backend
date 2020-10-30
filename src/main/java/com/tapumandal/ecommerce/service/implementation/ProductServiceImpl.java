@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.tapumandal.ecommerce.domain.image.ImageService;
 import com.tapumandal.ecommerce.entity.Product;
 import com.tapumandal.ecommerce.domain.image.Image;
+import com.tapumandal.ecommerce.entity.ProductBusiness;
 import com.tapumandal.ecommerce.entity.dto.ProductDto;
 import com.tapumandal.ecommerce.repository.ProductRepository;
 import com.tapumandal.ecommerce.service.ProductService;
@@ -176,4 +177,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    @Override
+    public List<ProductBusiness> getAllBusiness(Pageable pageable, String flag) {
+        Optional<List<ProductBusiness>> products = Optional.ofNullable(productRepository.getAllBusiness(pageable, flag));
+
+        if(products.isPresent()){
+            return products.get();
+        }else{
+            return null;
+        }
+    }
 }

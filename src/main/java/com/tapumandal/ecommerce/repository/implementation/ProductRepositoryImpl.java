@@ -2,6 +2,7 @@ package com.tapumandal.ecommerce.repository.implementation;
 
 import com.google.gson.Gson;
 import com.tapumandal.ecommerce.entity.Product;
+import com.tapumandal.ecommerce.entity.ProductBusiness;
 import com.tapumandal.ecommerce.repository.ProductRepository;
 import com.tapumandal.ecommerce.util.ApplicationPreferences;
 import com.tapumandal.ecommerce.util.MyPagenation;
@@ -63,7 +64,20 @@ public class ProductRepositoryImpl implements ProductRepository {
     public List<Product> getAll(Pageable pageable) {
 
 
-        Query resQuery = getQuery();
+        String query = "FROM Product P WHERE P.isDeleted = 0";
+        Query resQuery =  getSession().createQuery(query);
+
+        return getFromDB(pageable, resQuery).getResultList();
+    }
+
+    private Query getQuery(){
+        String query = "FROM Product P WHERE P.isDeleted = 0";
+        Query resQuery =  getSession().createQuery(query);
+
+        return resQuery;
+    }
+
+    private Query getFromDB(Pageable pageable, Query resQuery){
 
         int pageNum = pageable.getPageNumber();
         if(pageNum<1){
@@ -72,7 +86,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         resQuery.setFirstResult((pageNum-1)*pageable.getPageSize());
         resQuery.setMaxResults(pageable.getPageSize());
-        return resQuery.getResultList();
+        return resQuery;
     }
 
     @Override
@@ -83,13 +97,6 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         myPagenation.setTotalElement(resQuery.getResultList().size());
         return myPagenation;
-    }
-
-    private Query getQuery(){
-        String query = "FROM Product P WHERE P.isDeleted = 0";
-        Query resQuery =  getSession().createQuery(query);
-
-        return resQuery;
     }
 
     @Override
@@ -123,4 +130,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
 
+    @Override
+    public List<ProductBusiness> getAllBusiness(Pageable pageable, String flag) {
+        String query = "FROM ProductBusiness P WHERE P.isDeleted = 0 AND (P.categories LIKE '%"+flag+"%' OR P.company LIKE '%"+flag+"%')";
+        Query resQuery =  getSession().createQuery(query);
+
+        return getFromDB(pageable, resQuery).getResultList();
+    }
 }
