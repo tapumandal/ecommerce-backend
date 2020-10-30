@@ -2,6 +2,7 @@ package com.tapumandal.ecommerce.controller.v1;
 
 import com.google.gson.Gson;
 import com.tapumandal.ecommerce.entity.Product;
+import com.tapumandal.ecommerce.entity.ProductBusiness;
 import com.tapumandal.ecommerce.entity.dto.ProductDto;
 import com.tapumandal.ecommerce.service.FileStorageService;
 import com.tapumandal.ecommerce.service.ProductService;
@@ -115,6 +116,39 @@ public class ProductController extends ControllerHelper<Product> {
         } else{
             return response(false, HttpStatus.NOT_FOUND, "Product not found or deleted", (Product) null);
         }
+    }
+
+
+    @GetMapping(path = "/list/business/{flag}")
+    public ResponseEntity<CommonResponseArray<ProductBusiness>> getAllConsumer(@PathVariable("flag") String flag, HttpServletRequest request, Pageable pageable) {
+
+        storeUserDetails(request);
+
+        List<ProductBusiness> products = productService.getAllBusiness(pageable, flag);
+
+        MyPagenation myPagenation = managePagenation(request, productService.getPageable(pageable), pageable);
+
+        if (!products.isEmpty()) {
+            return ResponseEntity.ok(responseBusiness(true, HttpStatus.FOUND, "All product list", products, myPagenation));
+        } else if (products.isEmpty()) {
+            return ResponseEntity.ok(responseBusiness(false, HttpStatus.NO_CONTENT, "No product found", new ArrayList<ProductBusiness>(), myPagenation));
+        } else {
+            return ResponseEntity.ok(responseBusiness(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong", new ArrayList<ProductBusiness>(), myPagenation));
+        }
+
+    }
+
+    @Autowired
+    private   CommonResponseArray commonResponseArray;
+    protected  CommonResponseArray responseBusiness(boolean action, HttpStatus status, String message, List<ProductBusiness> data, MyPagenation pagenation){
+
+        commonResponseArray.setAction(action);
+        commonResponseArray.setStatus(status);
+        commonResponseArray.setMessage(message);
+        commonResponseArray.setData(data);
+        commonResponseArray.setMyPagenation(pagenation);
+
+        return commonResponseArray;
     }
 
 

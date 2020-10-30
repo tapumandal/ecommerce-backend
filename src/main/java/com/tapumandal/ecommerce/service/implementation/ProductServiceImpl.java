@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.tapumandal.ecommerce.domain.image.ImageService;
 import com.tapumandal.ecommerce.entity.Product;
 import com.tapumandal.ecommerce.domain.image.Image;
+import com.tapumandal.ecommerce.entity.ProductBusiness;
 import com.tapumandal.ecommerce.entity.dto.ProductDto;
 import com.tapumandal.ecommerce.repository.ProductRepository;
 import com.tapumandal.ecommerce.service.ProductService;
@@ -83,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product pro = new Product(productDto);
 
-        if(productDto.getImages().length > 0) {
+        if(productDto.getImages() != null) {
             List<Image> productImages = helper.storeProductImages(productDto.getImages());
             String thumbnailUrl = productImages.get(0).getUrl().replaceAll(productImages.get(0).getName(), "thumbnail." + productImages.get(0).getName());
             pro.setImage(thumbnailUrl);
@@ -176,4 +177,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    @Override
+    public List<ProductBusiness> getAllBusiness(Pageable pageable, String flag) {
+        Optional<List<ProductBusiness>> products = Optional.ofNullable(productRepository.getAllBusiness(pageable, flag));
+
+        if(products.isPresent()){
+            return products.get();
+        }else{
+            return null;
+        }
+    }
 }
