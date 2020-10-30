@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product pro = new Product(productDto);
 
-        if(productDto.getImages().length > 0) {
+        if(productDto.getImages() != null) {
             List<Image> productImages = helper.storeProductImages(productDto.getImages());
             String thumbnailUrl = productImages.get(0).getUrl().replaceAll(productImages.get(0).getName(), "thumbnail." + productImages.get(0).getName());
             pro.setImage(thumbnailUrl);

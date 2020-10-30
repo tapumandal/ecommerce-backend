@@ -62,7 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(apiVersionUrl+"/challan/**").hasAnyAuthority("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors().disable();
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors();
 
 
 //                .anyRequest().authenticated()
