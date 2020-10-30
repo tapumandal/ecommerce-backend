@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,8 +52,13 @@ public class NavigationServiceImpl implements NavigationService {
     }
 
     @Override
-    public Navigation getNavigation() {
-        return navigationRepository.getNavigation();
+    public List<MenuList> getNavigation() {
+
+        Navigation navigation =  navigationRepository.getNavigation();
+        List<MenuList> menuLists = new Gson().fromJson(navigation.getNavigation(), List.class);
+
+
+        return menuLists;
     }
 
     @Override
