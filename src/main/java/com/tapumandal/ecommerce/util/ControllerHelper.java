@@ -32,6 +32,16 @@ public class ControllerHelper<Entity> {
         return commonResponseSingle;
     }
 
+//    protected CommonResponseSingle response(boolean action, HttpStatus status, String message, Object data){
+//
+//        commonResponseSingle.setAction(action);
+//        commonResponseSingle.setStatus(status);
+//        commonResponseSingle.setMessage(message);
+//        commonResponseSingle.setData(data);
+//
+//        return commonResponseSingle;
+//    }
+
     protected  CommonResponseArray<Entity> response(boolean action, HttpStatus status, String message, List<Entity> data, MyPagenation pagenation){
 
         commonResponseArray.setAction(action);

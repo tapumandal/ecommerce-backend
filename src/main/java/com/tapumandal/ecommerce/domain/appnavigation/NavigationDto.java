@@ -23,7 +23,7 @@ public class NavigationDto {
     @NotNull
     @NotEmpty
     @Size(min=3, max = 50, message = "name field is not OK.")
-    private String navigation;
+    private List<MenuList> navigation;
 
     private boolean isActive = true;
     private boolean isDeleted = false;
@@ -44,11 +44,11 @@ public class NavigationDto {
         this.name = name;
     }
 
-    public String getNavigation() {
+    public List<MenuList> getNavigation() {
         return navigation;
     }
 
-    public void setNavigation(String navigation) {
+    public void setNavigation(List<MenuList> navigation) {
         this.navigation = navigation;
     }
 

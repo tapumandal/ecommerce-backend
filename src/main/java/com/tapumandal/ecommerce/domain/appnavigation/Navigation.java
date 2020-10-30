@@ -1,6 +1,8 @@
 package com.tapumandal.ecommerce.domain.appnavigation;
 
 import javax.persistence.*;
+
+import com.google.gson.Gson;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.stereotype.Component;
@@ -32,7 +34,7 @@ public class Navigation {
     public Navigation(){}
 
     public Navigation(NavigationDto navigationDto) {
-        this.navigation = navigationDto.getNavigation();
+        this.navigation = new Gson().toJson(navigationDto.getNavigation());
     }
 
     public int getId() {
