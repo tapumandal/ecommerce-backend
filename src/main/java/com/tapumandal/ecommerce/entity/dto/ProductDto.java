@@ -1,15 +1,17 @@
 package com.tapumandal.ecommerce.entity.dto;
 
 import com.sun.istack.Nullable;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Component
+/**
+ * Created by TapuMandal on 11/7/2020.
+ * For any query ask online.tapu@gmail.com
+ */
+
 public class ProductDto {
 
     @Nullable
@@ -235,4 +237,3 @@ public class ProductDto {
         this.preSelectedCategories = preSelectedCategories;
     }
 }
-

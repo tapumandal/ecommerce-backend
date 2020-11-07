@@ -13,12 +13,12 @@ ENTRYPOINT ["java", "-jar", "ecommerce-backend.jar"]
 # docker run --name myphpmyadmin -d --link mysql-server:db -p 8001:80 phpmyadmin/phpmyadmin
 
 ## Spring app Build
-# docker build . -t ims-server-app
+# docker build . -t ecommerce-backend
 ## App Run and link with mysql server
-# docker run -p 8080:8080 --name ims-server-app  --link mysql-server:mysql -d ims-server-app
+# docker run -p 8080:8080 --name ecommerce-backend  --link mysql-server:mysql -d ecommerce-backend
 
 #RUN AND BUILD TOGETHER WITHN SPECIFIC NETWORKS
-#docker build -t ims-server-app . && docker run --net=my-network -p 8080:8080 --name ims-server-app  --link mysql-server:mysql -d
-#ims-server-app
+#docker build -t ecommerce-backend . && docker run --net=my-network -p 8080:8080 --name ecommerce-backend  --link mysql-server:mysql -d
+#ecommerce-backend
 
-#docker build -t ims-server-app . && docker run -p 8080:8080 --name ims-server-app --link mysql-server:mysql ims-server-app
+#docker build -t ecommerce-backend . && docker run -p 8080:8080 --name ecommerce-backend --link mysql-server:mysql ecommerce-backend
