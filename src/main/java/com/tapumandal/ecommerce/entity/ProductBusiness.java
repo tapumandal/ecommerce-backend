@@ -1,7 +1,6 @@
 package com.tapumandal.ecommerce.entity;
 
 import com.tapumandal.ecommerce.domain.image.Image;
-import com.tapumandal.ecommerce.entity.dto.ProductDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 

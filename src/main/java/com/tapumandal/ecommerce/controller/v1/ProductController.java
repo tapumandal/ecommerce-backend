@@ -4,26 +4,18 @@ import com.google.gson.Gson;
 import com.tapumandal.ecommerce.entity.Product;
 import com.tapumandal.ecommerce.entity.ProductBusiness;
 import com.tapumandal.ecommerce.entity.dto.ProductDto;
-import com.tapumandal.ecommerce.service.FileStorageService;
 import com.tapumandal.ecommerce.service.ProductService;
 import com.tapumandal.ecommerce.util.CommonResponseArray;
 import com.tapumandal.ecommerce.util.CommonResponseSingle;
 import com.tapumandal.ecommerce.util.ControllerHelper;
 import com.tapumandal.ecommerce.util.MyPagenation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +29,7 @@ public class ProductController extends ControllerHelper<Product> {
 
 
     @PostMapping(path = "/create")
-    public ResponseEntity<CommonResponseSingle> createProduct(@ModelAttribute  ProductDto productDto, HttpServletRequest request) {
+    public ResponseEntity<CommonResponseSingle> createProduct(@ModelAttribute ProductDto productDto, HttpServletRequest request) {
 
         System.out.println("Controller Create");
         System.out.println(new Gson().toJson(productDto));
