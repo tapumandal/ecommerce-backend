@@ -108,8 +108,8 @@ public class CartRepositoryImpl implements CartRepository {
         Optional<Cart> tmpEntity = Optional.ofNullable(getById(id));
         if(tmpEntity.isPresent()){
             Cart cart = tmpEntity.get();
-//            cart.setActive(false);
-//            cart.setDeleted(true);
+            cart.setActive(false);
+            cart.setDeleted(true);
             update(cart);
             return true;
         }else{

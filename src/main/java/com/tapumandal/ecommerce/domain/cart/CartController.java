@@ -22,7 +22,7 @@ public class CartController extends ControllerHelper<Cart> {
     CartService cartService;
 
     @PostMapping(path = "/create")
-    public CommonResponseSingle createCart(@ModelAttribute CartDto cartDto, HttpServletRequest request) {
+    public CommonResponseSingle createCart(@RequestBody CartDto cartDto, HttpServletRequest request) {
 
 
         System.out.println("CONTROLLER");

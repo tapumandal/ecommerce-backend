@@ -3,6 +3,7 @@ package com.tapumandal.ecommerce.domain.cart;
 import com.google.gson.annotations.SerializedName;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.util.List;
 
 @Component
@@ -26,8 +27,13 @@ public class CartDto {
     @SerializedName("totalPayable")
     protected int totalPayable;
 
+    private boolean isActive = true;
+    private boolean isDeleted = false;
+    private Date createdAt;
+    private Date updatedAt;
+
     @SerializedName("productList")
-    protected List<CartProductDto> cartProducts;
+    protected List<CartProductDto> productList;
 
     public int getId() {
         return id;
@@ -77,11 +83,43 @@ public class CartDto {
         this.totalPayable = totalPayable;
     }
 
-    public List<CartProductDto> getCartProducts() {
-        return cartProducts;
+    public List<CartProductDto> getProductList() {
+        return productList;
     }
 
-    public void setCartProducts(List<CartProductDto> cartProducts) {
-        this.cartProducts = cartProducts;
+    public void setProductList(List<CartProductDto> productList) {
+        this.productList = productList;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

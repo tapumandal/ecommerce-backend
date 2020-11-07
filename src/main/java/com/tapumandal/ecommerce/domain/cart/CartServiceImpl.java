@@ -113,13 +113,13 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public boolean isActive(int id) {
-//        Optional<Cart> cart = Optional.ofNullable(cartRepository.getById(id));
-//        if(cart.isPresent()){
-//            if(cart.get().isActive()){
-//                return true;
-//            }
-//            return false;
-//        }
+        Optional<Cart> cart = Optional.ofNullable(cartRepository.getById(id));
+        if(cart.isPresent()){
+            if(cart.get().isActive()){
+                return true;
+            }
+            return false;
+        }
         return true;
     }
 

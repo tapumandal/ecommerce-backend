@@ -1,6 +1,11 @@
 package com.tapumandal.ecommerce.domain.cart;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,8 +32,28 @@ public class Cart {
     @Column(name = "total_payable")
     protected int totalPayable;
 
-    @OneToMany(mappedBy = "cart")
+
+    @Column(name = "is_active", columnDefinition = "boolean default 1")
+    private boolean isActive = true;
+
+    @Column(name = "is_deleted", columnDefinition = "boolean default 0")
+    private boolean isDeleted = false;
+
+    @Column(name = "created_at", updatable=false)
+    @CreationTimestamp
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private Date updatedAt;
+
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
     protected List<CartProduct> cartProducts;
+
+    public Cart() {
+    }
 
     public Cart(CartDto cartDto){
         this.deliveryCharge = cartDto.getDeliveryCharge();
@@ -36,11 +61,17 @@ public class Cart {
         this.totalDiscount = cartDto.getTotalDiscount();
         this.totalProductPrice = cartDto.getTotalProductPrice();
         this.totalPayable = cartDto.getTotalPayable();
-        for (CartProductDto proDto: cartDto.getCartProducts()) {
+        this.isActive = cartDto.isActive();
+        this.isDeleted = cartDto.isDeleted();
+
+        this.cartProducts = new ArrayList<CartProduct>();
+        for (CartProductDto proDto: cartDto.getProductList()) {
             CartProduct cartPro = new CartProduct();
             cartPro.setId(proDto.getId());
             cartPro.setProductId(proDto.getProductId());
             cartPro.setOrderQuantity(proDto.getOrderQuantity());
+            this.isActive = cartDto.isActive();
+            this.isDeleted = cartDto.isDeleted();
             cartProducts.add(cartPro);
         }
     }
@@ -99,5 +130,37 @@ public class Cart {
 
     public void setCartProducts(List<CartProduct> cartProducts) {
         this.cartProducts = cartProducts;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
