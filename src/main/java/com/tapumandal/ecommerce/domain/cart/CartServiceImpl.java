@@ -50,16 +50,20 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart update(CartDto cartDto) {
 
-
         Cart pro = new Cart(cartDto);
 
+        System.out.println("SERVICE");
+        System.out.println(new Gson().toJson(pro));
+
         Optional<Cart> cart;
-        try{
+//        try{
+            Cart tmpCart = cartRepository.getById(pro.getId());
+            pro.setCartProducts(tmpCart.getCartProducts());
             int proId = cartRepository.update(pro);
             cart = Optional.ofNullable(cartRepository.getById(proId));
-        }catch (Exception e){
-            return null;
-        }
+//        }catch (Exception e){
+//            return null;
+//        }
 
         if(cart.isPresent()){
             return cart.get();

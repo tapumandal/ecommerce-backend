@@ -56,6 +56,7 @@ public class Cart {
     }
 
     public Cart(CartDto cartDto){
+        this.id = cartDto.getId();
         this.deliveryCharge = cartDto.getDeliveryCharge();
         this.discountType = cartDto.getDiscountType();
         this.totalDiscount = cartDto.getTotalDiscount();
@@ -65,14 +66,16 @@ public class Cart {
         this.isDeleted = cartDto.isDeleted();
 
         this.cartProducts = new ArrayList<CartProduct>();
-        for (CartProductDto proDto: cartDto.getProductList()) {
-            CartProduct cartPro = new CartProduct();
-            cartPro.setId(proDto.getId());
-            cartPro.setProductId(proDto.getProductId());
-            cartPro.setOrderQuantity(proDto.getOrderQuantity());
-            this.isActive = cartDto.isActive();
-            this.isDeleted = cartDto.isDeleted();
-            cartProducts.add(cartPro);
+        if(cartDto.getProductList() != null) {
+            for (CartProductDto proDto : cartDto.getProductList()) {
+                CartProduct cartPro = new CartProduct();
+                cartPro.setId(proDto.getId());
+                cartPro.setProductId(proDto.getProductId());
+                cartPro.setOrderQuantity(proDto.getOrderQuantity());
+                this.isActive = cartDto.isActive();
+                this.isDeleted = cartDto.isDeleted();
+                cartProducts.add(cartPro);
+            }
         }
     }
 
