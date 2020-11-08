@@ -79,6 +79,9 @@ public class CartController extends ControllerHelper<Cart> {
     @PostMapping(path = "/update")
     public CommonResponseSingle updateCart(@RequestBody CartDto cartDto, HttpServletRequest request) {
 
+        System.out.println("CONTROLLER");
+        System.out.println(new Gson().toJson(cartDto));
+
         storeUserDetails(request);
 
         Cart cart = cartService.update(cartDto);
