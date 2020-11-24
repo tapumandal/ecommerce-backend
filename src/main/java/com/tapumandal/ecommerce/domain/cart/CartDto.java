@@ -9,22 +9,16 @@ import java.util.List;
 @Component
 public class CartDto {
 
-    @SerializedName("id")
     protected int id;
 
-    @SerializedName("deliveryCharge")
     protected int deliveryCharge;
 
-    @SerializedName("discountType")
     protected String discountType; // TotalPercentage/OverallAmount/ProductDiscount
 
-    @SerializedName("totalDiscount")
     protected int totalDiscount;
 
-    @SerializedName("totalProductPrice")
     protected int totalProductPrice;
 
-    @SerializedName("totalPayable")
     protected int totalPayable;
 
     private boolean isActive = true;
@@ -32,7 +26,8 @@ public class CartDto {
     private Date createdAt;
     private Date updatedAt;
 
-    @SerializedName("productList")
+    protected int userId;
+
     protected List<CartProductDto> productList;
 
     public int getId() {
@@ -121,5 +116,13 @@ public class CartDto {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }
