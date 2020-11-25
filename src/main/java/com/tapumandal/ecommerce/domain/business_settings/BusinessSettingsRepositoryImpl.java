@@ -47,9 +47,10 @@ public class BusinessSettingsRepositoryImpl implements BusinessSettingsRepositor
 
     private boolean delete(){
 
-        String hql = String.format("DELETE from %s",modelClassName);
-        Query query = getSession().createQuery(hql);
-        query.executeUpdate();
+        String query = "DELETE FROM BusinessSettings";
+//        Query resQuery =  getSession().createQuery(query);
+//        resQuery.executeUpdate();
+        getSession().createSQLQuery(query);
         getSession().flush();
         getSession().clear();
 
