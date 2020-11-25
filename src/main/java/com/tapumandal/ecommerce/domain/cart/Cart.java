@@ -17,6 +17,9 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
 
+    @Column(name = "user_id")
+    protected int userId;
+
     @Column(name = "delivery_charge")
     protected int deliveryCharge;
 
@@ -57,6 +60,7 @@ public class Cart {
 
     public Cart(CartDto cartDto){
         this.id = cartDto.getId();
+        this.userId = cartDto.getUserId();
         this.deliveryCharge = cartDto.getDeliveryCharge();
         this.discountType = cartDto.getDiscountType();
         this.totalDiscount = cartDto.getTotalDiscount();
@@ -85,6 +89,14 @@ public class Cart {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getDeliveryCharge() {

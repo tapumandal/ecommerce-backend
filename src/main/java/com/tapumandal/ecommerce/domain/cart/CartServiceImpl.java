@@ -98,11 +98,11 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public boolean deleteById(int id) {
-        try {
+//        try {
             return cartRepository.delete(id);
-        }catch (Exception ex){
-            return false;
-        }
+//        }catch (Exception ex){
+//            return false;
+//        }
     }
 
     @Override
