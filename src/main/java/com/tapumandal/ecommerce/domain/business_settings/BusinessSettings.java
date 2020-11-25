@@ -35,7 +35,7 @@ public class BusinessSettings {
     protected String discountType = "TotalPercentage"; // TotalPercentage/OverallAmount/ProductDiscount
 
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "business_settings_id_discount_type_condition", referencedColumnName = "id")
     protected List<DiscountTypeCondition> discountTypeCondition;
 
@@ -55,7 +55,7 @@ public class BusinessSettings {
     @Column(name = "card_payment_type")
     protected String cardPaymentDiscountType = "TotalPercentage"; // TotalPercentage/OverallAmount
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "business_settings_id_card_payment_condition", referencedColumnName = "id")
     protected List<DiscountTypeCondition> cardPaymentCondition;
 
@@ -65,7 +65,7 @@ public class BusinessSettings {
     @Column(name = "mobile_payment_type")
     protected String mobilePaymentDiscountType = "TotalPercentage"; // TotalPercentage/OverallAmount
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "business_settings_id_mobile_payment_condition", referencedColumnName = "id")
     protected List<DiscountTypeCondition> mobilePaymentCondition;
 

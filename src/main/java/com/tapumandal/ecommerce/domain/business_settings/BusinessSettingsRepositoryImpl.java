@@ -47,10 +47,17 @@ public class BusinessSettingsRepositoryImpl implements BusinessSettingsRepositor
 
     private boolean delete(){
 
-        String query = "DELETE FROM BusinessSettings";
+//        String query = "DELETE FROM BusinessSettings";
+//        System.out.println(query);
 //        Query resQuery =  getSession().createQuery(query);
-//        resQuery.executeUpdate();
-        getSession().createSQLQuery(query);
+//        getSession().createSQLQuery(query).executeUpdate();
+
+        Query qq = getSession().createQuery("DELETE DiscountTypeCondition WHERE 1 = 1");
+        qq.executeUpdate();
+
+        Query q = getSession().createQuery("DELETE BusinessSettings WHERE 1 = 1");
+        q.executeUpdate();
+
         getSession().flush();
         getSession().clear();
 
