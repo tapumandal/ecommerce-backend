@@ -21,9 +21,8 @@ public class CartController extends ControllerHelper<Cart> {
     @Autowired
     CartService cartService;
 
-    @PostMapping(path = "/create")
+    @PostMapping(path = "/consumer/create")
     public CommonResponseSingle createCart(@RequestBody CartDto cartDto, HttpServletRequest request) {
-
 
         System.out.println("CONTROLLER");
         System.out.println(new Gson().toJson(cartDto));
@@ -56,7 +55,7 @@ public class CartController extends ControllerHelper<Cart> {
         }
     }
 
-    @GetMapping(path = "/list")
+    @GetMapping(path = "/consumer/list")
     public CommonResponseArray<Cart> getAll(HttpServletRequest request, Pageable pageable) {
 
         storeUserDetails(request);

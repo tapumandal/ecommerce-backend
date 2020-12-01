@@ -17,22 +17,37 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
 
-    @Column(name = "user_id")
+    @Column(name = "name")
     protected int userId;
 
-    @Column(name = "delivery_charge")
+    @Column(name = "image")
     protected int deliveryCharge;
 
-    @Column(name = "discount_type")
-    protected String discountType; // TotalPercentage/OverallAmount/ProductDiscount
+    @Column(name = "company")
+    protected String defaultDiscountBtn = ""; // radioOnProduct/radioSpecialOffer
 
-    @Column(name = "total_discount")
+    @Column(name = "categories")
+    protected String selectedDiscountName = "On Product/Special Discount/Mobile Payment/Card Payment";
+
+    @Column(name = "pre_selected_categories")
+    protected String selectedDiscountType = "TotalPercentage"; // TotalPercentage/OverallAmount
+
+    @Column(name = "description")
+    protected String selectedDiscountDetails;
+
+    @Column(name = "selling_price_per_unit")
+    protected int totalProductDiscount;
+
+    @Column(name = "discount_price")
+    protected int totalProductQuantity;
+
+    @Column(name = "discount_title")
+    protected int totalProductPrice ;
+
+    @Column(name = "unit")
     protected int totalDiscount;
 
-    @Column(name = "total_product_price")
-    protected int totalProductPrice;
-
-    @Column(name = "total_payable")
+    @Column(name = "unit_title")
     protected int totalPayable;
 
 
@@ -59,25 +74,24 @@ public class Cart {
     }
 
     public Cart(CartDto cartDto){
+
         this.id = cartDto.getId();
         this.userId = cartDto.getUserId();
         this.deliveryCharge = cartDto.getDeliveryCharge();
-        this.discountType = cartDto.getDiscountType();
-        this.totalDiscount = cartDto.getTotalDiscount();
+        this.defaultDiscountBtn = cartDto.getDefaultDiscountBtn();
+        this.selectedDiscountName = cartDto.getSelectedDiscountName();
+        this.selectedDiscountType = cartDto.getSelectedDiscountType();
+        this.selectedDiscountDetails = cartDto.getSelectedDiscountDetails();
+        this.totalProductDiscount = cartDto.getTotalProductDiscount();
+        this.totalProductQuantity = cartDto.getTotalProductQuantity();
         this.totalProductPrice = cartDto.getTotalProductPrice();
+        this.totalDiscount = cartDto.getTotalDiscount();
         this.totalPayable = cartDto.getTotalPayable();
-        this.isActive = cartDto.isActive();
-        this.isDeleted = cartDto.isDeleted();
 
         this.cartProducts = new ArrayList<CartProduct>();
         if(cartDto.getProductList() != null) {
-            for (CartProductDto proDto : cartDto.getProductList()) {
-                CartProduct cartPro = new CartProduct();
-                cartPro.setId(proDto.getId());
-                cartPro.setProductId(proDto.getProductId());
-                cartPro.setOrderQuantity(proDto.getOrderQuantity());
-                this.isActive = cartDto.isActive();
-                this.isDeleted = cartDto.isDeleted();
+            for (CartProductDto cartDtoTmp : cartDto.getProductList()) {
+                CartProduct cartPro = new CartProduct(cartDtoTmp);
                 cartProducts.add(cartPro);
             }
         }
@@ -107,20 +121,52 @@ public class Cart {
         this.deliveryCharge = deliveryCharge;
     }
 
-    public String getDiscountType() {
-        return discountType;
+    public String getDefaultDiscountBtn() {
+        return defaultDiscountBtn == null ? "" : defaultDiscountBtn;
     }
 
-    public void setDiscountType(String discountType) {
-        this.discountType = discountType;
+    public void setDefaultDiscountBtn(String defaultDiscountBtn) {
+        this.defaultDiscountBtn = defaultDiscountBtn;
     }
 
-    public int getTotalDiscount() {
-        return totalDiscount;
+    public String getSelectedDiscountName() {
+        return selectedDiscountName == null ? "" : selectedDiscountName;
     }
 
-    public void setTotalDiscount(int totalDiscount) {
-        this.totalDiscount = totalDiscount;
+    public void setSelectedDiscountName(String selectedDiscountName) {
+        this.selectedDiscountName = selectedDiscountName;
+    }
+
+    public String getSelectedDiscountType() {
+        return selectedDiscountType == null ? "" : selectedDiscountType;
+    }
+
+    public void setSelectedDiscountType(String selectedDiscountType) {
+        this.selectedDiscountType = selectedDiscountType;
+    }
+
+    public String getSelectedDiscountDetails() {
+        return selectedDiscountDetails == null ? "" : selectedDiscountDetails;
+    }
+
+    public void setSelectedDiscountDetails(String selectedDiscountDetails) {
+        this.selectedDiscountDetails = selectedDiscountDetails;
+    }
+
+    public int getTotalProductDiscount() {
+        return totalProductDiscount;
+    }
+
+    public void setTotalProductDiscount(int totalProductDiscount) {
+        this.totalProductDiscount = totalProductDiscount;
+    }
+
+    public int getTotalProductQuantity() {
+        return totalProductQuantity;
+    }
+
+    public void setTotalProductQuantity(int totalProductQuantity) {
+        this.totalProductQuantity = totalProductQuantity;
     }
 
     public int getTotalProductPrice() {
@@ -131,20 +177,20 @@ public class Cart {
         this.totalProductPrice = totalProductPrice;
     }
 
+    public int getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public void setTotalDiscount(int totalDiscount) {
+        this.totalDiscount = totalDiscount;
+    }
+
     public int getTotalPayable() {
         return totalPayable;
     }
 
     public void setTotalPayable(int totalPayable) {
         this.totalPayable = totalPayable;
-    }
-
-    public List<CartProduct> getCartProducts() {
-        return cartProducts;
-    }
-
-    public void setCartProducts(List<CartProduct> cartProducts) {
-        this.cartProducts = cartProducts;
     }
 
     public boolean isActive() {
@@ -177,5 +223,13 @@ public class Cart {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<CartProduct> getCartProducts() {
+        return cartProducts;
+    }
+
+    public void setCartProducts(List<CartProduct> cartProducts) {
+        this.cartProducts = cartProducts;
     }
 }

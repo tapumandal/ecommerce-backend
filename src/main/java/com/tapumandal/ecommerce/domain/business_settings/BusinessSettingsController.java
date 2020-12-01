@@ -39,13 +39,18 @@ public class BusinessSettingsController extends ControllerHelper<BusinessSetting
     }
 
     @GetMapping(path = "/get")
-    public ResponseEntity<BusinessSettings> getBusinessSettings(HttpServletRequest request) {
+    public CommonResponseSingle getBusinessSettings(HttpServletRequest request) {
 
         storeUserDetails(request);
 
         BusinessSettings businessSettings = businessSettingsService.getById(0);
 
-        return new ResponseEntity<BusinessSettings>(businessSettings, HttpStatus.OK);
+        if (businessSettings != null) {
+            return response(true, HttpStatus.CREATED, "BusinessSettings inserted successfully", businessSettings);
+        } else if (businessSettings == null) {
+            return response(false, HttpStatus.NOT_FOUND, "BusinessSettings not Found", (BusinessSettings) null);
+        }
+        return response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong with the application", (BusinessSettings) null);
     }
 
 

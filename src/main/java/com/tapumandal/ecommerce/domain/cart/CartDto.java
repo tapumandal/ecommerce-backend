@@ -11,22 +11,27 @@ public class CartDto {
 
     protected int id;
 
-    protected int deliveryCharge;
-
-    protected String discountType; // TotalPercentage/OverallAmount/ProductDiscount
-
-    protected int totalDiscount;
-
-    protected int totalProductPrice;
-
-    protected int totalPayable;
-
-    private boolean isActive = true;
-    private boolean isDeleted = false;
-    private Date createdAt;
-    private Date updatedAt;
-
     protected int userId;
+
+    protected int deliveryCharge = 0;
+
+    protected String defaultDiscountBtn = ""; // radioOnProduct/radioSpecialOffer
+
+    protected String selectedDiscountName = "On Product/Special Discount/Mobile Payment/Card Payment";
+
+    protected String selectedDiscountType = "TotalPercentage"; // TotalPercentage/OverallAmount
+
+    protected String selectedDiscountDetails;
+
+    protected int totalProductDiscount = 0;
+
+    protected int totalProductQuantity = 0;
+
+    protected int totalProductPrice = 0 ;
+
+    protected int totalDiscount = 0;
+
+    protected int totalPayable = 0;
 
     protected List<CartProductDto> productList;
 
@@ -38,6 +43,14 @@ public class CartDto {
         this.id = id;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public int getDeliveryCharge() {
         return deliveryCharge;
     }
@@ -46,20 +59,52 @@ public class CartDto {
         this.deliveryCharge = deliveryCharge;
     }
 
-    public String getDiscountType() {
-        return discountType;
+    public String getDefaultDiscountBtn() {
+        return defaultDiscountBtn == null ? "" : defaultDiscountBtn;
     }
 
-    public void setDiscountType(String discountType) {
-        this.discountType = discountType;
+    public void setDefaultDiscountBtn(String defaultDiscountBtn) {
+        this.defaultDiscountBtn = defaultDiscountBtn;
     }
 
-    public int getTotalDiscount() {
-        return totalDiscount;
+    public String getSelectedDiscountName() {
+        return selectedDiscountName == null ? "" : selectedDiscountName;
     }
 
-    public void setTotalDiscount(int totalDiscount) {
-        this.totalDiscount = totalDiscount;
+    public void setSelectedDiscountName(String selectedDiscountName) {
+        this.selectedDiscountName = selectedDiscountName;
+    }
+
+    public String getSelectedDiscountType() {
+        return selectedDiscountType == null ? "" : selectedDiscountType;
+    }
+
+    public void setSelectedDiscountType(String selectedDiscountType) {
+        this.selectedDiscountType = selectedDiscountType;
+    }
+
+    public String getSelectedDiscountDetails() {
+        return selectedDiscountDetails == null ? "" : selectedDiscountDetails;
+    }
+
+    public void setSelectedDiscountDetails(String selectedDiscountDetails) {
+        this.selectedDiscountDetails = selectedDiscountDetails;
+    }
+
+    public int getTotalProductDiscount() {
+        return totalProductDiscount;
+    }
+
+    public void setTotalProductDiscount(int totalProductDiscount) {
+        this.totalProductDiscount = totalProductDiscount;
+    }
+
+    public int getTotalProductQuantity() {
+        return totalProductQuantity;
+    }
+
+    public void setTotalProductQuantity(int totalProductQuantity) {
+        this.totalProductQuantity = totalProductQuantity;
     }
 
     public int getTotalProductPrice() {
@@ -68,6 +113,14 @@ public class CartDto {
 
     public void setTotalProductPrice(int totalProductPrice) {
         this.totalProductPrice = totalProductPrice;
+    }
+
+    public int getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public void setTotalDiscount(int totalDiscount) {
+        this.totalDiscount = totalDiscount;
     }
 
     public int getTotalPayable() {
@@ -84,45 +137,5 @@ public class CartDto {
 
     public void setProductList(List<CartProductDto> productList) {
         this.productList = productList;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 }
