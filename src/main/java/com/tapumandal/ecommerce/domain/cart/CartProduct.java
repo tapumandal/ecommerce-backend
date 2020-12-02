@@ -81,6 +81,10 @@ public class CartProduct implements Serializable {
     @UpdateTimestamp
     private Date updatedAt;
 
+//    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Cart cart;
+
     public CartProduct() {
     }
 

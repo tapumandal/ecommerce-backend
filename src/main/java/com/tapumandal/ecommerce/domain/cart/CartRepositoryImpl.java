@@ -27,9 +27,7 @@ public class CartRepositoryImpl implements CartRepository {
     @Override
     public int create(Cart cart) {
 
-        getSession().saveOrUpdate(cart);
-        getSession().flush();
-        getSession().clear();
+        getSession().save(cart);
         return cart.getId();
     }
 

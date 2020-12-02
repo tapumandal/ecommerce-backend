@@ -17,37 +17,37 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
 
-    @Column(name = "name")
+    @Column(name = "userId")
     protected int userId;
 
-    @Column(name = "image")
+    @Column(name = "delivery_charge")
     protected int deliveryCharge;
 
-    @Column(name = "company")
-    protected String defaultDiscountBtn = ""; // radioOnProduct/radioSpecialOffer
+    @Column(name = "default_discount_btn")
+    protected String defaultDiscountBtn; // radioOnProduct/radioSpecialOffer
 
-    @Column(name = "categories")
-    protected String selectedDiscountName = "On Product/Special Discount/Mobile Payment/Card Payment";
+    @Column(name = "selected_discount_name")
+    protected String selectedDiscountName; //On Product/Special Discount/Mobile Payment/Card Payment;
 
-    @Column(name = "pre_selected_categories")
-    protected String selectedDiscountType = "TotalPercentage"; // TotalPercentage/OverallAmount
+    @Column(name = "selected_discount_type")
+    protected String selectedDiscountType; // TotalPercentage/OverallAmount
 
-    @Column(name = "description")
+    @Column(name = "selected_discount_details")
     protected String selectedDiscountDetails;
 
-    @Column(name = "selling_price_per_unit")
+    @Column(name = "total_product_discount")
     protected int totalProductDiscount;
 
-    @Column(name = "discount_price")
+    @Column(name = "total_product_quantity")
     protected int totalProductQuantity;
 
-    @Column(name = "discount_title")
+    @Column(name = "total_product_price")
     protected int totalProductPrice ;
 
-    @Column(name = "unit")
+    @Column(name = "total_discount")
     protected int totalDiscount;
 
-    @Column(name = "unit_title")
+    @Column(name = "total_payable")
     protected int totalPayable;
 
 
@@ -66,8 +66,11 @@ public class Cart {
     private Date updatedAt;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "cart_id", referencedColumnName = "id", insertable = true, updatable = false)
+//    protected List<CartProduct> cartProducts;
+
+    @OneToMany(mappedBy = "cart")
     protected List<CartProduct> cartProducts;
 
     public Cart() {

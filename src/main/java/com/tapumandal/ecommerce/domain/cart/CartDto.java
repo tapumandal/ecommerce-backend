@@ -13,25 +13,25 @@ public class CartDto {
 
     protected int userId;
 
-    protected int deliveryCharge = 0;
+    protected int deliveryCharge;
 
     protected String defaultDiscountBtn = ""; // radioOnProduct/radioSpecialOffer
 
-    protected String selectedDiscountName = "On Product/Special Discount/Mobile Payment/Card Payment";
+    protected String selectedDiscountName = ""; //On Product/Special Discount/Mobile Payment/Card Payment
 
-    protected String selectedDiscountType = "TotalPercentage"; // TotalPercentage/OverallAmount
+    protected String selectedDiscountType = ""; // TotalPercentage/OverallAmount
 
     protected String selectedDiscountDetails;
 
-    protected int totalProductDiscount = 0;
+    protected int totalProductDiscount;
 
-    protected int totalProductQuantity = 0;
+    protected int totalProductQuantity;
 
-    protected int totalProductPrice = 0 ;
+    protected int totalProductPrice;
 
-    protected int totalDiscount = 0;
+    protected int totalDiscount;
 
-    protected int totalPayable = 0;
+    protected int totalPayable;
 
     protected List<CartProductDto> productList;
 
