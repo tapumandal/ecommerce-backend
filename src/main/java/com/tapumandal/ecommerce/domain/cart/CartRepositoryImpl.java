@@ -1,4 +1,5 @@
 package com.tapumandal.ecommerce.domain.cart;
+import com.google.gson.Gson;
 import com.tapumandal.ecommerce.util.MyPagenation;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -27,7 +28,12 @@ public class CartRepositoryImpl implements CartRepository {
     @Override
     public int create(Cart cart) {
 
-        getSession().save(cart);
+        System.out.println("REPOSITORY");
+        System.out.println(new Gson().toJson(cart));
+
+        getSession().saveOrUpdate(cart);
+        getSession().flush();
+        getSession().clear();
         return cart.getId();
     }
 

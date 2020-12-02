@@ -66,12 +66,12 @@ public class Cart {
     private Date updatedAt;
 
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "cart_id", referencedColumnName = "id", insertable = true, updatable = false)
-//    protected List<CartProduct> cartProducts;
-
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
     protected List<CartProduct> cartProducts;
+
+//    @OneToMany(mappedBy = "cart")
+//    protected List<CartProduct> cartProducts;
 
     public Cart() {
     }
@@ -235,4 +235,6 @@ public class Cart {
     public void setCartProducts(List<CartProduct> cartProducts) {
         this.cartProducts = cartProducts;
     }
+
+
 }

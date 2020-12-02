@@ -22,6 +22,9 @@ public class CartProduct implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @Column(name = "product_id")
+    private int productId;
+
     @Column(name = "name")
     private String name;
 
@@ -82,14 +85,15 @@ public class CartProduct implements Serializable {
     private Date updatedAt;
 
 //    @JoinColumn(name = "cart_id", referencedColumnName = "id")
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Cart cart;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "cart_id")
+//    private Cart cart;
 
     public CartProduct() {
     }
 
     public CartProduct(CartProductDto cartProductDto) {
-        this.id = cartProductDto.getId();
+        this.productId = cartProductDto.getId();
         this.name = cartProductDto.getName();
         this.image = cartProductDto.getImage();
         this.company = cartProductDto.getCompany();
@@ -118,6 +122,16 @@ public class CartProduct implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+
 
     public String getName() {
         return name == null ? "" : name;
