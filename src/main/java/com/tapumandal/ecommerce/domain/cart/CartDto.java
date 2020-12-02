@@ -13,6 +13,14 @@ public class CartDto {
 
     protected int userId;
 
+    protected String name;
+
+    protected String mobileNumber;
+
+    protected String area;
+
+    protected String address;
+
     protected int deliveryCharge;
 
     protected String defaultDiscountBtn = ""; // radioOnProduct/radioSpecialOffer
@@ -41,6 +49,38 @@ public class CartDto {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name == null ? "" : name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber == null ? "" : mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getArea() {
+        return area == null ? "" : area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getAddress() {
+        return address == null ? "" : address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getUserId() {

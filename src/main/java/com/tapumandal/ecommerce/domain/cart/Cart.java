@@ -17,8 +17,21 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
 
-    @Column(name = "userId")
+    @Column(name = "user+_id")
     protected int userId;
+
+    @Column(name = "name")
+    protected String name;
+
+    @Column(name = "mobile_number")
+    protected String mobileNumber;
+
+    @Column(name = "area")
+    protected String area;
+
+    @Column(name = "address")
+    protected String address;
+
 
     @Column(name = "delivery_charge")
     protected int deliveryCharge;
@@ -80,6 +93,10 @@ public class Cart {
 
         this.id = cartDto.getId();
         this.userId = cartDto.getUserId();
+        this.name = cartDto.getName();
+        this.mobileNumber = cartDto.getMobileNumber();
+        this.area = cartDto.getArea();
+        this.address = cartDto.getAddress();
         this.deliveryCharge = cartDto.getDeliveryCharge();
         this.defaultDiscountBtn = cartDto.getDefaultDiscountBtn();
         this.selectedDiscountName = cartDto.getSelectedDiscountName();
@@ -106,6 +123,38 @@ public class Cart {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name == null ? "" : name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber == null ? "" : mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getArea() {
+        return area == null ? "" : area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getAddress() {
+        return address == null ? "" : address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getUserId() {
