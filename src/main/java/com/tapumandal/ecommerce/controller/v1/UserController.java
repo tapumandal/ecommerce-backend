@@ -1,5 +1,12 @@
 package com.tapumandal.ecommerce.controller.v1;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
+import com.google.gson.Gson;
 import com.tapumandal.ecommerce.entity.User;
 import com.tapumandal.ecommerce.entity.*;
 import com.tapumandal.ecommerce.entity.dto.*;
@@ -18,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -173,5 +181,58 @@ public class UserController extends ControllerHelper {
     @GetMapping("/admin")
     public String admin() {
         return ("<h1>Welcome Admin</h1>");
+    }
+
+
+    @PostMapping(path = "/consumer/registration")
+    public CommonResponseSingle consumerRegistration(@RequestBody @Valid UserDto userDto, HttpServletRequest request) {
+
+        System.out.println("consumerRegistration");
+        System.out.println(new Gson().toJson(userDto));
+
+//        if(jwtUtil.validateToken(userDto.getUserTokenId(), userDto.getUsername())){
+//            System.out.println("UserName Validate");
+//        }
+//        System.out.println("extractUsername: "+jwtUtil.extractUsername(userDto.getUserTokenId()));
+//
+//        System.out.println("extractExpiration: "+jwtUtil.extractExpiration(userDto.getUserTokenId()));
+
+
+        FirebaseOptions options = null;
+        try {
+            options = FirebaseOptions.builder()
+                    .setCredentials(GoogleCredentials.getApplicationDefault())
+                    .setDatabaseUrl("https://grocery-ecommerce-845b8.firebaseio.com/")
+                    .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        FirebaseApp.initializeApp(options);
+
+        FirebaseToken decodedToken = null;
+        try {
+            decodedToken = FirebaseAuth.getInstance().verifyIdToken(userDto.getUserTokenId());
+        } catch (FirebaseAuthException e) {
+            e.printStackTrace();
+        }
+        String uid = decodedToken.getUid();
+        System.out.println("Firebase Authentication: "+uid);
+
+        if (!userService.isUserExist(userDto.getUsername())) {
+//            if (userDto.getCompany().getId() != 0) {
+//                return response(false, HttpStatus.BAD_REQUEST, "Please check your company information.", (User) null);
+//            }
+            User user = userService.createUser(userDto);
+
+            if (user != null) {
+                return response(true, HttpStatus.CREATED, "User & Company registration successful", user);
+            } else {
+                return response(false, HttpStatus.BAD_REQUEST, "Something is wrong please contact.", (User) null);
+            }
+
+        } else {
+            return response(false, HttpStatus.NOT_ACCEPTABLE, "User already exist", (User) null);
+        }
     }
 }

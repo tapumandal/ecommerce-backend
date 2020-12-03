@@ -22,8 +22,12 @@ public class UserDto{
 //    @Size(min=7, max = 20, message = "Phone number is not usable")
     protected String phone;
 
-    @NotNull(message = "password can't be empty")
-    @Size(min=6, max = 32, message = "Password is not valid")
+    protected String gender;
+
+
+    protected String userTokenId;
+
+
     protected String password;
 
 //    @NotNull(message = "address can't be empty")
@@ -99,13 +103,6 @@ public class UserDto{
         this.work_title = work_title;
     }
 
-//    public CompanyDto getCompany() {
-//        return company;
-//    }
-//
-//    public void setCompany(CompanyDto company) {
-//        this.company = company;
-//    }
 
     public String getRole() {
         return role;
@@ -137,5 +134,21 @@ public class UserDto{
 
     public boolean isIs_deleted() {
         return is_deleted;
+    }
+
+    public String getGender() {
+        return gender == null ? "" : gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getUserTokenId() {
+        return userTokenId == null ? "" : userTokenId;
+    }
+
+    public void setUserTokenId(String userTokenId) {
+        this.userTokenId = userTokenId;
     }
 }
