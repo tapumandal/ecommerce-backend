@@ -1,10 +1,13 @@
 package com.tapumandal.ecommerce.entity.dto;
 
 import com.sun.istack.Nullable;
+import com.tapumandal.ecommerce.entity.Address;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class UserDto{
@@ -20,24 +23,17 @@ public class UserDto{
 
 //    @NotNull(message = "phone can't be empty")
 //    @Size(min=7, max = 20, message = "Phone number is not usable")
-    protected String phone;
+    protected String mobileNo;
 
     protected String gender;
 
+    private List<AddressDto> address = new ArrayList<AddressDto>();
 
     protected String userTokenId;
 
-
     protected String password;
 
-//    @NotNull(message = "address can't be empty")
-//    @Size(min=12, max = 32, message = "Address information is very less")
-    protected String address;
-
-//    @NotNull(message = "Work title can't be empty")
-//    @Size(min=3, max = 32, message = "Work Title is not valid")
     protected String work_title;
-
 
     protected String role;
 
@@ -72,11 +68,11 @@ public class UserDto{
     }
 
     public String getPhone() {
-        return phone;
+        return mobileNo;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.mobileNo = phone;
     }
 
     public String getPassword() {
@@ -87,11 +83,11 @@ public class UserDto{
         this.password = password;
     }
 
-    public String getAddress() {
+    public List<AddressDto> getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(List<AddressDto> address) {
         this.address = address;
     }
 

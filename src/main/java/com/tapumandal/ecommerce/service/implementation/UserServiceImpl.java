@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 @Service
 public class UserServiceImpl implements UserService{
 
+    private static final String CONSUMER_USER_PASSWORD = "12345abcde!@#$%";
     @Autowired
     UserRepository userRepository;
 
@@ -39,10 +40,10 @@ public class UserServiceImpl implements UserService{
 
 //        True for ecommerce fron app.
 //        Make it conditional when mobile app is ready
-        if(true){
-            return createAdminAccount(userDto);
-        }else{
+        if(userDto.getUserTokenId() != null){
             return createUserAccount(userDto);
+        }else{
+            return createAdminAccount(userDto);
         }
     }
 
@@ -74,6 +75,7 @@ public class UserServiceImpl implements UserService{
 
     private User createUserAccount(UserDto userDto) {
         User u = new User(userDto);
+        u.setPassword(CONSUMER_USER_PASSWORD);
         Optional<User> user;
 //        try{
         int userId = userRepository.create(u);

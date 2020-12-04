@@ -1,10 +1,15 @@
 package com.tapumandal.ecommerce.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.tapumandal.ecommerce.domain.cart.CartProduct;
+import com.tapumandal.ecommerce.domain.cart.CartProductDto;
+import com.tapumandal.ecommerce.entity.dto.AddressDto;
 import com.tapumandal.ecommerce.entity.dto.UserDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,14 +35,11 @@ public class User {
     @Column(name = "username_type")
     protected String usernameType;
 
-    @Column(name = "phone")
-    protected String phone;
+    @Column(name = "mobile_no")
+    protected String mobileNo;
 
     @Column(name = "password")
     protected String password;
-
-    @Column(name = "address")
-    protected String address;
 
     @Column(name = "work_title")
     protected String workTitle;
@@ -61,32 +63,37 @@ public class User {
     private Date updatedAt;
 
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private List<Address> addresses = new ArrayList<Address>();
+
+
 //    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "company_id")
 //    @Where(clause = "company_is_deleted = false AND company_is_active = true")
 //    @JsonSerialize(using = CustomCompanySerializer.class)
 //    private Company company;
 
-    public User() {
-    }
-
-    ;
+    public User() {}
 
     public User(UserDto userDto) {
 
         this.name = userDto.getName();
         this.username = userDto.getUsername();
-        this.phone = userDto.getPhone();
+        this.mobileNo = userDto.getPhone();
         this.password = userDto.getPassword();
-        this.address = userDto.getAddress();
         this.workTitle = userDto.getWork_title();
         this.role = userDto.getRole();
         this.isActive = userDto.isActive();
         this.isDeleted = userDto.isDeleted();
 
-//        if (userDto.getCompany() != null) {
-//            this.company = new Company(userDto.getCompany());
-//        }
+        this.addresses = new ArrayList<Address>();
+        if(userDto.getAddress() != null) {
+            for (AddressDto addressDto : userDto.getAddress()) {
+                Address address = new Address(addressDto);
+                addresses.add(address);
+            }
+        }
     }
 
 
@@ -130,12 +137,20 @@ public class User {
         this.usernameType = usernameType;
     }
 
-    public String getPhone() {
-        return phone == null ? "" : phone;
+    public String getMobileNo() {
+        return mobileNo == null ? "" : mobileNo;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 
     public String getPassword() {
@@ -144,14 +159,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getAddress() {
-        return address == null ? "" : address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public Date getCreatedAt() {

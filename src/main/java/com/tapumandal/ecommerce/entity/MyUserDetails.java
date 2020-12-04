@@ -15,6 +15,7 @@ public class MyUserDetails implements UserDetails {
 
     protected String username;
     protected String password;
+    protected String mobileNo;
     protected boolean active;
     protected List<SimpleGrantedAuthority> authrities;
 
@@ -22,6 +23,7 @@ public class MyUserDetails implements UserDetails {
 
     public MyUserDetails(User user){
         this.username = user.getUsername();
+        this.mobileNo = user.getMobileNo();
         this.password = user.getPassword();
         this.active = user.isActive();
         this.authrities = Arrays.stream(user.getRole().split(","))
@@ -48,6 +50,8 @@ public class MyUserDetails implements UserDetails {
         
         return username;
     }
+
+
 
     @Override
     public boolean isAccountNonExpired() {

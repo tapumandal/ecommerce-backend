@@ -34,6 +34,8 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class UserController extends ControllerHelper {
 
+    private static final String CONSUMER_USER_PASSWORD = "12345abcde!@#$%";
+
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
@@ -185,54 +187,97 @@ public class UserController extends ControllerHelper {
 
 
     @PostMapping(path = "/consumer/registration")
-    public CommonResponseSingle consumerRegistration(@RequestBody @Valid UserDto userDto, HttpServletRequest request) {
+    public CommonResponseSingle<LoginResponseModel> consumerRegistration(@RequestBody @Valid UserDto userDto, HttpServletRequest request) throws Exception  {
 
         System.out.println("consumerRegistration");
         System.out.println(new Gson().toJson(userDto));
 
-//        if(jwtUtil.validateToken(userDto.getUserTokenId(), userDto.getUsername())){
-//            System.out.println("UserName Validate");
-//        }
-//        System.out.println("extractUsername: "+jwtUtil.extractUsername(userDto.getUserTokenId()));
-//
-//        System.out.println("extractExpiration: "+jwtUtil.extractExpiration(userDto.getUserTokenId()));
+        userDto.setRole("USER");
 
-
-        FirebaseOptions options = null;
-        try {
-            options = FirebaseOptions.builder()
-                    .setCredentials(GoogleCredentials.getApplicationDefault())
-                    .setDatabaseUrl("https://grocery-ecommerce-845b8.firebaseio.com/")
-                    .build();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(!validateFirebaseTokenID(userDto.getUserTokenId())){
+            System.out.println("1");
+            return response(false, HttpStatus.BAD_REQUEST, "This is not a valid request.", (LoginResponseModel) null);
         }
-
-        FirebaseApp.initializeApp(options);
-
-        FirebaseToken decodedToken = null;
-        try {
-            decodedToken = FirebaseAuth.getInstance().verifyIdToken(userDto.getUserTokenId());
-        } catch (FirebaseAuthException e) {
-            e.printStackTrace();
-        }
-        String uid = decodedToken.getUid();
-        System.out.println("Firebase Authentication: "+uid);
 
         if (!userService.isUserExist(userDto.getUsername())) {
-//            if (userDto.getCompany().getId() != 0) {
-//                return response(false, HttpStatus.BAD_REQUEST, "Please check your company information.", (User) null);
-//            }
+            System.out.println("2");
             User user = userService.createUser(userDto);
 
-            if (user != null) {
-                return response(true, HttpStatus.CREATED, "User & Company registration successful", user);
-            } else {
-                return response(false, HttpStatus.BAD_REQUEST, "Something is wrong please contact.", (User) null);
+            try {
+                System.out.println("3");
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(userDto.getUsername(), CONSUMER_USER_PASSWORD)
+                );
+            } catch (BadCredentialsException e) {
+                System.out.println("4");
+                throw new Exception("Incorrect username or tokenId", e);
             }
+            System.out.println("5");
+            userDetails = myuserDetailsService.loadUserByUsername(user.getUsername());
+            System.out.println("USER DETAILS: "+new Gson().toJson(userDetails));
+            System.out.println("JWT: "+jwtUtil.generateToken(userDetails));
+            LoginResponseModel loginResponseModel = new LoginResponseModel();
+            loginResponseModel.setJwt(jwtUtil.generateToken(userDetails));
+            loginResponseModel.setUser(userService.getUserByUserName(userDetails.getUsername()));
+            System.out.println("6");
+            return response(true, HttpStatus.OK, "Registration is successful", loginResponseModel);
 
         } else {
-            return response(false, HttpStatus.NOT_ACCEPTABLE, "User already exist", (User) null);
+            System.out.println("7");
+            return response(false, HttpStatus.BAD_REQUEST, "The account is already exist", (LoginResponseModel) null);
         }
+    }
+
+    @PostMapping("/consumer/authenticate")
+    public CommonResponseSingle<LoginResponseModel> consumerAuthenticate(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+
+        if(!validateFirebaseTokenID(authenticationRequest.getUserTokenId())){
+            return response(false, HttpStatus.BAD_REQUEST, "This is not a valid request.", (LoginResponseModel) null);
+        }
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), CONSUMER_USER_PASSWORD)
+            );
+        } catch (BadCredentialsException e) {
+            throw new Exception("Incorrect username or tokenId", e);
+        }
+
+        userDetails = myuserDetailsService.loadUserByUsername(authenticationRequest.getUsername().toString());
+
+        LoginResponseModel loginResponseModel = new LoginResponseModel();
+        loginResponseModel.setJwt(jwtUtil.generateToken(userDetails));
+        loginResponseModel.setUser(userService.getUserByUserName(userDetails.getUsername()));
+
+        return response(true, HttpStatus.OK, "Login is successful", loginResponseModel);
+    }
+
+    private boolean validateFirebaseTokenID(String tokenID) {
+        if(tokenID != null && tokenID.length() > 10){
+            return true;
+        }else{
+            return false;
+        }
+//        FirebaseOptions options = null;
+//        try {
+//            options = FirebaseOptions.builder()
+//                    .setCredentials(GoogleCredentials.getApplicationDefault())
+//                    .setDatabaseUrl("https://grocery-ecommerce-845b8.firebaseio.com/")
+//                    .build();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        FirebaseApp.initializeApp(options);
+//
+//        FirebaseToken decodedToken = null;
+//        try {
+//            decodedToken = FirebaseAuth.getInstance().verifyIdToken(userDto.getUserTokenId());
+//        } catch (FirebaseAuthException e) {
+//            e.printStackTrace();
+//        }
+//        String uid = decodedToken.getUid();
+//        System.out.println("Firebase Authentication: "+uid);
+
     }
 }
