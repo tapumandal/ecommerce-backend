@@ -14,7 +14,10 @@ import java.util.function.Function;
 @Service
 public class JwtUtil {
 
-    private String SECRET_KEY = "secret";
+//    private String SECRET_KEY = "secret";
+//    private String SECRET_KEY = "RS256";
+//    private String SECRET_KEY = "PUBLIC_KEY";
+    private String SECRET_KEY = "HS256";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -51,6 +54,11 @@ public class JwtUtil {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public Boolean validateToken(String token, String uname) {
+        final String username = extractUsername(token);
+        return (username.equals(uname) && !isTokenExpired(token));
     }
 
 

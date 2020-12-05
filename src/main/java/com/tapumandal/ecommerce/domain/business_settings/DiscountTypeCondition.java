@@ -39,8 +39,6 @@ public class DiscountTypeCondition implements Serializable {
     @UpdateTimestamp
     private Date updatedAt;
 
-
-
     public DiscountTypeCondition() {
     }
 

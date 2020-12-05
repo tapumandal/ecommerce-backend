@@ -17,20 +17,48 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
 
-    @Column(name = "user_id")
+    @Column(name = "user+_id")
     protected int userId;
+
+    @Column(name = "name")
+    protected String name;
+
+    @Column(name = "mobile_number")
+    protected String mobileNumber;
+
+    @Column(name = "area")
+    protected String area;
+
+    @Column(name = "address")
+    protected String address;
+
 
     @Column(name = "delivery_charge")
     protected int deliveryCharge;
 
-    @Column(name = "discount_type")
-    protected String discountType; // TotalPercentage/OverallAmount/ProductDiscount
+    @Column(name = "default_discount_btn")
+    protected String defaultDiscountBtn; // radioOnProduct/radioSpecialOffer
+
+    @Column(name = "selected_discount_name")
+    protected String selectedDiscountName; //On Product/Special Discount/Mobile Payment/Card Payment;
+
+    @Column(name = "selected_discount_type")
+    protected String selectedDiscountType; // TotalPercentage/OverallAmount
+
+    @Column(name = "selected_discount_details")
+    protected String selectedDiscountDetails;
+
+    @Column(name = "total_product_discount")
+    protected int totalProductDiscount;
+
+    @Column(name = "total_product_quantity")
+    protected int totalProductQuantity;
+
+    @Column(name = "total_product_price")
+    protected int totalProductPrice ;
 
     @Column(name = "total_discount")
     protected int totalDiscount;
-
-    @Column(name = "total_product_price")
-    protected int totalProductPrice;
 
     @Column(name = "total_payable")
     protected int totalPayable;
@@ -55,29 +83,35 @@ public class Cart {
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     protected List<CartProduct> cartProducts;
 
+//    @OneToMany(mappedBy = "cart")
+//    protected List<CartProduct> cartProducts;
+
     public Cart() {
     }
 
     public Cart(CartDto cartDto){
+
         this.id = cartDto.getId();
         this.userId = cartDto.getUserId();
+        this.name = cartDto.getName();
+        this.mobileNumber = cartDto.getMobileNumber();
+        this.area = cartDto.getArea();
+        this.address = cartDto.getAddress();
         this.deliveryCharge = cartDto.getDeliveryCharge();
-        this.discountType = cartDto.getDiscountType();
-        this.totalDiscount = cartDto.getTotalDiscount();
+        this.defaultDiscountBtn = cartDto.getDefaultDiscountBtn();
+        this.selectedDiscountName = cartDto.getSelectedDiscountName();
+        this.selectedDiscountType = cartDto.getSelectedDiscountType();
+        this.selectedDiscountDetails = cartDto.getSelectedDiscountDetails();
+        this.totalProductDiscount = cartDto.getTotalProductDiscount();
+        this.totalProductQuantity = cartDto.getTotalProductQuantity();
         this.totalProductPrice = cartDto.getTotalProductPrice();
+        this.totalDiscount = cartDto.getTotalDiscount();
         this.totalPayable = cartDto.getTotalPayable();
-        this.isActive = cartDto.isActive();
-        this.isDeleted = cartDto.isDeleted();
 
         this.cartProducts = new ArrayList<CartProduct>();
         if(cartDto.getProductList() != null) {
-            for (CartProductDto proDto : cartDto.getProductList()) {
-                CartProduct cartPro = new CartProduct();
-                cartPro.setId(proDto.getId());
-                cartPro.setProductId(proDto.getProductId());
-                cartPro.setOrderQuantity(proDto.getOrderQuantity());
-                this.isActive = cartDto.isActive();
-                this.isDeleted = cartDto.isDeleted();
+            for (CartProductDto cartDtoTmp : cartDto.getProductList()) {
+                CartProduct cartPro = new CartProduct(cartDtoTmp);
                 cartProducts.add(cartPro);
             }
         }
@@ -89,6 +123,38 @@ public class Cart {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name == null ? "" : name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber == null ? "" : mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getArea() {
+        return area == null ? "" : area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getAddress() {
+        return address == null ? "" : address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getUserId() {
@@ -107,20 +173,52 @@ public class Cart {
         this.deliveryCharge = deliveryCharge;
     }
 
-    public String getDiscountType() {
-        return discountType;
+    public String getDefaultDiscountBtn() {
+        return defaultDiscountBtn == null ? "" : defaultDiscountBtn;
     }
 
-    public void setDiscountType(String discountType) {
-        this.discountType = discountType;
+    public void setDefaultDiscountBtn(String defaultDiscountBtn) {
+        this.defaultDiscountBtn = defaultDiscountBtn;
     }
 
-    public int getTotalDiscount() {
-        return totalDiscount;
+    public String getSelectedDiscountName() {
+        return selectedDiscountName == null ? "" : selectedDiscountName;
     }
 
-    public void setTotalDiscount(int totalDiscount) {
-        this.totalDiscount = totalDiscount;
+    public void setSelectedDiscountName(String selectedDiscountName) {
+        this.selectedDiscountName = selectedDiscountName;
+    }
+
+    public String getSelectedDiscountType() {
+        return selectedDiscountType == null ? "" : selectedDiscountType;
+    }
+
+    public void setSelectedDiscountType(String selectedDiscountType) {
+        this.selectedDiscountType = selectedDiscountType;
+    }
+
+    public String getSelectedDiscountDetails() {
+        return selectedDiscountDetails == null ? "" : selectedDiscountDetails;
+    }
+
+    public void setSelectedDiscountDetails(String selectedDiscountDetails) {
+        this.selectedDiscountDetails = selectedDiscountDetails;
+    }
+
+    public int getTotalProductDiscount() {
+        return totalProductDiscount;
+    }
+
+    public void setTotalProductDiscount(int totalProductDiscount) {
+        this.totalProductDiscount = totalProductDiscount;
+    }
+
+    public int getTotalProductQuantity() {
+        return totalProductQuantity;
+    }
+
+    public void setTotalProductQuantity(int totalProductQuantity) {
+        this.totalProductQuantity = totalProductQuantity;
     }
 
     public int getTotalProductPrice() {
@@ -131,20 +229,20 @@ public class Cart {
         this.totalProductPrice = totalProductPrice;
     }
 
+    public int getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public void setTotalDiscount(int totalDiscount) {
+        this.totalDiscount = totalDiscount;
+    }
+
     public int getTotalPayable() {
         return totalPayable;
     }
 
     public void setTotalPayable(int totalPayable) {
         this.totalPayable = totalPayable;
-    }
-
-    public List<CartProduct> getCartProducts() {
-        return cartProducts;
-    }
-
-    public void setCartProducts(List<CartProduct> cartProducts) {
-        this.cartProducts = cartProducts;
     }
 
     public boolean isActive() {
@@ -178,4 +276,14 @@ public class Cart {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public List<CartProduct> getCartProducts() {
+        return cartProducts;
+    }
+
+    public void setCartProducts(List<CartProduct> cartProducts) {
+        this.cartProducts = cartProducts;
+    }
+
+
 }

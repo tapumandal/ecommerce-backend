@@ -96,12 +96,12 @@ public class ControllerHelper<Entity> {
 
     public void storeUserDetails(HttpServletRequest request){
 
-        System.out.println(request.getHeader("Authorization"));
+//        System.out.println(request.getHeader("Authorization"));
 
         if(request.getHeader("Authorization") == null) {
-            System.out.println("NULL");
+//            System.out.println("NULL");
         }else if(request.getHeader("Authorization").equals("")) {
-            System.out.println("EMPTY");
+//            System.out.println("EMPTY");
         }else{
 
             String authorizationHeader = request.getHeader("Authorization");

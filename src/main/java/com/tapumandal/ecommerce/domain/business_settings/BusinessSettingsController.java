@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("/api/v1/businessSettings")
+@RequestMapping("/api/v1/business_settings")
 public class BusinessSettingsController extends ControllerHelper<BusinessSettings> {
 
     @Autowired
@@ -39,42 +39,35 @@ public class BusinessSettingsController extends ControllerHelper<BusinessSetting
     }
 
     @GetMapping(path = "/get")
-    public ResponseEntity<BusinessSettings> getBusinessSettings(HttpServletRequest request) {
+    public CommonResponseSingle getBusinessSettings(HttpServletRequest request) {
 
         storeUserDetails(request);
 
         BusinessSettings businessSettings = businessSettingsService.getById(0);
 
-        return new ResponseEntity<BusinessSettings>(businessSettings, HttpStatus.OK);
-    }
-
-
-    @PostMapping(path = "/update")
-    public CommonResponseSingle updateBusinessSettings(@RequestBody BusinessSettingsDto businessSettingsDto, HttpServletRequest request) {
-
-        storeUserDetails(request);
-
-        BusinessSettings businessSettings = businessSettingsService.update(businessSettingsDto);
-
         if (businessSettings != null) {
-            return response(true, HttpStatus.OK, "New businessSettings inserted successfully", businessSettings);
+            return response(true, HttpStatus.CREATED, "BusinessSettings inserted successfully", businessSettings);
         } else if (businessSettings == null) {
-            return response(false, HttpStatus.BAD_REQUEST, "Something is wrong with data", (BusinessSettings) null);
+            return response(false, HttpStatus.NOT_FOUND, "BusinessSettings not Found", (BusinessSettings) null);
         }
         return response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong with the application", (BusinessSettings) null);
     }
 
-    @Autowired
-    private   CommonResponseArray commonResponseArray;
 
-    protected  CommonResponseArray<List<BusinessSettings>> responseCustom(boolean action, HttpStatus status, String message, List<BusinessSettings> data){
+//    @PostMapping(path = "/update")
+//    public CommonResponseSingle updateBusinessSettings(@RequestBody BusinessSettingsDto businessSettingsDto, HttpServletRequest request) {
+//
+//        storeUserDetails(request);
+//
+//        BusinessSettings businessSettings = businessSettingsService.update(businessSettingsDto);
+//
+//        if (businessSettings != null) {
+//            return response(true, HttpStatus.OK, "New businessSettings inserted successfully", businessSettings);
+//        } else if (businessSettings == null) {
+//            return response(false, HttpStatus.BAD_REQUEST, "Something is wrong with data", (BusinessSettings) null);
+//        }
+//        return response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong with the application", (BusinessSettings) null);
+//    }
 
-        commonResponseArray.setAction(action);
-        commonResponseArray.setStatus(status);
-        commonResponseArray.setMessage(message);
-        commonResponseArray.setData(data);
-
-        return commonResponseArray;
-    }
 
 }

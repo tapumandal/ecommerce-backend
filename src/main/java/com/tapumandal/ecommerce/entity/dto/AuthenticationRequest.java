@@ -10,9 +10,16 @@ public class AuthenticationRequest {
     @Email(message = "Email is not valid")
     private String username;
 
-    @NotNull(message = "Password can't be empty")
-    @Size(min=6, max = 32, message = "Password is not valid")
+//    @NotNull(message = "Password can't be empty")
+//    @Size(min=6, max = 32, message = "Password is not valid")
     private String password;
+
+
+    @NotNull(message = "TokenID can't be empty")
+    @Size(min=6, message = "TokenID is not valid")
+    private String userTokenId;
+
+
 
     public AuthenticationRequest(){}
 
@@ -27,5 +34,21 @@ public class AuthenticationRequest {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUserTokenId() {
+        return userTokenId == null ? "" : userTokenId;
+    }
+
+    public void setUserTokenId(String userTokenId) {
+        this.userTokenId = userTokenId;
     }
 }

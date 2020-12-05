@@ -1,10 +1,13 @@
 package com.tapumandal.ecommerce.entity.dto;
 
 import com.sun.istack.Nullable;
+import com.tapumandal.ecommerce.entity.Address;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class UserDto{
@@ -18,22 +21,19 @@ public class UserDto{
     @NotNull(message = "UserName can't be empty")
     protected String username;
 
-//    @NotNull(message = "phone can't be empty")
-//    @Size(min=7, max = 20, message = "Phone number is not usable")
-    protected String phone;
+    @NotNull(message = "Mobile No can't be empty")
+    protected String mobileNo;
 
-    @NotNull(message = "password can't be empty")
-    @Size(min=6, max = 32, message = "Password is not valid")
+    @Nullable
+    protected String gender;
+
+    private List<AddressDto> addresses = new ArrayList<AddressDto>();
+
+    protected String userTokenId;
+
     protected String password;
 
-//    @NotNull(message = "address can't be empty")
-//    @Size(min=12, max = 32, message = "Address information is very less")
-    protected String address;
-
-//    @NotNull(message = "Work title can't be empty")
-//    @Size(min=3, max = 32, message = "Work Title is not valid")
     protected String work_title;
-
 
     protected String role;
 
@@ -67,12 +67,12 @@ public class UserDto{
         this.username = username;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getMobileNo() {
+        return mobileNo == null ? "" : mobileNo;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
     }
 
     public String getPassword() {
@@ -83,12 +83,12 @@ public class UserDto{
         this.password = password;
     }
 
-    public String getAddress() {
-        return address;
+    public List<AddressDto> getAddresses() {
+        return addresses;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddresses(List<AddressDto> addresses) {
+        this.addresses = addresses;
     }
 
     public String getWork_title() {
@@ -99,13 +99,6 @@ public class UserDto{
         this.work_title = work_title;
     }
 
-//    public CompanyDto getCompany() {
-//        return company;
-//    }
-//
-//    public void setCompany(CompanyDto company) {
-//        this.company = company;
-//    }
 
     public String getRole() {
         return role;
@@ -137,5 +130,21 @@ public class UserDto{
 
     public boolean isIs_deleted() {
         return is_deleted;
+    }
+
+    public String getGender() {
+        return gender == null ? "" : gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getUserTokenId() {
+        return userTokenId == null ? "" : userTokenId;
+    }
+
+    public void setUserTokenId(String userTokenId) {
+        this.userTokenId = userTokenId;
     }
 }
