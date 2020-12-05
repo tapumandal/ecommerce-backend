@@ -21,13 +21,13 @@ public class UserDto{
     @NotNull(message = "UserName can't be empty")
     protected String username;
 
-//    @NotNull(message = "phone can't be empty")
-//    @Size(min=7, max = 20, message = "Phone number is not usable")
+    @NotNull(message = "Mobile No can't be empty")
     protected String mobileNo;
 
+    @Nullable
     protected String gender;
 
-    private List<AddressDto> address = new ArrayList<AddressDto>();
+    private List<AddressDto> addresses = new ArrayList<AddressDto>();
 
     protected String userTokenId;
 
@@ -67,12 +67,12 @@ public class UserDto{
         this.username = username;
     }
 
-    public String getPhone() {
-        return mobileNo;
+    public String getMobileNo() {
+        return mobileNo == null ? "" : mobileNo;
     }
 
-    public void setPhone(String phone) {
-        this.mobileNo = phone;
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
     }
 
     public String getPassword() {
@@ -83,12 +83,12 @@ public class UserDto{
         this.password = password;
     }
 
-    public List<AddressDto> getAddress() {
-        return address;
+    public List<AddressDto> getAddresses() {
+        return addresses;
     }
 
-    public void setAddress(List<AddressDto> address) {
-        this.address = address;
+    public void setAddresses(List<AddressDto> addresses) {
+        this.addresses = addresses;
     }
 
     public String getWork_title() {

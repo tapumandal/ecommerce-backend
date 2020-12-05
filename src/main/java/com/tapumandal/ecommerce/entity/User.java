@@ -38,6 +38,9 @@ public class User {
     @Column(name = "mobile_no")
     protected String mobileNo;
 
+    @Column(name = "gender")
+    protected String gender;
+
     @Column(name = "password")
     protected String password;
 
@@ -80,7 +83,8 @@ public class User {
 
         this.name = userDto.getName();
         this.username = userDto.getUsername();
-        this.mobileNo = userDto.getPhone();
+        this.mobileNo = userDto.getMobileNo();
+        this.gender = userDto.getGender();
         this.password = userDto.getPassword();
         this.workTitle = userDto.getWork_title();
         this.role = userDto.getRole();
@@ -88,8 +92,8 @@ public class User {
         this.isDeleted = userDto.isDeleted();
 
         this.addresses = new ArrayList<Address>();
-        if(userDto.getAddress() != null) {
-            for (AddressDto addressDto : userDto.getAddress()) {
+        if(userDto.getAddresses() != null) {
+            for (AddressDto addressDto : userDto.getAddresses()) {
                 Address address = new Address(addressDto);
                 addresses.add(address);
             }
@@ -143,6 +147,14 @@ public class User {
 
     public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
+    }
+
+    public String getGender() {
+        return gender == null ? "" : gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public List<Address> getAddresses() {
