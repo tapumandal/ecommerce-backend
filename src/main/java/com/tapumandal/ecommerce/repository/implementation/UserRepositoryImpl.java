@@ -46,7 +46,7 @@ public class UserRepositoryImpl  implements UserRepository {
         getSession().clear();
 
         if(tmpEntity.isPresent()){
-            getSession().update(user);
+            getSession().merge(user);
             getSession().flush();
             getSession().clear();
             return user.getId();

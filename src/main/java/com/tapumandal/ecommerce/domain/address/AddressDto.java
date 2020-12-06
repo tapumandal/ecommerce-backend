@@ -1,4 +1,4 @@
-package com.tapumandal.ecommerce.entity.dto;
+package com.tapumandal.ecommerce.domain.address;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

@@ -1,15 +1,21 @@
 package com.tapumandal.ecommerce.service.implementation;
 
+import com.google.gson.Gson;
+import com.tapumandal.ecommerce.domain.address.Address;
+import com.tapumandal.ecommerce.domain.address.AddressDto;
+import com.tapumandal.ecommerce.domain.address.AddressRepository;
 import com.tapumandal.ecommerce.entity.User;
 import com.tapumandal.ecommerce.entity.dto.UserDto;
 import com.tapumandal.ecommerce.repository.UserRepository;
 import com.tapumandal.ecommerce.service.UserService;
 import com.tapumandal.ecommerce.util.ApplicationPreferences;
 import com.tapumandal.ecommerce.util.MyPagenation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -22,6 +28,8 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    AddressRepository addressRepository;
 
     @Autowired
     ApplicationPreferences applicationPreferences;
@@ -92,7 +100,6 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-
     @Override
     public User create(UserDto u) {
         return null;
@@ -101,18 +108,38 @@ public class UserServiceImpl implements UserService{
     @Override
     public User update(UserDto userDto) {
 
-        User u = new User(userDto);
+        List<Address> children = new ArrayList<>();
 
-        Optional<User> user;
+        User user = getById(userDto.getId());
+        System.out.println("SERVICE ADDRESS GET BY ID : "+new Gson().toJson(user));
+
+        for (AddressDto dto : userDto.getAddresses()) {
+            Address child;
+            if (dto.getId() == 0) {
+                //CREATE MODE: create new child
+                child = new Address();
+//                child.setUser(user); //associate parent
+            } else {
+                //UPDATE MODE : fetch by id
+                child = addressRepository.getById(dto.getId());
+            }
+
+            BeanUtils.copyProperties(dto, child);//copy properties from dto
+            children.add(child);
+        }
+        user.getAddresses().clear();
+        user.getAddresses().addAll(children);
+
+        Optional<User> userReturn;
         try{
-            int userId = userRepository.update(u);
-            user = Optional.ofNullable(userRepository.getById(userId));
+            int userId = userRepository.update(user);
+            userReturn = Optional.ofNullable(userRepository.getById(userId));
         }catch (Exception e){
             return null;
         }
 
-        if(user.isPresent()){
-            return user.get();
+        if(userReturn.isPresent()){
+            return userReturn.get();
         }else{
             return null;
         }

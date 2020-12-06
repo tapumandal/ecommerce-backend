@@ -7,9 +7,10 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.tapumandal.ecommerce.domain.address.Address;
+import com.tapumandal.ecommerce.domain.address.AddressDto;
 import com.tapumandal.ecommerce.domain.cart.CartProduct;
 import com.tapumandal.ecommerce.domain.cart.CartProductDto;
-import com.tapumandal.ecommerce.entity.dto.AddressDto;
 import com.tapumandal.ecommerce.entity.dto.UserDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -66,16 +67,12 @@ public class User {
     private Date updatedAt;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private List<Address> addresses = new ArrayList<Address>();
 
-
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "company_id")
-//    @Where(clause = "company_is_deleted = false AND company_is_active = true")
-//    @JsonSerialize(using = CustomCompanySerializer.class)
-//    private Company company;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Address> addresses = new ArrayList<Address>();
 
     public User() {}
 

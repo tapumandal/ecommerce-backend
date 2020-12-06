@@ -1,7 +1,7 @@
 package com.tapumandal.ecommerce.entity.dto;
 
 import com.sun.istack.Nullable;
-import com.tapumandal.ecommerce.entity.Address;
+import com.tapumandal.ecommerce.domain.address.AddressDto;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
