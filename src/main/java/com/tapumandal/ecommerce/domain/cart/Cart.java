@@ -17,14 +17,14 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
 
-    @Column(name = "user+_id")
+    @Column(name = "user_id")
     protected int userId;
 
     @Column(name = "name")
     protected String name;
 
     @Column(name = "mobile_number")
-    protected String mobileNumber;
+    protected String mobileNo;
 
     @Column(name = "area")
     protected String area;
@@ -94,7 +94,7 @@ public class Cart {
         this.id = cartDto.getId();
         this.userId = cartDto.getUserId();
         this.name = cartDto.getName();
-        this.mobileNumber = cartDto.getMobileNumber();
+        this.mobileNo = cartDto.getMobileNo();
         this.area = cartDto.getArea();
         this.address = cartDto.getAddress();
         this.deliveryCharge = cartDto.getDeliveryCharge();
@@ -133,12 +133,12 @@ public class Cart {
         this.name = name;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber == null ? "" : mobileNumber;
+    public String getMobileNo() {
+        return mobileNo == null ? "" : mobileNo;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
     }
 
     public String getArea() {

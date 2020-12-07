@@ -134,7 +134,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public MyPagenation getPageable(Pageable pageable) {
-        return null;
+        return cartRepository.getPageable(pageable);
     }
 
 }
