@@ -45,7 +45,7 @@ public class ProductController extends ControllerHelper<Product> {
         return ResponseEntity.ok(response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong with the application", (Product) null));
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/consumer/{id}")
     public CommonResponseSingle<Product> getProduct(@PathVariable("id") int id, HttpServletRequest request) {
 
         storeUserDetails(request);
@@ -111,7 +111,7 @@ public class ProductController extends ControllerHelper<Product> {
     }
 
 
-    @GetMapping(path = "/list/business/{flag}")
+    @GetMapping(path = "/consumer/list/{flag}")
     public ResponseEntity<CommonResponseArray<ProductBusiness>> getAllConsumer(@PathVariable("flag") String flag, HttpServletRequest request, Pageable pageable) {
 
         storeUserDetails(request);

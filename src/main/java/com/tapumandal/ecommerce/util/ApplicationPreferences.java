@@ -22,6 +22,7 @@ public class ApplicationPreferences {
         User u = userService.getByValue("username", username);
         preferences = Preferences.userRoot().node(this.getClass().getName());
         preferences.put("name", u.getName());
+        preferences.put("userId", String.valueOf(u.getId()));
         preferences.put("mobileNo", u.getMobileNo());
         preferences.put("role", u.getRole());
 
@@ -31,6 +32,7 @@ public class ApplicationPreferences {
         user = new User();
         preferences = Preferences.userRoot().node(ApplicationPreferences.class.getName());
         user.setName(preferences.get("name", null));
+        user.setId(Integer.parseInt(preferences.get("userId", "0")));
         user.setMobileNo(preferences.get("mobileNo", null));
         user.setRole(preferences.get("role", null));
         return user;

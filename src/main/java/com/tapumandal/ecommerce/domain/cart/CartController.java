@@ -1,10 +1,7 @@
 package com.tapumandal.ecommerce.domain.cart;
 
 import com.google.gson.Gson;
-import com.tapumandal.ecommerce.util.CommonResponseArray;
-import com.tapumandal.ecommerce.util.CommonResponseSingle;
-import com.tapumandal.ecommerce.util.ControllerHelper;
-import com.tapumandal.ecommerce.util.MyPagenation;
+import com.tapumandal.ecommerce.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -22,7 +20,9 @@ public class CartController extends ControllerHelper<Cart> {
     @Autowired
     CartService cartService;
 
-    @PostMapping(path = "/consumer/cart/create")
+    private static Preferences preferences;
+
+    @PostMapping(path = "/cart/consumer/create")
     public CommonResponseSingle createCart(@RequestBody CartDto cartDto, HttpServletRequest request) {
 
         System.out.println("CONTROLLER");
@@ -56,10 +56,14 @@ public class CartController extends ControllerHelper<Cart> {
         }
     }
 
-    @GetMapping(path = "/consumer/{user_id}/cart/list")
-    public CommonResponseArray<Cart> getAll(@PathVariable("user_id") int userId, HttpServletRequest request, Pageable pageable) {
+    @GetMapping(path = "/cart/consumer/list")
+    public CommonResponseArray<Cart> getAll(HttpServletRequest request, Pageable pageable) {
 
         storeUserDetails(request);
+        preferences = Preferences.userRoot().node(ApplicationPreferences.class.getName());
+        int userID = Integer.parseInt(preferences.get("userId", "0"));
+
+        System.out.println("UserID: "+userID);
 
         List<Cart> carts = cartService.getAll(pageable);
 
