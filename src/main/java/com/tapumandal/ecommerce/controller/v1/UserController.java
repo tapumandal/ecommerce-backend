@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -186,7 +187,36 @@ public class UserController extends ControllerHelper {
     }
 
 
-    @PostMapping(path = "/consumer/registration")
+    private boolean validateFirebaseTokenID(String tokenID) {
+        if(tokenID != null && tokenID.length() > 10){
+            return true;
+        }else{
+            return false;
+        }
+//        FirebaseOptions options = null;
+//        try {
+//            options = FirebaseOptions.builder()
+//                    .setCredentials(GoogleCredentials.getApplicationDefault())
+//                    .setDatabaseUrl("https://grocery-ecommerce-845b8.firebaseio.com/")
+//                    .build();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        FirebaseApp.initializeApp(options);
+//
+//        FirebaseToken decodedToken = null;
+//        try {
+//            decodedToken = FirebaseAuth.getInstance().verifyIdToken(userDto.getUserTokenId());
+//        } catch (FirebaseAuthException e) {
+//            e.printStackTrace();
+//        }
+//        String uid = decodedToken.getUid();
+//        System.out.println("Firebase Authentication: "+uid);
+
+    }
+
+    @PostMapping(path = "consumer/registration")
     public CommonResponseSingle<LoginResponseModel> consumerRegistration(@RequestBody @Valid UserDto userDto, HttpServletRequest request) throws Exception  {
 
         System.out.println("consumerRegistration");
@@ -228,7 +258,7 @@ public class UserController extends ControllerHelper {
         }
     }
 
-    @PostMapping("/consumer/authenticate")
+    @PostMapping("consumer/authenticate")
     public CommonResponseSingle<LoginResponseModel> consumerAuthenticate(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
         if(!validateFirebaseTokenID(authenticationRequest.getUserTokenId())){
@@ -252,32 +282,20 @@ public class UserController extends ControllerHelper {
         return response(true, HttpStatus.OK, "Login is successful", loginResponseModel);
     }
 
-    private boolean validateFirebaseTokenID(String tokenID) {
-        if(tokenID != null && tokenID.length() > 10){
-            return true;
-        }else{
-            return false;
-        }
-//        FirebaseOptions options = null;
-//        try {
-//            options = FirebaseOptions.builder()
-//                    .setCredentials(GoogleCredentials.getApplicationDefault())
-//                    .setDatabaseUrl("https://grocery-ecommerce-845b8.firebaseio.com/")
-//                    .build();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        FirebaseApp.initializeApp(options);
-//
-//        FirebaseToken decodedToken = null;
-//        try {
-//            decodedToken = FirebaseAuth.getInstance().verifyIdToken(userDto.getUserTokenId());
-//        } catch (FirebaseAuthException e) {
-//            e.printStackTrace();
-//        }
-//        String uid = decodedToken.getUid();
-//        System.out.println("Firebase Authentication: "+uid);
 
+    @PostMapping(path = "consumer/address/update")
+    public CommonResponseSingle<User> updateUserAddress(@RequestBody UserDto userDto, HttpServletRequest request) {
+
+        System.out.println("CONTROLLER ADDRESS DTO: "+new Gson().toJson(userDto));
+        storeUserDetails(request);
+
+        User user = userService.update(userDto);
+        System.out.println("CONTROLLER ADDRESS RETURN: "+new Gson().toJson(userDto));
+        if (user != null) {
+            return response(true, HttpStatus.OK, "New user inserted successfully", user);
+        } else if (user == null) {
+            return response(false, HttpStatus.BAD_REQUEST, "Something is wrong with data", (User) null);
+        }
+        return response(false, HttpStatus.INTERNAL_SERVER_ERROR, "Something is wrong with the application", (User) null);
     }
 }

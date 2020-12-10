@@ -15,7 +15,7 @@ public class CartDto {
 
     protected String name;
 
-    protected String mobileNumber;
+    protected String mobileNo;
 
     protected String area;
 
@@ -59,12 +59,12 @@ public class CartDto {
         this.name = name;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber == null ? "" : mobileNumber;
+    public String getMobileNo() {
+        return mobileNo == null ? "" : mobileNo;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
     }
 
     public String getArea() {

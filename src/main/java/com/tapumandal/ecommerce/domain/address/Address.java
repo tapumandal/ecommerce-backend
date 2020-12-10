@@ -1,8 +1,7 @@
-package com.tapumandal.ecommerce.entity;
-
+package com.tapumandal.ecommerce.domain.address;
 import javax.persistence.Column;
 
-import com.tapumandal.ecommerce.entity.dto.AddressDto;
+import com.tapumandal.ecommerce.entity.User;
 import com.tapumandal.ecommerce.entity.dto.UserDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -55,6 +54,10 @@ public class Address {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Date updatedAt;
+
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
     public Address() {
     }
@@ -173,4 +176,12 @@ public class Address {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }
