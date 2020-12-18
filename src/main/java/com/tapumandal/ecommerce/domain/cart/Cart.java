@@ -81,7 +81,7 @@ public class Cart {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
-    protected List<CartProduct> cartProducts;
+    protected List<CartProduct> productList;
 
 //    @OneToMany(mappedBy = "cart")
 //    protected List<CartProduct> cartProducts;
@@ -108,11 +108,11 @@ public class Cart {
         this.totalDiscount = cartDto.getTotalDiscount();
         this.totalPayable = cartDto.getTotalPayable();
 
-        this.cartProducts = new ArrayList<CartProduct>();
+        this.productList = new ArrayList<CartProduct>();
         if(cartDto.getProductList() != null) {
             for (CartProductDto cartDtoTmp : cartDto.getProductList()) {
                 CartProduct cartPro = new CartProduct(cartDtoTmp);
-                cartProducts.add(cartPro);
+                this.productList.add(cartPro);
             }
         }
     }
@@ -277,13 +277,11 @@ public class Cart {
         this.updatedAt = updatedAt;
     }
 
-    public List<CartProduct> getCartProducts() {
-        return cartProducts;
+    public List<CartProduct> getProductList() {
+        return productList;
     }
 
-    public void setCartProducts(List<CartProduct> cartProducts) {
-        this.cartProducts = cartProducts;
+    public void setProductList(List<CartProduct> productList) {
+        this.productList = productList;
     }
-
-
 }

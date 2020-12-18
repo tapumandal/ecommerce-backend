@@ -70,6 +70,7 @@ public class ControllerHelper<Entity> {
 
 
         String url = request.getRequestURI();
+        url = url.substring(7);
         String nextPage = null;
         String prePage = null;
 

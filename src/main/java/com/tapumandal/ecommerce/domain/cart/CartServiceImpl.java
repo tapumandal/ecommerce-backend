@@ -58,7 +58,7 @@ public class CartServiceImpl implements CartService {
         Optional<Cart> cart;
 //        try{
             Cart tmpCart = cartRepository.getById(pro.getId());
-            pro.setCartProducts(tmpCart.getCartProducts());
+            pro.setProductList(tmpCart.getProductList());
             int proId = cartRepository.update(pro);
             cart = Optional.ofNullable(cartRepository.getById(proId));
 //        }catch (Exception e){
