@@ -21,4 +21,4 @@ ENTRYPOINT ["java", "-jar", "ecommerce-backend.jar"]
 #docker build -t ecommerce-backend . && docker run --net=my-network -p 8080:8080 --name ecommerce-backend  --link mysql-server:mysql -d
 #ecommerce-backend
 
-#docker build -t ecommerce-backend . && docker run -p 8080:8080 --name ecommerce-backend --link mysql-server:mysql ecommerce-backend
+#docker build -t ecommerce-backend . && docker run -p 80:8081 --name ecommerce-backend --link mysql-server:mysql tapumadnal/ecommerce-backend
