@@ -1,10 +1,10 @@
 FROM openjdk:8
 ADD target/ecommerce-backend.jar ecommerce-backend.jar
-EXPOSE 8080
+EXPOSE 8081
 ENTRYPOINT ["java", "-jar", "ecommerce-backend.jar"]
 
 ## MySql pull then run with credentials
-# docker run --name mysql-server -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=ims-db -e MYSQL_USER=ims-user -e MYSQL_PASSWORD=password -d mysql:5.6
+# docker run --name mysql-server -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=tapudb -e MYSQL_USER=user-t4pu -e MYSQL_PASSWORD=password -d mysql:5.6
 #
 # docker run --net=my-network --name mysql-server -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=ims-db -e MYSQL_USER=ims-user -e MYSQL_PASSWORD
 #=password -d mysql:5.6
@@ -21,4 +21,4 @@ ENTRYPOINT ["java", "-jar", "ecommerce-backend.jar"]
 #docker build -t ecommerce-backend . && docker run --net=my-network -p 8080:8080 --name ecommerce-backend  --link mysql-server:mysql -d
 #ecommerce-backend
 
-#docker build -t ecommerce-backend . && docker run -p 8080:8080 --name ecommerce-backend --link mysql-server:mysql ecommerce-backend
+#docker build -t ecommerce-backend . && docker run -p 80:8081 --name ecommerce-backend --link mysql-server:mysql tapumadnal/ecommerce-backend
