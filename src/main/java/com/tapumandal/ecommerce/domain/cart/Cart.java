@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,16 +73,20 @@ public class Cart {
 
     @Column(name = "created_at", updatable=false)
     @CreationTimestamp
-    private Date createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at")
     @UpdateTimestamp
-    private Date updatedAt;
+    private Timestamp updatedAt;
 
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     protected List<CartProduct> productList;
+
+
+    @Column(name = "status")
+    protected String status = "Processing";
 
 //    @OneToMany(mappedBy = "cart")
 //    protected List<CartProduct> cartProducts;
@@ -261,19 +266,19 @@ public class Cart {
         isDeleted = deleted;
     }
 
-    public Date getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -283,5 +288,13 @@ public class Cart {
 
     public void setProductList(List<CartProduct> productList) {
         this.productList = productList;
+    }
+
+    public String getStatus() {
+        return status == null ? "" : status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

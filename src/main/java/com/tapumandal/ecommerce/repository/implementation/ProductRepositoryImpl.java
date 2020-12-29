@@ -132,6 +132,9 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public List<ProductBusiness> getAllBusiness(Pageable pageable, String flag) {
+        System.out.println("FLAG >"+flag+"<");
+        flag = flag.trim();
+        System.out.println("FLAG >"+flag+"<");
         String query = "FROM ProductBusiness P WHERE P.isDeleted = 0 AND (P.categories LIKE '%"+flag+"%' OR P.company LIKE '%"+flag+"%')";
         Query resQuery =  getSession().createQuery(query);
 

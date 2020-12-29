@@ -254,14 +254,7 @@ public class UserController extends ControllerHelper {
 
         } else {
             System.out.println("7");
-
-            updateUserAddress(userDto, request);
-
-            AuthenticationRequest authenticationRequest = new AuthenticationRequest();
-            authenticationRequest.setUsername(userDto.getMobileNo());
-            authenticationRequest.setUserTokenId(userDto.getUserTokenId());
-            return consumerAuthenticate(authenticationRequest);
-//            return response(false, HttpStatus.BAD_REQUEST, "The account is already exist", (LoginResponseModel) null);
+            return response(false, HttpStatus.BAD_REQUEST, "The account is already exist. \n Please login.", (LoginResponseModel) null);
         }
     }
 
