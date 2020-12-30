@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,17 +57,11 @@ public class CartServiceImpl implements CartService {
         Optional<Cart> cart;
 //        try{
             Cart tmpCart = cartRepository.getById(cartDto.getId());
-            final Cart tmpCart2 = tmpCart;
-            System.out.println("CART TM2:"+new Gson().toJson(tmpCart2));
-            BeanUtils.copyProperties(cartDto, tmpCart);
-            tmpCart.getProductList().clear();
-//            tmpCart.setProductList(tmpCart2.getProductList());
-            System.out.println("CART TM2:"+new Gson().toJson(tmpCart2));
             System.out.println("CART TMP:"+new Gson().toJson(tmpCart));
+            tmpCart.setStatus(cartDto.getStatus());
             int proId = cartRepository.update(tmpCart);
             cart = Optional.ofNullable(cartRepository.getById(proId));
             System.out.println("CART GET:"+new Gson().toJson(cart.get()));
-//            System.out.println("CopyProperCart: "+new Gson().toJson(cart));
 //        }catch (Exception e){
 //            return null;
 //        }
