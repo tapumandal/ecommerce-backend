@@ -13,7 +13,9 @@ import java.sql.Date;
 @Component
 public class CartProductDto {
 
-    protected int id;
+    private int id;
+
+    private int productId;
 
     private String name;
 
@@ -213,6 +215,14 @@ public class CartProductDto {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }
 

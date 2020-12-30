@@ -2,6 +2,7 @@ package com.tapumandal.ecommerce.domain.cart;
 
 import com.google.gson.Gson;
 import com.tapumandal.ecommerce.util.MyPagenation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -50,17 +51,22 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart update(CartDto cartDto) {
 
-        Cart pro = new Cart(cartDto);
-
         System.out.println("SERVICE");
-        System.out.println(new Gson().toJson(pro));
-
+        System.out.println("CART DTO:"+new Gson().toJson(cartDto));
         Optional<Cart> cart;
 //        try{
-            Cart tmpCart = cartRepository.getById(pro.getId());
-            pro.setProductList(tmpCart.getProductList());
-            int proId = cartRepository.update(pro);
+            Cart tmpCart = cartRepository.getById(cartDto.getId());
+            final Cart tmpCart2 = tmpCart;
+            System.out.println("CART TM2:"+new Gson().toJson(tmpCart2));
+            BeanUtils.copyProperties(cartDto, tmpCart);
+            tmpCart.getProductList().clear();
+//            tmpCart.setProductList(tmpCart2.getProductList());
+            System.out.println("CART TM2:"+new Gson().toJson(tmpCart2));
+            System.out.println("CART TMP:"+new Gson().toJson(tmpCart));
+            int proId = cartRepository.update(tmpCart);
             cart = Optional.ofNullable(cartRepository.getById(proId));
+            System.out.println("CART GET:"+new Gson().toJson(cart.get()));
+//            System.out.println("CopyProperCart: "+new Gson().toJson(cart));
 //        }catch (Exception e){
 //            return null;
 //        }

@@ -43,6 +43,8 @@ public class CartDto {
 
     protected List<CartProductDto> productList;
 
+    protected String status;
+
     public int getId() {
         return id;
     }
@@ -177,5 +179,13 @@ public class CartDto {
 
     public void setProductList(List<CartProductDto> productList) {
         this.productList = productList;
+    }
+
+    public String getStatus() {
+        return status == null ? "" : status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
