@@ -69,6 +69,10 @@ public class BusinessSettings {
     @JoinColumn(name = "business_settings_id_mobile_payment_condition", referencedColumnName = "id")
     protected List<DiscountTypeCondition> mobilePaymentCondition;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "business_settings_id_mobile_payment_condition", referencedColumnName = "id")
+    protected VersionControlModel versionControlModel;
+
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -114,6 +118,8 @@ public class BusinessSettings {
             DiscountTypeCondition dTypeCondition = new DiscountTypeCondition(dTypeConditionDto);
             this.mobilePaymentCondition.add(dTypeCondition);
         }
+
+        this.versionControlModel = new VersionControlModel(businessSettingsDto.getVersionControlModel());
     }
 
 
@@ -259,5 +265,13 @@ public class BusinessSettings {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public VersionControlModel getVersionControlModel() {
+        return versionControlModel;
+    }
+
+    public void setVersionControlModel(VersionControlModel versionControlModel) {
+        this.versionControlModel = versionControlModel;
     }
 }

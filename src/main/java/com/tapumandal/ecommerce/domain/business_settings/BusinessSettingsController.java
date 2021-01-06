@@ -24,7 +24,8 @@ public class BusinessSettingsController extends ControllerHelper<BusinessSetting
     public CommonResponseSingle createBusinessSettings(@RequestBody BusinessSettingsDto businessSettingsDto, HttpServletRequest request) {
 
 
-        System.out.println("createBusinessSettings");
+        System.out.println("createBusinessSettingsDTO:");
+        System.out.println(new Gson().toJson(businessSettingsDto.getVersionControlModel()));
         System.out.println(new Gson().toJson(businessSettingsDto));
 
         storeUserDetails(request);
