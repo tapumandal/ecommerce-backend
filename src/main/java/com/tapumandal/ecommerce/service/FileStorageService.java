@@ -1,5 +1,6 @@
 package com.tapumandal.ecommerce.service;
 
+import com.google.gson.Gson;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -54,6 +55,8 @@ public class FileStorageService {
                 System.out.println("Sorry! Filename contains invalid path sequence ");
             }
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
+//            System.out.println("Path fileStorageLocation: "+ new Gson().toJson(fileStorageLocation));
+//            System.out.println("Path targetLocation: "+ new Gson().toJson(targetLocation));
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             return fileName;
         } catch (IOException ex) {

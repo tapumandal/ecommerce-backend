@@ -52,7 +52,10 @@ public class ProductServiceImpl implements ProductService {
 
         if(productDto.getImages().length > 0) {
             List<Image> productImages = helper.storeProductImages(productDto.getImages());
+            System.out.println("productImages: "+new Gson().toJson(productImages));
+
             String thumbnailUrl = productImages.get(0).getUrl().replaceAll(productImages.get(0).getName(), "thumbnail." + productImages.get(0).getName());
+            System.out.println("thumbnailUrl: "+thumbnailUrl);
             pro.setImage(thumbnailUrl);
             pro.setProductImages(productImages);
         }

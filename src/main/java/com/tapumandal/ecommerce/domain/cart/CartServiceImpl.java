@@ -2,10 +2,12 @@ package com.tapumandal.ecommerce.domain.cart;
 
 import com.google.gson.Gson;
 import com.tapumandal.ecommerce.util.MyPagenation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,17 +52,16 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart update(CartDto cartDto) {
 
-        Cart pro = new Cart(cartDto);
-
         System.out.println("SERVICE");
-        System.out.println(new Gson().toJson(pro));
-
+        System.out.println("CART DTO:"+new Gson().toJson(cartDto));
         Optional<Cart> cart;
 //        try{
-            Cart tmpCart = cartRepository.getById(pro.getId());
-            pro.setProductList(tmpCart.getProductList());
-            int proId = cartRepository.update(pro);
+            Cart tmpCart = cartRepository.getById(cartDto.getId());
+            System.out.println("CART TMP:"+new Gson().toJson(tmpCart));
+            tmpCart.setStatus(cartDto.getStatus());
+            int proId = cartRepository.update(tmpCart);
             cart = Optional.ofNullable(cartRepository.getById(proId));
+            System.out.println("CART GET:"+new Gson().toJson(cart.get()));
 //        }catch (Exception e){
 //            return null;
 //        }

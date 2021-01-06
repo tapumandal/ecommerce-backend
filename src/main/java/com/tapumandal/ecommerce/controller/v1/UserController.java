@@ -254,7 +254,7 @@ public class UserController extends ControllerHelper {
 
         } else {
             System.out.println("7");
-            return response(false, HttpStatus.BAD_REQUEST, "The account is already exist", (LoginResponseModel) null);
+            return response(false, HttpStatus.BAD_REQUEST, "The account is already exist. \n Please login.", (LoginResponseModel) null);
         }
     }
 

@@ -39,6 +39,9 @@ public class ImageService {
     @Value("${storage.path}")
     String storagePath;
 
+    @Value("${file.upload-dir}")
+    String productFileUploadDir;
+
 
     public List<ImageModel> store(MultipartFile[] images){
         List<ImageModel> imageModels = new ArrayList<>();
@@ -51,7 +54,7 @@ public class ImageService {
             }
             if(i==0){
                 try {
-                    Thumbnails.of(new File("ecommerce/public/images/product/"+tmp.getName()))
+                    Thumbnails.of(new File(productFileUploadDir+"/"+tmp.getName()))
                             .outputFormat("JPEG")
                             .crop(Positions.CENTER)
                             .size(80, 80)
@@ -85,8 +88,9 @@ public class ImageService {
         return imageModels;
     }
     public ImageModel store(MultipartFile image){
-
+        System.out.println("ImageModel store:"+image.getOriginalFilename());
         String fileName = fileStorageService.storeFile(image);
+        System.out.println("ImageModel fileName:"+fileName);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(basePath+storagePath)
                 .path(fileName)
