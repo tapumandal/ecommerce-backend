@@ -20,11 +20,11 @@ public class VersionControlModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    @Column(name = "isForce")
-    protected boolean force;
+    @Column(name = "is_force")
+    protected boolean isForce;
 
     @Column(name = "version")
-    protected int appVersion;
+    protected int version;
 
     @Column(name = "forceable_version")
     protected int forceableVersion;
@@ -49,18 +49,20 @@ public class VersionControlModel{
     @UpdateTimestamp
     protected Date updatedAt;
 
+    @OneToOne(mappedBy = "versionControlModel")
+    private BusinessSettings businessSettings;
 
     public VersionControlModel() {
     }
 
     public VersionControlModel(VersionControlModelDto versionControlModelDto) {
-        this.force = isForce();
-        this.appVersion = getAppVersion();
-        this.forceableVersion = getForceableVersion();
-        this.message = getMessage();
-        this.title = getTitle();
-        this.displayVersion = getDisplayVersion();
-        this.changeLog = getChangeLog();
+        this.isForce = versionControlModelDto.isForce();
+        this.version = versionControlModelDto.getVersion();
+        this.forceableVersion = versionControlModelDto.getForceable_version();
+        this.message = versionControlModelDto.getMessage();
+        this.title = versionControlModelDto.getTitle();
+        this.displayVersion = versionControlModelDto.getDisplayVersion();
+        this.changeLog = versionControlModelDto.getChangeLog();
     }
 
     public int getId() {
@@ -71,36 +73,20 @@ public class VersionControlModel{
         this.id = id;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public boolean isForce() {
-        return force;
+        return isForce;
     }
 
     public void setForce(boolean force) {
-        this.force = force;
+        isForce = force;
     }
 
-    public int getAppVersion() {
-        return appVersion;
+    public int getVersion() {
+        return version;
     }
 
-    public void setAppVersion(int appVersion) {
-        this.appVersion = appVersion;
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public int getForceableVersion() {
@@ -141,5 +127,29 @@ public class VersionControlModel{
 
     public void setChangeLog(String changeLog) {
         this.changeLog = changeLog;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public BusinessSettings getBusinessSettings() {
+        return businessSettings;
+    }
+
+    public void setBusinessSettings(BusinessSettings businessSettings) {
+        this.businessSettings = businessSettings;
     }
 }

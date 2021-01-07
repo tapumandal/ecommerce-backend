@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "business_settings")
 @Component
-public class BusinessSettings {
+public class BusinessSettings{
 
 
     @Id
@@ -70,7 +71,7 @@ public class BusinessSettings {
     protected List<DiscountTypeCondition> mobilePaymentCondition;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "business_settings_id_mobile_payment_condition", referencedColumnName = "id")
+    @JoinColumn(name = "version_control_model_id", referencedColumnName = "id")
     protected VersionControlModel versionControlModel;
 
 
