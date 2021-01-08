@@ -72,7 +72,7 @@ public class BusinessSettings{
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "version_control_model_id", referencedColumnName = "id")
-    protected VersionControlModel versionControlModel;
+    protected VersionControl versionControl;
 
 
     @Column(name = "created_at")
@@ -120,7 +120,7 @@ public class BusinessSettings{
             this.mobilePaymentCondition.add(dTypeCondition);
         }
 
-        this.versionControlModel = new VersionControlModel(businessSettingsDto.getVersionControlModel());
+        this.versionControl = new VersionControl(businessSettingsDto.getVersionControlDto());
     }
 
 
@@ -268,11 +268,11 @@ public class BusinessSettings{
         this.updatedAt = updatedAt;
     }
 
-    public VersionControlModel getVersionControlModel() {
-        return versionControlModel;
+    public VersionControl getVersionControl() {
+        return versionControl;
     }
 
-    public void setVersionControlModel(VersionControlModel versionControlModel) {
-        this.versionControlModel = versionControlModel;
+    public void setVersionControl(VersionControl versionControl) {
+        this.versionControl = versionControl;
     }
 }

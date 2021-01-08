@@ -1,62 +1,44 @@
 package com.tapumandal.ecommerce.domain.business_settings;
 
-import com.google.gson.annotations.SerializedName;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
-
 /**
- * Created by TapuMandal on 11/25/2020.
+ * Created by TapuMandal on 1/8/2021.
  * For any query ask online.tapu@gmail.com
  */
 
 @Component
-public class VersionControlModelDto implements Serializable{
-
-    @SerializedName("isForce")
-    protected boolean isForce = false;
-
-    @SerializedName("version")
-    protected int version;
-
-    @SerializedName("forceable_version")
-    protected int forceable_version;
-
-    @SerializedName("message")
-    protected String message;
-
-    @SerializedName("title")
-    protected String title;
-
-    @SerializedName("display_version")
-    protected String displayVersion;
-
-    @SerializedName("change_log")
-    protected String changeLog;
-
+public class VersionControlDto {
+    private boolean force;
+    private Integer appVersion;
+    private Integer forceableVersion;
+    private String message;
+    private String title;
+    private String displayVersion;
+    private String changeLog;
 
     public boolean isForce() {
-        return isForce;
+        return force;
     }
 
     public void setForce(boolean force) {
-        isForce = force;
+        this.force = force;
     }
 
-    public int getVersion() {
-        return version;
+    public Integer getAppVersion() {
+        return appVersion;
     }
 
-    public void setVersion(int version) {
-        this.version = version;
+    public void setAppVersion(Integer appVersion) {
+        this.appVersion = appVersion;
     }
 
-    public int getForceable_version() {
-        return forceable_version;
+    public Integer getForceableVersion() {
+        return forceableVersion;
     }
 
-    public void setForceable_version(int forceable_version) {
-        this.forceable_version = forceable_version;
+    public void setForceableVersion(Integer forceableVersion) {
+        this.forceableVersion = forceableVersion;
     }
 
     public String getMessage() {
