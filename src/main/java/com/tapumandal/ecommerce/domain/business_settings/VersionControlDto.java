@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class VersionControlDto {
     private boolean force;
-    private Integer appVersion;
-    private Integer forceableVersion;
+    private int appVersion;
+    private int forceableVersion;
     private String message;
     private String title;
     private String displayVersion;
@@ -25,19 +25,19 @@ public class VersionControlDto {
         this.force = force;
     }
 
-    public Integer getAppVersion() {
+    public int getAppVersion() {
         return appVersion;
     }
 
-    public void setAppVersion(Integer appVersion) {
+    public void setAppVersion(int appVersion) {
         this.appVersion = appVersion;
     }
 
-    public Integer getForceableVersion() {
+    public int getForceableVersion() {
         return forceableVersion;
     }
 
-    public void setForceableVersion(Integer forceableVersion) {
+    public void setForceableVersion(int forceableVersion) {
         this.forceableVersion = forceableVersion;
     }
 

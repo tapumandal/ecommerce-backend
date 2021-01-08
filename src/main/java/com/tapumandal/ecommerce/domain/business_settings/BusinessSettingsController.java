@@ -25,7 +25,7 @@ public class BusinessSettingsController extends ControllerHelper<BusinessSetting
 
 
         System.out.println("createBusinessSettingsDTO:");
-//        System.out.println(new Gson().toJson(businessSettingsDto.getVersionControlModel()));
+        System.out.println(new Gson().toJson(businessSettingsDto.getVersionControlDto()));
         System.out.println(new Gson().toJson(businessSettingsDto));
 
         storeUserDetails(request);
