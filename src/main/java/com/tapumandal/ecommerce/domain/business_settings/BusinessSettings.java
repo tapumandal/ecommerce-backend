@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "business_settings")
 @Component
-public class BusinessSettings {
+public class BusinessSettings{
 
 
     @Id
@@ -69,6 +70,10 @@ public class BusinessSettings {
     @JoinColumn(name = "business_settings_id_mobile_payment_condition", referencedColumnName = "id")
     protected List<DiscountTypeCondition> mobilePaymentCondition;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "version_control_model_id", referencedColumnName = "id")
+    protected VersionControl versionControl;
+
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -114,6 +119,8 @@ public class BusinessSettings {
             DiscountTypeCondition dTypeCondition = new DiscountTypeCondition(dTypeConditionDto);
             this.mobilePaymentCondition.add(dTypeCondition);
         }
+
+        this.versionControl = new VersionControl(businessSettingsDto.getVersionControlDto());
     }
 
 
@@ -259,5 +266,13 @@ public class BusinessSettings {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public VersionControl getVersionControl() {
+        return versionControl;
+    }
+
+    public void setVersionControl(VersionControl versionControl) {
+        this.versionControl = versionControl;
     }
 }

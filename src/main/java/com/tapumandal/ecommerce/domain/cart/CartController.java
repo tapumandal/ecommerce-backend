@@ -68,7 +68,7 @@ public class CartController extends ControllerHelper<Cart> {
         List<Cart> carts = cartService.getAll(pageable);
 
         MyPagenation myPagenation = managePagenation(request, cartService.getPageable(pageable), pageable);
-
+        System.out.println("CART:"+new Gson().toJson(carts));
         if (!carts.isEmpty()) {
             return response(true, HttpStatus.FOUND, "All cart list", carts, myPagenation);
         } else if (carts.isEmpty()) {

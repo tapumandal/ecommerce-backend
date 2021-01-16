@@ -3,10 +3,6 @@ package com.tapumandal.ecommerce.domain.business_settings;
 
 import com.google.gson.annotations.SerializedName;
 import org.springframework.stereotype.Component;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -61,6 +57,8 @@ public class BusinessSettingsDto implements Serializable {
 
     @SerializedName("mobilePaymentCondition")
     protected List<DiscountTypeConditionDto> mobilePaymentCondition;
+
+    protected VersionControlDto versionControlDto;
 
     public int getId() {
         return id;
@@ -188,5 +186,13 @@ public class BusinessSettingsDto implements Serializable {
 
     public void setMobilePaymentCondition(List<DiscountTypeConditionDto> mobilePaymentCondition) {
         this.mobilePaymentCondition = mobilePaymentCondition;
+    }
+
+    public VersionControlDto getVersionControlDto() {
+        return versionControlDto;
+    }
+
+    public void setVersionControlDto(VersionControlDto versionControlDto) {
+        this.versionControlDto = versionControlDto;
     }
 }
