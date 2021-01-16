@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ImageService {
+public class ImageServiceUtil {
 
 
     @Autowired
@@ -53,44 +53,37 @@ public class ImageService {
                 imageModels.add(tmp);
             }
             if(i==0){
-                try {
-                    Thumbnails.of(new File(productFileUploadDir+"/"+tmp.getName()))
-                            .outputFormat("JPEG")
-                            .crop(Positions.CENTER)
-                            .size(80, 80)
-                            .keepAspectRatio(true)
-                            .outputQuality(1)
-                            .toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }else{
-                Rename rename = new Rename() {
-                    @Override
-                    public String apply(String s, ThumbnailParameter thumbnailParameter) {
-                        return this.appendPrefix(s, "");
-                    }
-                };
-
-                try {
-                    Thumbnails.of(new File("ecommerce/public/images/product/"+tmp.getName()))
-                            .outputFormat("JPEG")
-                            .size(300, 200)
-                            .keepAspectRatio(true)
-                            .outputQuality(0.90)
-                            .toFiles(rename);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                createThumbnail(tmp, file);
             }
             i++;
         }
         return imageModels;
     }
+
+    private void createThumbnail(ImageModel tmp, MultipartFile file) {
+        if(file.getSize()>10000) {
+        String thumbnailName = tmp.getName();
+        thumbnailName = "thumbnail_" + thumbnailName;
+        ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(basePath + storagePath)
+                .path(thumbnailName)
+                .toUriString();
+    }else{
+        try {
+            Thumbnails.of(new File(productFileUploadDir+"/"+tmp.getName()))
+                    .outputFormat("JPEG")
+                    .size(80, 80)
+                    .keepAspectRatio(true)
+                    .outputQuality(1)
+                    .toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    }
+
     public ImageModel store(MultipartFile image){
-        System.out.println("ImageModel store:"+image.getOriginalFilename());
         String fileName = fileStorageService.storeFile(image);
-        System.out.println("ImageModel fileName:"+fileName);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(basePath+storagePath)
                 .path(fileName)
