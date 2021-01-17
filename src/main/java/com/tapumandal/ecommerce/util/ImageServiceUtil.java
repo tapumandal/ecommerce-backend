@@ -61,29 +61,28 @@ public class ImageServiceUtil {
     }
 
     private void createThumbnail(ImageModel tmp, MultipartFile file) {
-        if(file.getSize()>10000) {
-        String thumbnailName = tmp.getName();
-        thumbnailName = "thumbnail_" + thumbnailName;
-        ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(basePath + storagePath)
-                .path(thumbnailName)
-                .toUriString();
-    }else{
-        try {
-            Thumbnails.of(new File(productFileUploadDir+"/"+tmp.getName()))
-                    .outputFormat("JPEG")
-                    .size(80, 80)
-                    .keepAspectRatio(true)
-                    .outputQuality(1)
-                    .toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(file.getSize()<10000) {
+            System.out.println("LESS THAN 10000");
+            fileStorageService.storeFile(file, "thumbnail.");
+
+        }else{
+            System.out.println("NOT LESS THAN 10000");
+            try {
+                Thumbnails.of(new File(productFileUploadDir+"/"+tmp.getName()))
+                        .outputFormat("JPEG")
+                        .size(180, 180)
+                        .crop(Positions.CENTER)
+                        .keepAspectRatio(true)
+                        .outputQuality(0.5)
+                        .toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-    }
     }
 
     public ImageModel store(MultipartFile image){
-        String fileName = fileStorageService.storeFile(image);
+        String fileName = fileStorageService.storeFile(image, "");
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(basePath+storagePath)
                 .path(fileName)

@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
         if(productDto.getImages().length > 0) {
             List<Image> productImages = storeProductImages(productDto.getImages());
 
-            String thumbnailUrl = productImages.get(0).getUrl().replaceAll(productImages.get(0).getName(), "thumbnail_" + productImages.get(0).getName());
+            String thumbnailUrl = productImages.get(0).getUrl().replaceAll(productImages.get(0).getName(), "thumbnail." + productImages.get(0).getName());
             pro.setImage(thumbnailUrl);
             pro.setProductImages(productImages);
         }
@@ -92,7 +92,7 @@ public class ProductServiceImpl implements ProductService {
 
         if(productDto.getImages() != null) {
             List<Image> productImages = storeProductImages(productDto.getImages());
-            String thumbnailUrl = productImages.get(0).getUrl().replaceAll(productImages.get(0).getName(), "thumbnail_" + productImages.get(0).getName());
+            String thumbnailUrl = productImages.get(0).getUrl().replaceAll(productImages.get(0).getName(), "thumbnail." + productImages.get(0).getName());
             pro.setImage(thumbnailUrl);
 
             List<Image> existingImages = imageService.getImageByProductId(pro.getId());
