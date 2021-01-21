@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ImageService {
+public class ImageServiceUtil {
 
 
     @Autowired
@@ -49,48 +49,41 @@ public class ImageService {
         int i=0;
         for (MultipartFile file: images) {
             ImageModel tmp = this.store(file);
-            if (tmp != null){
-                imageModels.add(tmp);
-            }
-            if(i==0){
-                try {
-                    Thumbnails.of(new File(productFileUploadDir+"/"+tmp.getName()))
-                            .outputFormat("JPEG")
-                            .crop(Positions.CENTER)
-                            .size(80, 80)
-                            .keepAspectRatio(true)
-                            .outputQuality(1)
-                            .toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }else{
-                Rename rename = new Rename() {
-                    @Override
-                    public String apply(String s, ThumbnailParameter thumbnailParameter) {
-                        return this.appendPrefix(s, "");
-                    }
-                };
-
-                try {
-                    Thumbnails.of(new File("ecommerce/public/images/product/"+tmp.getName()))
-                            .outputFormat("JPEG")
-                            .size(300, 200)
-                            .keepAspectRatio(true)
-                            .outputQuality(0.90)
-                            .toFiles(rename);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            imageModels.add(tmp);
             i++;
         }
         return imageModels;
     }
-    public ImageModel store(MultipartFile image){
-        System.out.println("ImageModel store:"+image.getOriginalFilename());
-        String fileName = fileStorageService.storeFile(image);
-        System.out.println("ImageModel fileName:"+fileName);
+
+    public ImageModel createThumbnail(MultipartFile file) {
+        String thumbnailName = "thumbnail_"+String.valueOf(Instant.now().getEpochSecond());
+        thumbnailName = fileStorageService.storeFile(file, thumbnailName);
+
+        if(file.getSize()>10000) {
+            try {
+                Thumbnails.of(new File(productFileUploadDir+"/"+thumbnailName))
+                        .outputFormat("JPEG")
+                        .size(180, 180)
+                        .crop(Positions.CENTER)
+                        .keepAspectRatio(true)
+                        .outputQuality(0.5)
+                        .toFiles(Rename.NO_CHANGE);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return createImageModel(thumbnailName);
+    }
+
+    public ImageModel store(MultipartFile file){
+        String fileName = String.valueOf(Instant.now().getEpochSecond());
+        fileName = fileStorageService.storeFile(file, fileName);
+
+        return createImageModel(fileName);
+    }
+
+    private ImageModel createImageModel(String fileName){
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(basePath+storagePath)
                 .path(fileName)

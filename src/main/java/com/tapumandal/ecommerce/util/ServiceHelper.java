@@ -14,11 +14,11 @@ public class ServiceHelper {
 
 
     @Autowired
-    ImageService imageService;
+    ImageServiceUtil imageServiceUtil;
 
     public List<Image> storeProductImages(MultipartFile[] images) {
 
-        List<ImageModel> imageModels = imageService.store(images);
+        List<ImageModel> imageModels = imageServiceUtil.store(images);
 
         List<Image> productImages = new ArrayList<>();
 

@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -14,53 +15,57 @@ import java.sql.Date;
 @Entity
 @Table(name = "version_control")
 @Component
-public class VersionControl {
+public class VersionControl implements Serializable {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
 
-    @Column(name="force")
-    private boolean force;
+    @Column(name = "force_update")
+    protected boolean force;
 
-    @Column(name="app_version")
-    private Integer appVersion;
+    @Column(name = "app_version")
+    protected int appVersion;
 
-    @Column(name="forceable_version")
-    private Integer forceableVersion;
+    @Column(name = "forceable_version")
+    protected int forceableVersion;
 
-    @Column(name="message")
-    private String message;
+    @Column(name = "message")
+    protected String message;
 
-    @Column(name="title")
-    private String title;
+    @Column(name = "title")
+    protected String title;
 
-    @Column(name="display_version")
-    private String displayVersion;
+    @Column(name = "display_version")
+    protected String displayVersion;
 
-    @Column(name="change_log")
-    private String changeLog;
+    @Column(name = "change_log")
+    protected String changeLog;
 
     @Column(name = "created_at")
     @CreationTimestamp
-    private Date createdAt;
+    protected Date createdAt;
 
     @Column(name = "updated_at")
     @UpdateTimestamp
-    private Date updatedAt;
+    protected Date updatedAt;
+
+//    @OneToOne(mappedBy="versionControl")
+//    @PrimaryKeyJoinColumn
+//    public BusinessSettings businessSettings;
 
     public VersionControl() {
     }
 
     public VersionControl(VersionControlDto versionControlDto) {
-        force = versionControlDto.isForce();
-        appVersion = versionControlDto.getAppVersion();
-        forceableVersion = versionControlDto.getForceableVersion();
-        message = versionControlDto.getMessage();
-        title = versionControlDto.getTitle();
-        displayVersion = versionControlDto.getDisplayVersion();
-        changeLog = versionControlDto.getChangeLog();
+        this.force = versionControlDto.isForce();
+        this.appVersion = versionControlDto.getAppVersion();
+        this.forceableVersion = versionControlDto.getForceableVersion();
+        this.message = versionControlDto.getMessage();
+        this.title = versionControlDto.getTitle();
+        this.displayVersion = versionControlDto.getDisplayVersion();
+        this.changeLog = versionControlDto.getChangeLog();
     }
 
     public boolean isForce() {
@@ -71,19 +76,19 @@ public class VersionControl {
         this.force = force;
     }
 
-    public Integer getAppVersion() {
+    public int getAppVersion() {
         return appVersion;
     }
 
-    public void setAppVersion(Integer appVersion) {
+    public void setAppVersion(int appVersion) {
         this.appVersion = appVersion;
     }
 
-    public Integer getForceableVersion() {
+    public int getForceableVersion() {
         return forceableVersion;
     }
 
-    public void setForceableVersion(Integer forceableVersion) {
+    public void setForceableVersion(int forceableVersion) {
         this.forceableVersion = forceableVersion;
     }
 

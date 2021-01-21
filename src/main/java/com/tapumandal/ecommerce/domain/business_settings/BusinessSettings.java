@@ -17,7 +17,7 @@ public class BusinessSettings{
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     protected int id;
 
     @Column(name = "update_menu")
@@ -70,8 +70,11 @@ public class BusinessSettings{
     @JoinColumn(name = "business_settings_id_mobile_payment_condition", referencedColumnName = "id")
     protected List<DiscountTypeCondition> mobilePaymentCondition;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "version_control_model_id", referencedColumnName = "id")
+//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+//    @JoinColumn(name = "version_control_id", referencedColumnName = "id")
+//    protected VersionControl versionControl;
+
+    @OneToOne(targetEntity = VersionControl.class, cascade = CascadeType.ALL)
     protected VersionControl versionControl;
 
 

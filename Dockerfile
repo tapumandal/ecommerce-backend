@@ -9,7 +9,7 @@ ENTRYPOINT ["java", "-jar", "ecommerce-backend.jar"]
 # docker run --net=my-network --name mysql-server -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=ims-db -e MYSQL_USER=ims-user -e MYSQL_PASSWORD
 #=password -d mysql:5.6
 
-## phpmyadmin pull then run with mysql server linked
+## phpmyadmin pull then run with mysql server linked    
 # docker run --name myphpmyadmin -d --link mysql-server:db -p 8001:80 phpmyadmin/phpmyadmin
 
 ## Spring app Build

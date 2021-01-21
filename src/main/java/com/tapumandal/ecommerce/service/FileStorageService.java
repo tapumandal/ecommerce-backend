@@ -41,11 +41,10 @@ public class FileStorageService {
         }
     }
 
-    public String storeFile(MultipartFile file) {
+    public String storeFile(MultipartFile file, String name) {
 
         String extension = getExtension(file);
-        String newFileName = String.valueOf(Instant.now().getEpochSecond())+"."+extension;
-
+        String newFileName = name+"."+extension;
         // Normalize file name
 //        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String fileName = StringUtils.cleanPath(newFileName);
