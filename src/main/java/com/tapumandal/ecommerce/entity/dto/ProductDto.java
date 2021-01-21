@@ -38,6 +38,8 @@ public class ProductDto {
     //    @NotNull
 //    @NotEmpty
 //    @Size(min=4, max = 50, message = "image field is not OK.")
+    private MultipartFile thumbnail;
+
     private MultipartFile[] images;
 
     private String imageRealPath;
@@ -235,5 +237,13 @@ public class ProductDto {
 
     public void setPreSelectedCategories(String[] preSelectedCategories) {
         this.preSelectedCategories = preSelectedCategories;
+    }
+
+    public MultipartFile getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(MultipartFile thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

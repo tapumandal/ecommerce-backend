@@ -55,17 +55,13 @@ public class ProductServiceImpl implements ProductService {
 
         Product pro = new Product(productDto);
 
-        if(productDto.getImages().length > 0) {
+        if(productDto.getImages() != null) {
             List<Image> productImages = storeProductImages(productDto.getImages());
-
-            String thumbnailUrl = productImages.get(0).getUrl().replaceAll(productImages.get(0).getName(), "thumbnail." + productImages.get(0).getName());
-            pro.setImage(thumbnailUrl);
             pro.setProductImages(productImages);
         }
 
-        System.out.println("SERVICE: ");
-        System.out.println(new Gson().toJson(pro));
-
+        String thumbnailUrl = storeThumbnail(productDto.getThumbnail());
+        pro.setImage(thumbnailUrl);
 
         Optional<Product> product;
 
@@ -83,6 +79,7 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
     }
+
 
     @Override
     public Product update(ProductDto productDto) {
@@ -194,6 +191,11 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+
+    private String storeThumbnail(MultipartFile thumbnail) {
+        ImageModel imageModel = imageServiceUtil.createThumbnail(thumbnail);
+        return imageModel.getUrl();
+    }
 
     public List<Image> storeProductImages(MultipartFile[] images) {
 

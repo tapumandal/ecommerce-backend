@@ -49,40 +49,41 @@ public class ImageServiceUtil {
         int i=0;
         for (MultipartFile file: images) {
             ImageModel tmp = this.store(file);
-            if (tmp != null){
-                imageModels.add(tmp);
-            }
-            if(i==0){
-                createThumbnail(tmp, file);
-            }
+            imageModels.add(tmp);
             i++;
         }
         return imageModels;
     }
 
-    private void createThumbnail(ImageModel tmp, MultipartFile file) {
-        if(file.getSize()<10000) {
-            System.out.println("LESS THAN 10000");
-            fileStorageService.storeFile(file, "thumbnail.");
+    public ImageModel createThumbnail(MultipartFile file) {
+        String thumbnailName = "thumbnail_"+String.valueOf(Instant.now().getEpochSecond());
+        thumbnailName = fileStorageService.storeFile(file, thumbnailName);
 
-        }else{
-            System.out.println("NOT LESS THAN 10000");
+        if(file.getSize()>10000) {
             try {
-                Thumbnails.of(new File(productFileUploadDir+"/"+tmp.getName()))
+                Thumbnails.of(new File(productFileUploadDir+"/"+thumbnailName))
                         .outputFormat("JPEG")
                         .size(180, 180)
                         .crop(Positions.CENTER)
                         .keepAspectRatio(true)
                         .outputQuality(0.5)
-                        .toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+                        .toFiles(Rename.NO_CHANGE);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+        return createImageModel(thumbnailName);
     }
 
-    public ImageModel store(MultipartFile image){
-        String fileName = fileStorageService.storeFile(image, "");
+    public ImageModel store(MultipartFile file){
+        String fileName = String.valueOf(Instant.now().getEpochSecond());
+        fileName = fileStorageService.storeFile(file, fileName);
+
+        return createImageModel(fileName);
+    }
+
+    private ImageModel createImageModel(String fileName){
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(basePath+storagePath)
                 .path(fileName)
